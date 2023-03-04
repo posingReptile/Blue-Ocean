@@ -38,8 +38,8 @@ function Workout() {
           <Fab color="primary" aria-label="add">
             <AddIcon />
           </Fab>
-          <Grid item xs={12} md={6}>
-            <List>
+          <Grid item xs={12} md={12}>
+            <List sx={{ ml: 4, mr: 4 }}>
               <ListItem>
                 <ListItemText primary="Exercise1" />
               </ListItem>
@@ -60,10 +60,9 @@ function Workout() {
           label="Notes"
           variant="outlined"
           multiline
-          sx={{ width: 300 }}
+          sx={{ width: 300, ml: 4 }}
           rows={5}
         />
-
         <Typography sx={{ mt: 2, mb: 2, ml: 4 }} variant="h6" component="div">
           Calories Burned
         </Typography>
