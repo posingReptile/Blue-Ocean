@@ -29,11 +29,24 @@ import EditIcon from '@mui/icons-material/Edit';
 // api or props?
 
 function GridEntry(props) {
-  const { str } = props;
+  const { gridValue } = props;
   return (
-    <Box sx={{ width: '100%' }}>
-      <Typography>{str}</Typography>
+    <Box>
+      <Typography>{gridValue}</Typography>
     </Box>
+  );
+}
+
+function FormEntry(props) {
+  const { gridValue, defaultValue } = props;
+  return (
+    <TextField
+      variant="outlined"
+      id={gridValue}
+      name={gridValue}
+      label={gridValue}
+      defaultValue={defaultValue}
+    />
   );
 }
 
@@ -82,7 +95,9 @@ function Profile() {
     //     height,
     //     calorieGoal
     //   })
-    //     .catch(() => console.log('failed to update profile info'));
+    //     .catch(() => console.log('failed to update profile info'))
+    //  .finally(() => )
+    setEditFields();
   }
   return (
     <Box>
@@ -107,14 +122,14 @@ function Profile() {
             <Typography variant='h4'>{username}</Typography>
           </Box>
           <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-            <GridEntry str={age} />
-            <GridEntry str={weight} />
+            <GridEntry gridValue={age} />
+            <GridEntry gridValue={weight} />
 
-            <GridEntry str={height} />
-            <GridEntry str={targetWeight} />
+            <GridEntry gridValue={height} />
+            <GridEntry gridValue={targetWeight} />
 
-            <GridEntry str="calorie goal" />
-            <GridEntry str={calorieGoal} />
+            <GridEntry gridValue="calorie goal" />
+            <GridEntry gridValue={calorieGoal} />
           </Box>
         </Box>
       )}
@@ -133,52 +148,27 @@ function Profile() {
             <Typography variant='h4'>{username}</Typography>
           </Box>
             <form onSubmit={updateFields}>
-                <FormControl onSubmit={updateFields}>
-                  <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                    <TextField
-                      id="outlined"
-                      name="age"
-                      label="age"
-                      defaultValue={age}
-                    />
-                    <TextField
-                      id="outlined"
-                      name="weight"
-                      label="weight"
-                      defaultValue={weight}
-                    />
+              <FormControl onSubmit={updateFields}>
+                <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+                  <FormEntry gridValue="age" defaultValue={age} />
+                  <FormEntry gridValue="weight" defaultValue={weight} />
 
-                    <TextField
-                      id="outlined"
-                      name="height"
-                      label="height"
-                      defaultValue={height}
-                    />
-                    <TextField
-                      id="outlined"
-                      name="targetWeight"
-                      label="targetWeight"
-                      defaultValue={targetWeight}
-                    />
+                  <FormEntry gridValue="height" defaultValue={height} />
+                  <FormEntry gridValue="targetWeight" defaultValue={targetWeight} />
 
-                    <GridEntry str=""/>
-                    <TextField
-                      id="outlined"
-                      name="calorieGoal"
-                      label="calorieGoal"
-                      defaultValue={calorieGoal}
-                    />
+                  <GridEntry gridValue=""/>
+                  <FormEntry gridValue="calorieGoal" defaultValue={calorieGoal} />
 
-                    <Stack direction="row" spacing={2}>
-                      <Button variant="outlined" onClick={onEdit} >
-                        Cancel
-                      </Button>
-                      <Button type="submit" variant="contained">
-                        Done
-                      </Button>
-                    </Stack>
-                  </Box>
-                </FormControl>
+                  <Stack direction="row" spacing={2}>
+                    <Button variant="outlined" onClick={onEdit} >
+                      Cancel
+                    </Button>
+                    <Button type="submit" variant="contained">
+                      Done
+                    </Button>
+                  </Stack>
+                </Box>
+              </FormControl>
             </form>
         </Box>
       )}
