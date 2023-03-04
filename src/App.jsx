@@ -32,7 +32,7 @@ function App() {
         return (<LogSign setComponent={setComponent}/>);
       case 'usersetup' :
         console.log(component);
-        return (<UserSetup />);
+        return (<UserSetup setComponent={setComponent}/>);
       case 'calendar' :
         console.log(component);
         return (<Calendar />);
@@ -59,7 +59,7 @@ function App() {
       <TabPanel value={test} index={2}>
         Item Three
       </TabPanel>*/}
-      {(component !== ('logsign' || 'usersetup')) &&
+      {(component !== 'logsign' && component !== 'usersetup') &&
       <NavBar setComponent={setComponent}/>}
       {currComponent(component)}
     </div>
