@@ -1,5 +1,5 @@
 import React from 'react';
-import 'src/css/workout.css';
+import '../../../css/workout.css';
 
 
 function Workout() {
@@ -7,6 +7,7 @@ function Workout() {
   return (
     <div>
       Workout Component
+      <div>Test</div>
     </div>
   )
 }

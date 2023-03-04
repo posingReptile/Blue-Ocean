@@ -5,6 +5,7 @@ import UserSetup from './components/signlog/UserSetup.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 import NavBar from './components/navbar/NavBar.jsx';
+import Workout from './components/modal/workout/Workout.jsx';
 import './css/App.css';
 
 import Box from '@mui/material/Box';
@@ -43,7 +44,8 @@ function App() {
 
   return (
     <div className="App">
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Workout />
+      {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={test} onChange={() => console.log('hello')} aria-label="basic tabs example">
           <Tab label="Item One" />
           <Tab label="Item Two" />
@@ -61,7 +63,7 @@ function App() {
       </TabPanel>
       {(component !== ('logsign' || 'usersetup')) &&
       <NavBar setComponent={setComponent}/>}
-      {currComponent(component)}
+      {currComponent(component)} */}
     </div>
   )
 }
