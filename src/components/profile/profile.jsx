@@ -26,7 +26,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 // api or props?
 
-function TableEntry(props) {
+function GridEntry(props) {
   const { str } = props;
   return (
     <Box sx={{ width: '100%' }}>
@@ -35,8 +35,7 @@ function TableEntry(props) {
   );
 }
 // we don't do proptypes
-// TableEntry.propTypes = {
-//   children: PropTypes.node,
+// GridEntry.propTypes = {
 //   str: PropTypes.string.isRequire,
 // };
 
@@ -65,13 +64,13 @@ function Profile() {
       </Box>
 
       <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
-        <TableEntry str="age" />
-        <TableEntry str="" />
-        <TableEntry str="weight" />
+        <GridEntry str="age" />
+        <GridEntry str="" />
+        <GridEntry str="weight" />
 
-        <TableEntry str="height" />
-        <TableEntry str="" />
-        <TableEntry str="target weight" />
+        <GridEntry str="height" />
+        <GridEntry str="" />
+        <GridEntry str="target weight" />
       </Box>
 
     </Box>
