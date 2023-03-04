@@ -67,6 +67,9 @@ function Workout() {
         <Typography sx={{ mt: 2, mb: 2, ml: 4 }} variant="h6" component="div">
           Calories Burned
         </Typography>
+        <Typography sx={{ mt: 2, mb: 2, ml: 4 }} variant="h6" component="div">
+          Total Calories Today:
+        </Typography>
       </Box>
     </div>
   );
