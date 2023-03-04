@@ -13,6 +13,8 @@ import ListItemText from "@mui/material/ListItemText";
 import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
 
+import EditWorkout from "./EditWorkout";
+
 import "../../../css/workout.css";
 
 // Component for Dashboard (Showing today's workout)

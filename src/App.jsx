@@ -6,6 +6,7 @@ import Calendar from "./components/calendar/Calendar.jsx";
 import Dashboard from "./components/dashboard/Dashboard.jsx";
 import NavBar from "./components/navbar/NavBar.jsx";
 import WorkoutDash from "./components/modal/workout/WorkoutDash.jsx";
+import EditWorkout from "./components/modal/workout/EditWorkout";
 import "./css/App.css";
 
 import Box from "@mui/material/Box";
@@ -41,7 +42,8 @@ function App() {
 
   return (
     <div className="App">
-      <WorkoutDash />
+      {/* <WorkoutDash /> */}
+      <EditWorkout />
       {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={test} onChange={() => console.log('hello')} aria-label="basic tabs example">
           <Tab label="Item One" />
