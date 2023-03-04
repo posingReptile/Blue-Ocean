@@ -16,26 +16,66 @@ function UserSetup({ setComponent }) {
   const [age, setAge] = useState(0);
   const [weight, setWeight] = useState(0);
   const [goalWeight, setGoalWeight] = useState(0);
+  const [weightError , setWeightError] = useState(false);
+  const [goalWeightError, setGoalWeightError] = useState(false);
+  const [ageError, setAgeError] = useState(false);
 
   const handleFeetChange = (event) => {
-    setFeet(event.target.value);
+    setFeet(Number(event.target.value));
   };
 
   const handleInchesChange = (event) => {
-    setInches(event.target.value);
+    setInches(Number(event.target.value));
   };
 
   const handleAgeChange = (event) => {
-    setAge(event.target.value);
+    setAge(Number(event.target.value));
   };
 
   const handleWeightChange = (event) => {
-    setWeight(event.target.value);
+    setWeight(Number(event.target.value));
   };
 
   const handleGoalWeightChange = (event) => {
-    setGoalWeight(event.target.value);
+    setGoalWeight(Number(event.target.value));
   };
+
+  const validateForm = async () => {
+
+    if (weight <= 0 || typeof weight !== 'number' || isNaN(weight)) {
+      await setWeightError(true);
+    } else {
+      await setWeightError(false);
+    }
+
+    if (goalWeight <= 0 || typeof goalWeight !== 'number' || isNaN(goalWeight)) {
+      await setGoalWeightError(true);
+    } else {
+      await setGoalWeightError(false);
+    }
+
+    if (age <= 0 || typeof age !== 'number' || isNaN(age) || age > 100) {
+      await setAgeError(true);
+    } else {
+      await setAgeError(false);
+    }
+
+    if(weightError || goalWeightError || ageError) {
+      axios.put('/login', {
+        username: 'test',
+        feet: feet,
+        inches: inches,
+        age: age,
+        weight: weight,
+        goalWeight: goalWeight,
+      }).then((response) => {
+        console.log(response);
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+  }
+
 
   const handleSubmit = () => {
     console.log('feet: ', feet);
@@ -43,19 +83,12 @@ function UserSetup({ setComponent }) {
     console.log('age: ', age);
     console.log('weight: ', weight);
     console.log('goalWeight: ', goalWeight);
-    axios.put('/login', {
-      username: 'test',
-      feet: feet,
-      inches: inches,
-      age: age,
-      weight: weight,
-      goalWeight: goalWeight,
-  }).then((response) => {
-    console.log(response);
-  }).catch((error) => {
-    console.log(error);
-  });
+    console.log('weightError: ', weightError);
+    console.log('goalWeightError: ', goalWeightError);
+    console.log('ageError: ', ageError);
+    validateForm();
   }
+
 
   return (
       <div className="loginOuterWrapper">
@@ -111,6 +144,7 @@ function UserSetup({ setComponent }) {
             size="small"
             label="Weight"
             onChange={handleWeightChange}
+            {...weightError ? {error: true, helperText: 'Enter a valid weight'} : null}
           />
           <br/>
           <TextField
@@ -119,6 +153,7 @@ function UserSetup({ setComponent }) {
             size="small"
             label="Age"
             onChange={handleAgeChange}
+            {...ageError ? {error: true, helperText: 'Enter a valid age'} : null}
           />
           <br/>
           <TextField
@@ -130,6 +165,7 @@ function UserSetup({ setComponent }) {
             size="small"
             label="Goal Weight"
             onChange={handleGoalWeightChange}
+            {...goalWeightError ? {error: true, helperText: 'Enter a valid goal weight'} : null}
           />
           <br/>
         </div>

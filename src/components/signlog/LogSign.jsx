@@ -35,6 +35,7 @@ function Login({ setComponent }) {
   const handleSignup = () => {
     console.log('username: ', username);
     console.log('password: ', password);
+    setComponent('usersetup');
     axios.post('/login', {
       username: username,
       password: password,
