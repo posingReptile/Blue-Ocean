@@ -17,19 +17,33 @@ prs
 */
 import React from 'react';
 import defaultProfileImage from '../../assets/pfpic.png';
-import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
-import Badge from '@mui/material/Badge';
+import {
+  Avatar, Badge, Box, Typography
+} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 
 // import '../css/profile.css';
 
 // api or props?
 
+function TableEntry(props) {
+  const { str } = props;
+  return (
+    <Box sx={{ width: '100%' }}>
+      <Typography>{str}</Typography>
+    </Box>
+  );
+}
+// we don't do proptypes
+// TableEntry.propTypes = {
+//   children: PropTypes.node,
+//   str: PropTypes.string.isRequire,
+// };
+
+
 function Profile() {
   return (
     <Box>
-      username
       <Box>
         <Badge
           overlap="circular"
@@ -47,30 +61,18 @@ function Profile() {
             }}
           />
         </Badge>
+        <Typography variant='h4'>username</Typography>
       </Box>
 
       <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
-        <Box sx={{ width: '100%' }}>
-          <a>age</a>
-        </Box>
-        <Box sx={{ width: '100%' }}>
-          <a></a>
-        </Box>
-        <Box sx={{ width: '100%' }}>
-          <a>weight</a>
-        </Box>
+        <TableEntry str="age" />
+        <TableEntry str="" />
+        <TableEntry str="weight" />
 
-        <Box sx={{ width: '100%' }}>
-          <a>height</a>
-        </Box>
-        <Box sx={{ width: '100%' }}>
-          <a></a>
-        </Box>
-        <Box sx={{ width: '100%' }}>
-          <a>target weight</a>
-        </Box>
+        <TableEntry str="height" />
+        <TableEntry str="" />
+        <TableEntry str="target weight" />
       </Box>
-
 
     </Box>
   );
