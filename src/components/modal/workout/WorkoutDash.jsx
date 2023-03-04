@@ -12,6 +12,10 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
+import Avatar from "@mui/material/Avatar";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 
 import EditWorkout from "./EditWorkout";
 
@@ -43,15 +47,57 @@ function Workout() {
           <Grid item xs={12} md={12}>
             <List sx={{ ml: 4, mr: 4 }}>
               <ListItem>
-                <ListItemText primary="Exercise1" />
+                <ListItemAvatar>
+                  <Avatar sx={{ backgroundColor: "orange" }}>
+                    <DirectionsRunIcon color="error" />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Running Exercise 1"
+                  secondary={`Intensity: ${"High"} | Duration: ${1} hour`}
+                  secondary={
+                    <div className="workout-details">
+                      <span>{`Intensity: ${"High"}`}</span>
+                      <span>{`Duration: ${1} Hour`}</span>
+                    </div>
+                  }
+                />
               </ListItem>
               <Divider />
               <ListItem>
-                <ListItemText primary="Exercise2" />
+                <ListItemAvatar>
+                  <Avatar sx={{ backgroundColor: "orange" }}>
+                    <FitnessCenterIcon color="secondary" />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Strength Exercise 2"
+                  secondary={
+                    <div className="workout-details">
+                      <span>{`Weight: ${10}lbs`}</span>
+                      <span>{`Sets: ${20}`}</span>
+                      <span>{`Reps: ${30}`}</span>
+                    </div>
+                  }
+                />
               </ListItem>
               <Divider />
               <ListItem>
-                <ListItemText primary="Exercise 3" />
+                <ListItemAvatar>
+                  <Avatar sx={{ backgroundColor: "orange" }}>
+                    <FitnessCenterIcon color="secondary" />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Strength Exercise 3"
+                  secondary={
+                    <div className="workout-details">
+                      <span>{`Weight: ${10}lbs`}</span>
+                      <span>{`Sets: ${20}`}</span>
+                      <span>{`Reps: ${30}`}</span>
+                    </div>
+                  }
+                />
               </ListItem>
               <Divider />
             </List>

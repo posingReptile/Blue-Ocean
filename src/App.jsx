@@ -42,7 +42,7 @@ function App() {
 
   return (
     <div className="App">
-      {/* <WorkoutDash /> */}
+      <WorkoutDash />
       <EditWorkout />
       {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={test} onChange={() => console.log('hello')} aria-label="basic tabs example">
