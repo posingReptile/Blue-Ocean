@@ -17,6 +17,7 @@ import Avatar from "@mui/material/Avatar";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import ListItemButton from "@mui/material/ListItemButton";
 
 function EditWorkout() {
   return (
@@ -27,7 +28,7 @@ function EditWorkout() {
         component="div"
         align="center"
       >
-        Today's Workout
+        Edit Workout
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -42,39 +43,8 @@ function EditWorkout() {
                 primary="Strength Exercise 1"
                 secondary={
                   <div className="workout-details">
-                    <span>{`Weight: ${10}lbs`}</span>
-                    <span>{`Sets: ${20}`}</span>
-                    <span>{`Reps: ${30}`}</span>
-                  </div>
-                }
-                sx={{ mr: 6 }}
-              />
-              <ListItemSecondaryAction>
-                <Fab color="secondary" aria-label="edit" size="small">
-                  <EditIcon />
-                </Fab>
-                <Fab
-                  color="error"
-                  aria-label="edit"
-                  size="small"
-                  sx={{ ml: 1 }}
-                >
-                  <ClearIcon />
-                </Fab>
-              </ListItemSecondaryAction>
-            </ListItem>
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar sx={{ backgroundColor: "orange" }}>
-                  <DirectionsRunIcon color="error" />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText
-                primary="Running Exercise 2"
-                secondary={
-                  <div className="workout-details">
-                    <span>{`Intensity: ${"High"}`}</span>
-                    <span>{`Duration: ${1} Hour`}</span>
+                    <span>{`Weight: ${10}lbs`}</span>|
+                    <span>{`Sets: ${20}`}</span>|<span>{`Reps: ${30}`}</span>
                   </div>
                 }
                 sx={{ mr: 6 }}
@@ -95,11 +65,42 @@ function EditWorkout() {
             </ListItem>
             <Divider />
             <ListItem>
+              <ListItemAvatar>
+                <Avatar sx={{ backgroundColor: "orange" }}>
+                  <DirectionsRunIcon color="error" />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary="Running Exercise 2"
+                secondary={
+                  <div className="workout-details">
+                    <span>{`Intensity: ${"High"}`}</span>|
+                    <span>{`Duration: ${1} Hour`}</span>
+                  </div>
+                }
+                sx={{ mr: 6 }}
+              />
+              <ListItemSecondaryAction>
+                <Fab color="secondary" aria-label="edit" size="small">
+                  <EditIcon />
+                </Fab>
+                <Fab
+                  color="error"
+                  aria-label="edit"
+                  size="small"
+                  sx={{ ml: 1 }}
+                >
+                  <ClearIcon />
+                </Fab>
+              </ListItemSecondaryAction>
+            </ListItem>
+            <Divider />
+            <ListItemButton>
               <ListItemText primary="Add an exercise" />
               <Fab color="primary" aria-label="add" size="small">
                 <AddIcon />
               </Fab>
-            </ListItem>
+            </ListItemButton>
             <Divider />
           </List>
         </Grid>

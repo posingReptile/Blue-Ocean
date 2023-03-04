@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
@@ -16,6 +16,7 @@ import Avatar from "@mui/material/Avatar";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import ListItemButton from "@mui/material/ListItemButton";
 
 import EditWorkout from "./EditWorkout";
 
@@ -23,6 +24,7 @@ import "../../../css/workout.css";
 
 // Component for Dashboard (Showing today's workout)
 function Workout() {
+  const [test, setTest] = useState(false);
   return (
     <div>
       <Box
@@ -46,7 +48,7 @@ function Workout() {
           </Fab>
           <Grid item xs={12} md={12}>
             <List sx={{ ml: 4, mr: 4 }}>
-              <ListItem>
+              <ListItemButton onClick={() => setTest(!test)}>
                 <ListItemAvatar>
                   <Avatar sx={{ backgroundColor: "orange" }}>
                     <DirectionsRunIcon color="error" />
@@ -56,13 +58,24 @@ function Workout() {
                   primary="Running Exercise 1"
                   secondary={`Intensity: ${"High"} | Duration: ${1} hour`}
                   secondary={
-                    <div className="workout-details">
-                      <span>{`Intensity: ${"High"}`}</span>
-                      <span>{`Duration: ${1} Hour`}</span>
-                    </div>
+                    <>
+                      <div className="workout-details">
+                        <span>{`Intensity: ${"High"}`}</span>
+                        <span>{`Duration: ${1} Hour`}</span>
+                      </div>
+                      {test ? (
+                        <div>
+                          Instructions testInstructions testInstructions
+                          testInstructions testInstructions testInstructions
+                          testInstructions testInstructions testInstructions
+                          test Instructions testInstructions testInstructions
+                          testInstructions test
+                        </div>
+                      ) : null}
+                    </>
                   }
                 />
-              </ListItem>
+              </ListItemButton>
               <Divider />
               <ListItem>
                 <ListItemAvatar>
@@ -112,10 +125,10 @@ function Workout() {
           rows={5}
         />
         <Typography sx={{ mt: 2, mb: 2, ml: 4 }} variant="h6" component="div">
-          Calories Burned
+          Calories Burned: 1,000,000
         </Typography>
         <Typography sx={{ mt: 2, mb: 2, ml: 4 }} variant="h6" component="div">
-          Total Calories Today:
+          Total Calories Today: 5,000
         </Typography>
       </Box>
     </div>
