@@ -9,11 +9,11 @@ import { CardActionArea } from "@mui/material";
 function ChooseMuscle() {
   return (
     <div>
-      <div>Choose Muscle Component</div>
+      <h1 align="center">Choose Muscle</h1>
       <Grid
         container
         spacing={0}
-        // sx={{ justifyContent: "center", alignItems: "center" }}
+        sx={{ justifyContent: "center", alignItems: "center" }}
       >
         <Grid item xs={4} align="center">
           <Card

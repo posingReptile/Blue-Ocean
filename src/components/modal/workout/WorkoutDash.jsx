@@ -56,7 +56,6 @@ function Workout() {
                 </ListItemAvatar>
                 <ListItemText
                   primary="Running Exercise 1"
-                  secondary={`Intensity: ${"High"} | Duration: ${1} hour`}
                   secondary={
                     <>
                       <div className="workout-details">
