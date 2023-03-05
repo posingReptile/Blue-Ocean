@@ -10,125 +10,91 @@ import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import ListItemButton from "@mui/material/ListItemButton";
 import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
 import Avatar from "@mui/material/Avatar";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
-import ListItemButton from "@mui/material/ListItemButton";
+import Button from "@mui/material/Button";
 
 import EditWorkout from "./EditWorkout";
 
 import "../../../css/workout.css";
 
+import DayWorkoutList from "./DayWorkoutList";
+
 // Component for Dashboard (Showing today's workout)
 function Workout() {
   const [test, setTest] = useState(false);
+
   return (
     <div>
       <Box
         sx={{
-          width: 600,
-          height: 600,
-          backgroundColor: "primary.dark",
+          minHeight: 600,
+          backgroundColor: "primary.light",
           borderRadius: 4,
           margin: 4,
         }}
       >
         <Grid container spacing={2}>
-          <Typography sx={{ mt: 2, mb: 2, ml: 4 }} variant="h4" component="div">
-            Today's Workout
-          </Typography>
-          <Fab color="secondary" aria-label="edit">
-            <EditIcon />
-          </Fab>
-          <Fab color="primary" aria-label="add">
-            <AddIcon />
-          </Fab>
-          <Grid item xs={12} md={12}>
-            <List sx={{ ml: 4, mr: 4 }}>
-              <ListItemButton onClick={() => setTest(!test)}>
-                <ListItemAvatar>
-                  <Avatar sx={{ backgroundColor: "orange" }}>
-                    <DirectionsRunIcon color="error" />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary="Running Exercise 1"
-                  secondary={
-                    <>
-                      <div className="workout-details">
-                        <span>{`Intensity: ${"High"}`}</span>
-                        <span>{`Duration: ${1} Hour`}</span>
-                      </div>
-                      {test ? (
-                        <div>
-                          Instructions testInstructions testInstructions
-                          testInstructions testInstructions testInstructions
-                          testInstructions testInstructions testInstructions
-                          test Instructions testInstructions testInstructions
-                          testInstructions test
-                        </div>
-                      ) : null}
-                    </>
-                  }
-                />
-              </ListItemButton>
-              <Divider />
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar sx={{ backgroundColor: "orange" }}>
-                    <FitnessCenterIcon color="secondary" />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary="Strength Exercise 2"
-                  secondary={
-                    <div className="workout-details">
-                      <span>{`Weight: ${10}lbs`}</span>
-                      <span>{`Sets: ${20}`}</span>
-                      <span>{`Reps: ${30}`}</span>
-                    </div>
-                  }
-                />
-              </ListItem>
-              <Divider />
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar sx={{ backgroundColor: "orange" }}>
-                    <FitnessCenterIcon color="secondary" />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary="Strength Exercise 3"
-                  secondary={
-                    <div className="workout-details">
-                      <span>{`Weight: ${10}lbs`}</span>
-                      <span>{`Sets: ${20}`}</span>
-                      <span>{`Reps: ${30}`}</span>
-                    </div>
-                  }
-                />
-              </ListItem>
-              <Divider />
-            </List>
+          <Grid item xs={8}>
+            <Typography variant="h4" component="div" align="center">
+              Today's Workout
+            </Typography>
+          </Grid>
+          <Grid item xs={4} align="end" pr={4}>
+            <Fab color="primary">
+              <AddIcon />
+            </Fab>
+          </Grid>
+          <DayWorkoutList />
+          <Grid
+            item
+            xs={6}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Typography sx={{ mt: 2, ml: 4 }} variant="h6" component="div">
+              Calories Burned Today: 1,000,000
+            </Typography>
+            <Typography
+              sx={{ mt: 2, mb: 2, ml: 4 }}
+              variant="h6"
+              component="div"
+            >
+              Total Workout Duration: 1 Light year
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            xs={6}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-end",
+              justifyContent: "center",
+              paddingRight: 6,
+            }}
+          >
+            <TextField
+              id="outlined-basic"
+              label="Notes"
+              variant="outlined"
+              multiline
+              sx={{ width: 300 }}
+              rows={8}
+            />
+            <Button variant="contained" sx={{ mt: 2, width: 150 }}>
+              Save Notes
+            </Button>
           </Grid>
         </Grid>
-        <TextField
-          id="outlined-basic"
-          label="Notes"
-          variant="outlined"
-          multiline
-          sx={{ width: 300, ml: 4 }}
-          rows={5}
-        />
-        <Typography sx={{ mt: 2, mb: 2, ml: 4 }} variant="h6" component="div">
-          Calories Burned: 1,000,000
-        </Typography>
-        <Typography sx={{ mt: 2, mb: 2, ml: 4 }} variant="h6" component="div">
-          Total Calories Today: 5,000
-        </Typography>
       </Box>
     </div>
   );

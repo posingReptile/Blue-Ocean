@@ -5,11 +5,16 @@ import UserSetup from "./components/signlog/UserSetup.jsx";
 import Calendar from "./components/calendar/Calendar.jsx";
 import Dashboard from "./components/dashboard/Dashboard.jsx";
 import NavBar from "./components/navbar/NavBar.jsx";
+
 import WorkoutDash from "./components/modal/workout/WorkoutDash.jsx";
 import EditWorkout from "./components/modal/workout/EditWorkout";
 import ChooseMuscle from "./components/modal/workout/ChooseMuscle";
 import ChooseExercise from "./components/modal/workout/ChooseExercise";
 import "./css/App.css";
+
+//Testing
+import DayWorkoutList from "./components/modal/workout/DayWorkoutList";
+import DayWorkoutListItem from "./components/modal/workout/DayWorkoutListItem";
 
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
@@ -44,10 +49,13 @@ function App() {
 
   return (
     <div className="App">
-      {/* <WorkoutDash /> */}
+      <WorkoutDash />
       {/* <EditWorkout /> */}
       {/* <ChooseMuscle /> */}
-      <ChooseExercise />
+      {/* <ChooseExercise /> */}
+      <DayWorkoutList />
+      {/* <DayWorkoutListItem /> */}
+
       {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={test} onChange={() => console.log('hello')} aria-label="basic tabs example">
           <Tab label="Item One" />

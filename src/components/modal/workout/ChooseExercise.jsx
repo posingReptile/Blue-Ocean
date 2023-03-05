@@ -23,7 +23,7 @@ function ChooseExercise() {
 
   const handleAddWorkout = (e) => {
     e.stopPropagation();
-    event.preventDefault();
+    // event.preventDefault();
     setShowAddModal(true);
     console.log("Hello");
   };
