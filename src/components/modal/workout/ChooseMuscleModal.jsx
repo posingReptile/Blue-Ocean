@@ -12,6 +12,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 
 import MuscleItem from "./MuscleItem";
+import ChooseExerciseModal from "./ChooseExerciseModal";
 
 function ChooseMuscleModal({ setShowAddModal }) {
   const [open, setOpen] = useState(false);
@@ -39,6 +40,7 @@ function ChooseMuscleModal({ setShowAddModal }) {
         <MuscleItem muscleName={"Biceps"} />
         <MuscleItem muscleName={"Biceps"} />
       </Grid>
+      <ChooseExerciseModal />
     </>
   );
 }

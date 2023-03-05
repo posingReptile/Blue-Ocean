@@ -53,7 +53,7 @@ function App() {
       <WorkoutDash />
       {/* <EditWorkout /> */}
       {/* <ChooseMuscle /> */}
-      {/* <ChooseExercise /> */}
+      <ChooseExercise />
       {/* <DayWorkoutList /> */}
       {/* <DayWorkoutListItem /> */}
 
