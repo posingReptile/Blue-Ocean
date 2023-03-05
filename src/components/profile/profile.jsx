@@ -4,6 +4,7 @@ profile pic changes
 */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PersonalRecords from './personalRecords.jsx';
 import defaultProfileImage from '../../assets/pfpic.png';
 import {
   Avatar, Badge, Box, Button, FormControl, Stack, TextField, Typography
@@ -175,7 +176,7 @@ function Profile() {
           </form>
         </Box>
       )}
-
+      <PersonalRecords />
     </Box>
   );
 }
