@@ -15,6 +15,7 @@ import "./css/App.css";
 //Testing
 import DayWorkoutList from "./components/modal/workout/DayWorkoutList";
 import DayWorkoutListItem from "./components/modal/workout/DayWorkoutListItem";
+import ChooseMuscleModal from "./components/modal/workout/ChooseMuscleModal";
 
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";

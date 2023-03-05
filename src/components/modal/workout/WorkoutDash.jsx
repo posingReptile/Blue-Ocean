@@ -23,14 +23,37 @@ import EditWorkout from "./EditWorkout";
 
 import "../../../css/workout.css";
 
+import Modal from "@mui/material/Modal";
+
 import DayWorkoutList from "./DayWorkoutList";
+import ChooseMuscleModal from "./ChooseMuscleModal";
+
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  // width: "50%",
+  // height: "50%",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: 2,
+};
 
 // Component for Dashboard (Showing today's workout)
 function Workout() {
   const [showButtons, setShowButtons] = useState(false); // Shows edit and clear button
+  const [open, setOpen] = useState(false); // Opens add a workout modal
+  const handleOpen = () => setOpen(true); // Handles when Add (+) is clicked
+  const handleClose = () => setOpen(false); // Handles modal outside click (closes)
 
   return (
-    <div>
+    <>
       <Box
         sx={{
           minHeight: 600,
@@ -46,7 +69,7 @@ function Workout() {
             </Typography>
           </Grid>
           <Grid item xs={4} align="end" pr={4}>
-            <Fab color="primary">
+            <Fab color="primary" onClick={handleOpen}>
               <AddIcon />
             </Fab>
             <Fab
@@ -104,7 +127,17 @@ function Workout() {
           </Grid>
         </Grid>
       </Box>
-    </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <ChooseMuscleModal />
+        </Box>
+      </Modal>
+    </>
   );
 }
 
