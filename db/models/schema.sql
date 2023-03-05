@@ -1,4 +1,5 @@
-CREATE DATABASE shredded_db
+CREATE DATABASE shredded
+
 
 CREATE SCHEMA shredded
 
@@ -57,3 +58,6 @@ CREATE TABLE IF NOT EXISTS food (
 )
 
 
+-- CREATE USER process.env.USER WITH PASSWORD process.env.PASSWORD;
+
+-- GRANT ALL PRIVILEGES ON DATABASE process.env.PGDATABASE TO process.env.PGUSER;
