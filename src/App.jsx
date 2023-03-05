@@ -53,7 +53,7 @@ function App() {
       {/* <EditWorkout /> */}
       {/* <ChooseMuscle /> */}
       {/* <ChooseExercise /> */}
-      <DayWorkoutList />
+      {/* <DayWorkoutList /> */}
       {/* <DayWorkoutListItem /> */}
 
       {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

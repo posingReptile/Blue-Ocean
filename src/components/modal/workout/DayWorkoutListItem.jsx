@@ -18,9 +18,11 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 
 import "../../../css/workout.css";
+import EditExerciseModal from "./EditExerciseModal";
 
 function DayWorkoutListItem({
   // Current expected props
+  showButtons,
   exerciseName = "Test Exercise Name",
   instructions = "Test Instructions",
   type = "cardio",
@@ -56,8 +58,8 @@ function DayWorkoutListItem({
     <>
       <ListItemButton
         onMouseDown={() => setShowMore(!showMore)}
-        onMouseEnter={() => setShowEdit(true)}
-        onMouseLeave={() => setShowEdit(false)}
+        // onMouseEnter={() => setShowEdit(true)}
+        // onMouseLeave={() => setShowEdit(false)}
       >
         <ListItemAvatar>
           <Avatar sx={{ backgroundColor: "orange" }}>
@@ -83,7 +85,7 @@ function DayWorkoutListItem({
             </>
           }
         />
-        {showEdit && (
+        {showButtons && (
           <ListItemSecondaryAction onMouseDown={(e) => e.stopPropagation()}>
             <Fab
               color="secondary"
@@ -99,15 +101,17 @@ function DayWorkoutListItem({
               anchorEl={anchorEl}
               onClose={handleClose}
               anchorOrigin={{
-                vertical: "top",
-                horizontal: "left",
+                vertical: "center",
+                horizontal: "center",
               }}
               transformOrigin={{
                 vertical: "top",
                 horizontal: "right",
               }}
+              style={{ marginRight: 4 }}
             >
-              <Paper>Hello</Paper>
+              {/* <Paper sx={{ width: 300, height: 300 }}>Hello</Paper> */}
+              <EditExerciseModal type={"strength"} handleClose={handleClose} />
             </Popover>
             <Fab color="error" aria-label="edit" size="medium" sx={{ ml: 1 }}>
               <ClearIcon />

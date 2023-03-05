@@ -27,7 +27,7 @@ import DayWorkoutList from "./DayWorkoutList";
 
 // Component for Dashboard (Showing today's workout)
 function Workout() {
-  const [test, setTest] = useState(false);
+  const [showButtons, setShowButtons] = useState(false); // Shows edit and clear button
 
   return (
     <div>
@@ -49,8 +49,16 @@ function Workout() {
             <Fab color="primary">
               <AddIcon />
             </Fab>
+            <Fab
+              color="primary"
+              onClick={() => {
+                setShowButtons(!showButtons);
+              }}
+            >
+              <EditIcon />
+            </Fab>
           </Grid>
-          <DayWorkoutList />
+          <DayWorkoutList showButtons={showButtons} />
           <Grid
             item
             xs={6}
