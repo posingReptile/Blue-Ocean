@@ -10,6 +10,7 @@ import {
   Avatar, Badge, Box, Button, FormControl, Stack, TextField, Typography
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+// import '../../css/profile.css';
 
 function GridEntry(props) {
   const { label, gridValue } = props;
@@ -95,7 +96,12 @@ function Profile() {
     setEditFields();
   }
   return (
-    <Box>
+    <Box sx={{
+      maxWidth: '700px',
+      margin: '0 auto',
+      padding: '2rem',
+      textAlign: 'center',
+    }}>
 
       {!(editFields) && (
         <Box>
