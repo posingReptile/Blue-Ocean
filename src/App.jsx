@@ -4,8 +4,12 @@ import LogSign from "./components/signlog/LogSign.jsx";
 import UserSetup from "./components/signlog/UserSetup.jsx";
 import CalendarPage from "./components/calendar/Calendar.jsx";
 import Dashboard from "./components/dashboard/Dashboard.jsx";
-import NavBar from "./components/navbar/NavBar.jsx";
 
+// Testing NavBar production
+import NavBar from "./components/navbar/NavBar.jsx";
+import ResponsiveNavBar from "./components/navbar/ResponsiveNavBar.jsx";
+
+import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -19,6 +23,7 @@ function App() {
   const [currentDay, setCurrentDay] = useState(new Date());
 
   const currComponent = (component) => {
+    console.log("currComponent");
     switch (component) {
       case "profile":
         console.log(component);
@@ -43,27 +48,22 @@ function App() {
   const test = 0;
 
   return (
-    <div className="App">
-      {/*<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={test} onChange={() => console.log('hello')} aria-label="basic tabs example">
-          <Tab label="Item One" />
-          <Tab label="Item Two" />
-          <Tab label="Item Three" />
-        </Tabs>
-      </Box>
-      <TabPanel value={test} index={0}>
-        Item One
-      </TabPanel>
-      <TabPanel value={test} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={test} index={2}>
-        Item Three
-      </TabPanel>*/}
-      {component !== "logsign" && component !== "usersetup" && (
-        <NavBar setComponent={setComponent} />
-      )}
-    </div>
+    <>
+      <Container maxWidth="lg">
+        <Box
+          sx={{
+            bgcolor: "#cfe8fc",
+            height: "100vh",
+          }}
+        >
+          {component !== "logsign" && component !== "usersetup" && (
+            // <NavBar setComponent={setComponent} />
+            // <NewNavBar setComponent={setComponent} />
+            <ResponsiveNavBar />
+          )}
+        </Box>
+      </Container>
+    </>
   );
 }
 
