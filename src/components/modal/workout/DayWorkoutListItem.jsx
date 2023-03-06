@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
@@ -23,6 +24,8 @@ import EditExerciseModal from "./EditExerciseModal";
 
 function DayWorkoutListItem({
   // Current expected props
+  handleEditInfo,
+  handleDelete,
   showButtons,
   exerciseName = "Test Exercise Name",
   instructions = "Test Instructions",
@@ -53,18 +56,19 @@ function DayWorkoutListItem({
 
   const handleDeleteClick = (e) => {
     e.stopPropagation();
+    handleDelete();
   };
 
   return (
     <>
-      <ListItemButton
-        onMouseDown={() => setShowMore(!showMore)}
-        // onMouseEnter={() => setShowEdit(true)}
-        // onMouseLeave={() => setShowEdit(false)}
-      >
+      <ListItemButton onMouseDown={() => setShowMore(!showMore)}>
         <ListItemAvatar>
-          <Avatar sx={{ backgroundColor: "orange" }}>
-            <DirectionsRunIcon color="error" />
+          <Avatar sx={{ backgroundColor: "lightBlue" }}>
+            {type === "cardio" ? (
+              <DirectionsRunIcon color="secondary" />
+            ) : (
+              <FitnessCenterIcon color="secondary" />
+            )}
           </Avatar>
         </ListItemAvatar>
         <ListItemText
@@ -111,10 +115,19 @@ function DayWorkoutListItem({
               }}
               style={{ marginRight: 4 }}
             >
-              {/* <Paper sx={{ width: 300, height: 300 }}>Hello</Paper> */}
-              <EditExerciseModal type={"strength"} handleClose={handleClose} />
+              <EditExerciseModal
+                type={"strength"}
+                handleClose={handleClose}
+                handleEditInfo={handleEditInfo}
+              />
             </Popover>
-            <Fab color="error" aria-label="edit" size="medium" sx={{ ml: 1 }}>
+            <Fab
+              color="error"
+              aria-label="edit"
+              size="medium"
+              sx={{ ml: 1 }}
+              onClick={handleDeleteClick}
+            >
               <ClearIcon />
             </Fab>
           </ListItemSecondaryAction>

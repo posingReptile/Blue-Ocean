@@ -67,9 +67,14 @@ function ChooseMuscleModal({ handleClose }) {
       </Typography>
       <Grid
         container
-        spacing={2}
-        sx={{ overflow: "auto" }}
-        // sx={{ justifyContent: "center", alignItems: "center" }}
+        spacing={1}
+        sx={{
+          overflow: "auto",
+          justifyContent: "center",
+          alignItems: "center",
+          minWidth: 400,
+          // border: "1px solid red",
+        }}
       >
         {muscleItems}
       </Grid>

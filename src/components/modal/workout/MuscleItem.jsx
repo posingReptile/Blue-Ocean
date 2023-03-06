@@ -29,7 +29,18 @@ function MuscleItem({ muscleName = "Test Muscle", handleExerciseOpen }) {
   }
 
   return (
-    <Grid item xs={4} align="center" sx={{ mt: 4 }}>
+    <Grid
+      item
+      xs={4}
+      md={3}
+      sx={{
+        mt: 2,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        // border: "1px solid blue",
+      }}
+    >
       <Card
         sx={{
           width: 100,

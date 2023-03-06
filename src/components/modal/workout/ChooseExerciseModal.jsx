@@ -47,7 +47,7 @@ function ChooseExerciseModal({
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 800, height: 800 }}>
+        <Box sx={{ ...style, minWidth: 300, width: "60%", height: 600 }}>
           <h1 align="center">{`Choose ${muscleName} Exercise`}</h1>
           <Grid container>
             <Grid item xs={12}>
