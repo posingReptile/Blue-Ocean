@@ -2,32 +2,31 @@ import { useState } from 'react';
 import Profile from './components/profile/profile.jsx';
 import LogSignMain from './components/signlog/LogSignMain.jsx';
 import UserSetup from './components/signlog/UserSetup.jsx';
-import Calendar from './components/calendar/Calendar.jsx';
+import CalendarPage from './components/calendar/Calendar.jsx';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 import NavBar from './components/navbar/NavBar.jsx';
-import './css/App.css';
 
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import TabPanel from '@mui/material/Button';
-// import Button from '@mui/material/Button';
 
-
+import "./css/App.css";
 
 function App() {
   const [count, setCount] = useState(0);
-  const [component, setComponent] = useState('profile');
+  const [component, setComponent] = useState("profile");
+  const [currentDay, setCurrentDay] = useState(new Date());
 
   const currComponent = (component) => {
     switch (component) {
-      case 'profile' :
+      case "profile":
         console.log(component);
-        return (<Profile />);
-      case 'dashboard' :
+        return <Profile />;
+      case "dashboard":
         console.log(component);
-        return (<Dashboard />);
-      case 'logsign' :
+        return <Dashboard />;
+      case "logsign":
         console.log(component);
         return (<LogSignMain setComponent={setComponent}/>);
       case 'usersetup' :
@@ -35,9 +34,9 @@ function App() {
         return (<LogSignMain setComponent={setComponent}/>);
       case 'calendar' :
         console.log(component);
-        return (<Calendar />);
+        return (<CalendarPage currentDay={currentDay} setCurrentDay={setCurrentDay}/>);
     }
-  }
+  };
 
   const test = 0;
 
@@ -59,11 +58,11 @@ function App() {
       <TabPanel value={test} index={2}>
         Item Three
       </TabPanel>*/}
-      {(component !== 'logsign' && component !== 'usersetup') &&
-      <NavBar setComponent={setComponent}/>}
-      {currComponent(component)}
+      {component !== "logsign" && component !== "usersetup" && (
+        <NavBar setComponent={setComponent} />
+      )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
