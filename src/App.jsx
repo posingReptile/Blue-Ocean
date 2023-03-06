@@ -6,17 +6,6 @@ import Calendar from "./components/calendar/Calendar.jsx";
 import Dashboard from "./components/dashboard/Dashboard.jsx";
 import NavBar from "./components/navbar/NavBar.jsx";
 
-//Testing for workout
-import WorkoutDash from "./components/modal/workout/WorkoutDash.jsx"; // Main Workout Dash
-import DayWorkoutList from "./components/modal/workout/DayWorkoutList"; // Dash's list of exercise
-import DayWorkoutListItem from "./components/modal/workout/DayWorkoutListItem"; // Individual item for Dash List
-import ChooseMuscleModal from "./components/modal/workout/ChooseMuscleModal"; // Modal Popup to choose exercise
-
-// import EditWorkout from "./components/modal/workout/temp/EditWorkout";
-// import ChooseMuscle from "./components/modal/workout/temp/ChooseMuscle";
-// import ChooseExercise from "./components/modal/workout/temp/ChooseExercise";
-// import WorkoutDetails from "./components/modal/workout/temp/WorkoutDetails";
-
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
