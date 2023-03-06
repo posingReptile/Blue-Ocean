@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import '../../css/LogSign.css'
 import Button from '@mui/material/Button';
 import Select from '@mui/material/Select';
@@ -10,7 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import imgUrl from './biceplogo.png'
 import axios from 'axios';
 
-function UserSetup({ setComponent }) {
+function UserSetup({ setComponent, username, password }) {
   const [feet, setFeet] = useState(1);
   const [inches, setInches] = useState(0);
   const [age, setAge] = useState(0);
@@ -19,6 +19,13 @@ function UserSetup({ setComponent }) {
   const [weightError , setWeightError] = useState(false);
   const [goalWeightError, setGoalWeightError] = useState(false);
   const [ageError, setAgeError] = useState(false);
+
+  useEffect(() => {
+    setWeightError((weight <= 0 || typeof weight !== 'number' || isNaN(weight)));
+    setGoalWeightError(goalWeight <= 0 || typeof goalWeight !== 'number' || isNaN(goalWeight));
+    setAgeError(age <= 0 || typeof age !== 'number' || isNaN(age) || age > 100);
+  }, [weight, goalWeight, age]);
+
 
   const handleFeetChange = (event) => {
     setFeet(Number(event.target.value));
@@ -40,34 +47,28 @@ function UserSetup({ setComponent }) {
     setGoalWeight(Number(event.target.value));
   };
 
-  const validateForm = async () => {
+  const validateForm = () => {
 
-    if (weight <= 0 || typeof weight !== 'number' || isNaN(weight)) {
-      await setWeightError(true);
-    } else {
-      await setWeightError(false);
-    }
+    console.log('username: ', username);
+    console.log('feet: ', feet);
+    console.log('inches: ', inches);
+    console.log('age: ', age);
+    console.log('weight: ', weight);
+    console.log('goalWeight: ', goalWeight);
+    console.log('weightError: ', weightError);
+    console.log('goalWeightError: ', goalWeightError);
+    console.log('ageError: ', ageError);
 
-    if (goalWeight <= 0 || typeof goalWeight !== 'number' || isNaN(goalWeight)) {
-      await setGoalWeightError(true);
-    } else {
-      await setGoalWeightError(false);
-    }
-
-    if (age <= 0 || typeof age !== 'number' || isNaN(age) || age > 100) {
-      await setAgeError(true);
-    } else {
-      await setAgeError(false);
-    }
-
-    if(weightError || goalWeightError || ageError) {
-      axios.put('/login', {
-        username: 'test',
+    if(!weightError && !goalWeightError && !ageError) {
+      axios.post('/new-user', {
+        username: username,
         feet: feet,
         inches: inches,
         age: age,
         weight: weight,
         goalWeight: goalWeight,
+        goal_date: null,
+        calorie_goal: null,
       }).then((response) => {
         console.log(response);
       }).catch((error) => {
@@ -78,14 +79,6 @@ function UserSetup({ setComponent }) {
 
 
   const handleSubmit = () => {
-    console.log('feet: ', feet);
-    console.log('inches: ', inches);
-    console.log('age: ', age);
-    console.log('weight: ', weight);
-    console.log('goalWeight: ', goalWeight);
-    console.log('weightError: ', weightError);
-    console.log('goalWeightError: ', goalWeightError);
-    console.log('ageError: ', ageError);
     validateForm();
   }
 
@@ -95,6 +88,7 @@ function UserSetup({ setComponent }) {
         <img src={imgUrl} style={{width:500, height:120}}/>
         <br/>
         <div className="loginFieldWrapper">
+          <span className="heightText">{username}, please provide the following details</span><br/><br/>
           <div className="heightBox">
             <span className="heightText">Height</span>
             <FormControl sx={{width: '12%', mr: 1, ml: 1, mb: 1}} size="small">

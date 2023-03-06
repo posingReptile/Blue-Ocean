@@ -5,9 +5,7 @@ import TextField from '@mui/material/TextField';
 import imgUrl from './biceplogo.png'
 import axios from 'axios';
 
-function Login({ setComponent }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+function Login({ setLoginComponent, setComponent, setPassword, setUsername, username, password }) {
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -35,15 +33,8 @@ function Login({ setComponent }) {
   const handleSignup = () => {
     console.log('username: ', username);
     console.log('password: ', password);
-    setComponent('usersetup');
-    axios.post('/login', {
-      username: username,
-      password: password,
-      }).then((response) => {
-        console.log(response);
-      }).catch((error) => {
-        console.log(error);
-      });
+    setComponent('usersetup'); //move inside axios once it's done
+    setLoginComponent('usersetup');
   }
 
   return (

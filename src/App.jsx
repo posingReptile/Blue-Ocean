@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Profile from './components/profile/profile.jsx';
-import LogSign from './components/signlog/LogSign.jsx';
+import LogSignMain from './components/signlog/LogSignMain.jsx';
 import UserSetup from './components/signlog/UserSetup.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
 import Dashboard from './components/dashboard/Dashboard.jsx';
@@ -29,10 +29,10 @@ function App() {
         return (<Dashboard />);
       case 'logsign' :
         console.log(component);
-        return (<LogSign setComponent={setComponent}/>);
+        return (<LogSignMain setComponent={setComponent}/>);
       case 'usersetup' :
         console.log(component);
-        return (<UserSetup setComponent={setComponent}/>);
+        return (<LogSignMain setComponent={setComponent}/>);
       case 'calendar' :
         console.log(component);
         return (<Calendar />);
