@@ -41,7 +41,7 @@ function App() {
         return <LogSign setComponent={setComponent} />;
       case "usersetup":
         console.log(component);
-        return <UserSetup />;
+        return <UserSetup setComponent={setComponent} />;
       case "calendar":
         console.log(component);
         return <Calendar />;
@@ -52,8 +52,7 @@ function App() {
 
   return (
     <div className="App">
-      <WorkoutDash />
-      {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      {/*<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={test} onChange={() => console.log('hello')} aria-label="basic tabs example">
           <Tab label="Item One" />
           <Tab label="Item Two" />
@@ -68,10 +67,11 @@ function App() {
       </TabPanel>
       <TabPanel value={test} index={2}>
         Item Three
-      </TabPanel>
-      {(component !== ('logsign' || 'usersetup')) &&
-      <NavBar setComponent={setComponent}/>}
-      {currComponent(component)} */}
+      </TabPanel>*/}
+      {component !== "logsign" && component !== "usersetup" && (
+        <NavBar setComponent={setComponent} />
+      )}
+      {currComponent(component)}
     </div>
   );
 }

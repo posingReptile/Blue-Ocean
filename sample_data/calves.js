@@ -1,4 +1,4 @@
-[
+export const calves = [
   {
     name: "Smith Machine Calf Raise",
     type: "strength",
