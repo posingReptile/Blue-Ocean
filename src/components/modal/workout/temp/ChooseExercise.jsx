@@ -14,7 +14,7 @@ import Button from "@mui/material/Button";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 
-import WorkoutDetails from "./WorkoutDetails";
+import WorkoutDetails from "../WorkoutDetails";
 
 function ChooseExercise() {
   const [showAdd, setShowAdd] = useState(false);

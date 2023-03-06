@@ -119,23 +119,4 @@ function EditWorkout() {
   );
 }
 
-// <ListItem>
-// <ListItemAvatar>
-//   <Avatar sx={{ backgroundColor: "orange" }}>
-//     <FitnessCenterIcon color="secondary" />
-//   </Avatar>
-// </ListItemAvatar>
-// <ListItemText
-//   primary="Strength Exercise 3"
-// secondary={
-//   <div className="workout-details">
-//     <span>{`Weight: ${10}lbs`}</span>
-//     <span>{`Sets: ${20}`}</span>
-//     <span>{`Reps: ${30}`}</span>
-//   </div>
-// }
-// />
-// </ListItem>
-// <Divider />
-
 export default EditWorkout;

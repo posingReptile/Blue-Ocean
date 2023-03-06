@@ -6,8 +6,6 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 
-import "../../../css/workoutdetails.css";
-
 const modalStyle = {
   position: "absolute",
   top: "50%",
@@ -33,7 +31,7 @@ function WorkoutDetails({ showAddModal, setShowAddModal }) {
     <div>
       <Modal open={showAddModal} onClose={handleCloseModal}>
         <Box sx={modalStyle}>
-          <Typography variant="h4">Exercise name</Typography>
+          <Typography variant="h4">TESTING WORKTOUT</Typography>
           <div className="workout-details-form">
             <TextField label="Weight (lbs)" variant="outlined" />
             <TextField label="Sets" variant="outlined" />

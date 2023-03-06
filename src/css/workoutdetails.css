@@ -1,9 +1,0 @@
-.workout-details-form {
-  display: flex;
-  gap: 15px;
-}
-
-.workout-details-form div {
-  display: flex;
-  justify-content: space-between;
-}
