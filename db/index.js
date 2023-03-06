@@ -1,14 +1,14 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
-import pkg from 'pg';
+import pkg from "pg";
 const { Pool, Client } = pkg;
-import pgtools from 'pgtools';
-import fs from 'fs';
-import util from 'util';
-import { fileURLToPath } from 'url';
-import path from 'path';
+import pgtools from "pgtools";
+import fs from "fs";
+import util from "util";
+import { fileURLToPath } from "url";
+import path from "path";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const filePath = path.join(__dirname, 'models', 'schema.sql');
+const filePath = path.join(__dirname, "models", "schema.sql");
 const readFileAsync = util.promisify(fs.readFile);
 
 // database creation options
@@ -36,7 +36,7 @@ async function checkDatabaseExists() {
     `);
     return result.rowCount > 0;
   } catch (error) {
-    console.log('database does not exist, creating database...');
+    console.log("database does not exist, creating database...");
   } finally {
     await tempClient.end();
   }
@@ -53,15 +53,16 @@ async function createDatabase() {
     const client = new Client(dbConfig);
 
     client.connect().then(() => {
-      console.log('connected...');
+      console.log("connected...");
     });
 
-    readFileAsync(filePath, 'utf8')
+    readFileAsync(filePath, "utf8")
       .then((sql) => {
+        console.log("i am here");
         return client.query(sql);
       })
       .then(() => {
-        console.log('database created!');
+        console.log("database created!");
       })
       .catch((err) => {
         console.error(err);
