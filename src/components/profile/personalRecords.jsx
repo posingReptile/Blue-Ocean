@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Autocomplete, Table, TableHead, TableFooter, TableBody, TableRow, TableCell, TableContainer, TextField
 } from '@mui/material';
+import { createFilterOptions } from '@mui/material/Autocomplete';
 
 const muscles = [
   'abdominals', 'biceps', 'calves', 'chest', 'glutes',
@@ -10,6 +11,10 @@ const muscles = [
 
 const prs = [{
   name: 'squat',
+  muscle: 'quads',
+  prval: 'idk'
+}, {
+  name: 'squat two',
   muscle: 'quads',
   prval: 'idk'
 }, {
@@ -22,15 +27,24 @@ const prs = [{
   prval: 'idk'
 }];
 
+const tableFilter = createFilterOptions();
 function PersonalRecords() {
-  const [tableCategoryFilter, setTableCategoryFilter] = useState([]);
-  const [tableExerciseFilter, setTableExerciseFilter] = useState([]);
-  function updateCategoryFilters(event, list) { setTableCategoryFilter(list); }
-  function updateExerciseFilters(event, list) { setTableExerciseFilter(list); }
+  const [tableMuscleFilter, settableMuscleFilter] = useState('');
+  const [tableExerciseFilter, setTableExerciseFilter] = useState('');
+  function updateCategoryFilters(event, list) {
+    if (!list) settableMuscleFilter('');
+    else settableMuscleFilter(list);
+  }
+  function updateExerciseFilters(event, list) {
+    if (!list) setTableExerciseFilter('');
+    else setTableExerciseFilter(list);
+  }
 
   const ex = prs.map((pr) => pr.name);
+  const filteredByExercise = tableFilter(ex, { inputValue: tableExerciseFilter, getOptionLabel: (option) => option });
 
-  const filteredRows = (tableCategoryFilter.length + tableExerciseFilter.length) > 0 ? prs.filter((pr) => tableCategoryFilter.includes(pr.muscle) || tableExerciseFilter.includes(pr.name)) : prs;
+  const rowsFilteredByMuscles = (tableMuscleFilter.length) > 0 ? prs.filter((pr) => pr.muscle === tableMuscleFilter) : prs;
+  const filteredRows = (tableExerciseFilter.length > 0) ? rowsFilteredByMuscles.filter((pr) => filteredByExercise.includes(pr.name)) : rowsFilteredByMuscles;
 
   return (
     <TableContainer>
@@ -54,22 +68,23 @@ function PersonalRecords() {
           <TableRow key="foot">
             <TableCell>
               <Autocomplete
-                multiple
+                // limitTags={1}
+                // multiple
                 id="pr-muscles"
                 options={muscles}
                 getOptionLabel={(option) => option}
-                filterSelectedOptions
+                // filterSelectedOptions
                 onChange={updateCategoryFilters}
                 renderInput={(params) => <TextField {...params} label="muscles" />}
               />
             </TableCell>
             <TableCell>
               <Autocomplete
-                multiple
+                // multiple
                 id="pr-exercises"
                 options={ex}
                 getOptionLabel={(option) => option}
-                filterSelectedOptions
+                // filterSelectedOptions
                 onChange={updateExerciseFilters}
                 renderInput={(params) => <TextField {...params} label="exercise" />}
               />
