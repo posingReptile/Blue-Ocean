@@ -9,12 +9,13 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-function ExerciseItem({ type = "Strength" }) {
+function ExerciseItem({ type = "Strength", handleAddExercise }) {
   const [showMore, setShowMore] = useState(false); // Shows the full details of the exercise clicked
 
   const handleAdd = (e) => {
     e.stopPropagation();
     setShowMore(false);
+    handleAddExercise();
   };
 
   return (

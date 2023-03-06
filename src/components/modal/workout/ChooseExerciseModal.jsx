@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -23,12 +24,23 @@ const style = {
   pb: 3,
 };
 
-function ChooseExerciseModal({ muscleName, open, handleClose, handleOpen }) {
-  const [showMore, setShowMore] = useState(false); // Shows the full details of the exercise clicked
+function ChooseExerciseModal({
+  muscleName,
+  open,
+  handleClose,
+  handleOpen,
+  exerciseList,
+}) {
+  const exerciseItems = [];
+
+  // Pass down function to post a new exercise to the table
+  const handleAddExercise = () => {
+    // Make an axios post request here
+    console.log("Exercise added to database");
+  };
 
   return (
     <>
-      <Button onClick={handleOpen}>Open Child Modal</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -40,9 +52,18 @@ function ChooseExerciseModal({ muscleName, open, handleClose, handleOpen }) {
           <Grid container>
             <Grid item xs={12}>
               <List>
-                <ExerciseItem type="Strength" />
-                <ExerciseItem type="Cardio" />
-                <ExerciseItem type="Strength" />
+                <ExerciseItem
+                  type="Strength"
+                  handleAddExercise={handleAddExercise}
+                />
+                <ExerciseItem
+                  type="Cardio"
+                  handleAddExercise={handleAddExercise}
+                />
+                <ExerciseItem
+                  type="Strength"
+                  handleAddExercise={handleAddExercise}
+                />
               </List>
             </Grid>
           </Grid>

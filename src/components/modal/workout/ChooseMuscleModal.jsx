@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -13,10 +14,18 @@ import ChooseExerciseModal from "./ChooseExerciseModal";
 function ChooseMuscleModal({ handleClose }) {
   const [currMuscle, setCurrMuscle] = useState("Test Muscle");
   const [exerciseOpen, setExerciseOpen] = useState(false); // Open ChooseExerciseModal
+  const [exerciseList, setExerciseList] = useState([]);
 
+  // This handler gets invoked when muscle is clicked (axios call made)
   const handleExerciseOpen = (muscleName) => {
     setCurrMuscle(muscleName);
     setExerciseOpen(true);
+    console.log(
+      "Axios call generated,",
+      "Exercises generated from database for specific muscle clicked"
+    );
+    // Axios request should be generated here
+    // Place setExerciseOpen and setCurrMuscle to happen only after success
   };
 
   const handleExerciseClose = () => {
@@ -49,10 +58,12 @@ function ChooseMuscleModal({ handleClose }) {
     );
   });
 
+  // Make an axios request here to get exercises according to muscle group
+
   return (
     <>
       <Typography align="center" variant="h4">
-        Choose Muscle
+        Choose Muscle Modal
       </Typography>
       <Grid
         container
@@ -70,6 +81,7 @@ function ChooseMuscleModal({ handleClose }) {
         open={exerciseOpen}
         handleClose={handleExerciseClose}
         handleOpen={handleExerciseOpen}
+        exerciseList={exerciseList}
       />
     </>
   );
