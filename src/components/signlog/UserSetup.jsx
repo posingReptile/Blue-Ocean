@@ -7,6 +7,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import imgUrl from './biceplogo.png'
 import axios from 'axios';
 
@@ -18,13 +21,36 @@ function UserSetup({ setComponent, username, password }) {
   const [goalWeight, setGoalWeight] = useState(0);
   const [weightError , setWeightError] = useState(false);
   const [goalWeightError, setGoalWeightError] = useState(false);
+  const [goalWeightDate, setGoalWeightDate] = useState(0);
   const [ageError, setAgeError] = useState(false);
+  const [calorieGoal, setCalorieGoal] = useState(0);
+
+  const calculateCalorieGoal = () => {
+    console.log(Date.now())
+    let tempCalorieGoal = 0;
+    const height = (feet * 12 + inches) * 2.54;
+    const ageInYears = Math.floor(age / 31536000000);
+    const metricWeight = weight * 0.453592;
+    const metricGoalWeight = goalWeight * 0.453592;
+    const weightDifference = metricWeight - metricGoalWeight;
+    const weightDifferenceInDays = (goalWeightDate - Date.now()) / 86400000;
+    const weightDifferencePerDay = weightDifference / weightDifferenceInDays;
+    const caloriesPerDay = weightDifferencePerDay * 7700;
+    console.log(caloriesPerDay)
+    if (weightDifferencePerDay > 0) {
+      tempCalorieGoal = 10 * metricWeight + 6.25 * height - 5 * ageInYears + 5 - caloriesPerDay;
+    }
+    setCalorieGoal(tempCalorieGoal)
+  };
 
   useEffect(() => {
-    setWeightError((weight <= 0 || typeof weight !== 'number' || isNaN(weight)));
-    setGoalWeightError(goalWeight <= 0 || typeof goalWeight !== 'number' || isNaN(goalWeight));
-    setAgeError(age <= 0 || typeof age !== 'number' || isNaN(age) || age > 100);
-  }, [weight, goalWeight, age]);
+    let calorieGoal = 0;
+    if (goalWeightDate > 0 && age > 0 && weight > 0 && goalWeight > 0 && feet > 1) {
+      calorieGoal = calculateCalorieGoal();
+    }
+    console.log('calorieGoal: ', calorieGoal);
+  }, [goalWeightDate, age, weight, goalWeight, feet]);
+
 
 
   const handleFeetChange = (event) => {
@@ -36,7 +62,13 @@ function UserSetup({ setComponent, username, password }) {
   };
 
   const handleAgeChange = (event) => {
-    setAge(Number(event.target.value));
+    console.log(event.$d.valueOf())
+    setAge(event.$d.valueOf());
+  };
+
+  const handleGoalDateChange = (event) => {
+    console.log(event.$d.valueOf())
+    setGoalWeightDate(event.$d.valueOf());
   };
 
   const handleWeightChange = (event) => {
@@ -49,6 +81,39 @@ function UserSetup({ setComponent, username, password }) {
 
   const validateForm = () => {
 
+    let weightCheck = (weight <= 0 || typeof weight !== 'number' || isNaN(weight));
+    let goalWeightCheck = (goalWeight <= 0 || typeof goalWeight !== 'number' || isNaN(goalWeight));
+    let ageCheck = (age <= 0 || typeof age !== 'number' || isNaN(age));
+
+    if(weight <= 0 || typeof weight !== 'number' || isNaN(weight)) {
+      setWeightError(true);
+    }
+    if(goalWeight <= 0 || typeof goalWeight !== 'number' || isNaN(goalWeight)) {
+      setGoalWeightError(true);
+    }
+    if(age <= 0 || typeof age !== 'number' || isNaN(age)) {
+      setAgeError(true);
+    }
+    if(goalWeightDate <= 0 || typeof goalWeightDate !== 'number' || isNaN(age)) {
+      setAgeError(true);
+    }
+    if(!weightCheck && !goalWeightCheck && !ageCheck) {
+      axios.post('/new-user', {
+        username: username,
+        feet: feet,
+        inches: inches,
+        age: age,
+        weight: weight,
+        goalWeight: goalWeight,
+        goal_date: goalWeightDate,
+        calorie_goal: null,
+      }).then((response) => {
+        console.log(response);
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+
     console.log('username: ', username);
     console.log('feet: ', feet);
     console.log('inches: ', inches);
@@ -58,23 +123,6 @@ function UserSetup({ setComponent, username, password }) {
     console.log('weightError: ', weightError);
     console.log('goalWeightError: ', goalWeightError);
     console.log('ageError: ', ageError);
-
-    if(!weightError && !goalWeightError && !ageError) {
-      axios.post('/new-user', {
-        username: username,
-        feet: feet,
-        inches: inches,
-        age: age,
-        weight: weight,
-        goalWeight: goalWeight,
-        goal_date: null,
-        calorie_goal: null,
-      }).then((response) => {
-        console.log(response);
-      }).catch((error) => {
-        console.log(error);
-      });
-    }
   }
 
 
@@ -84,6 +132,7 @@ function UserSetup({ setComponent, username, password }) {
 
 
   return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="loginOuterWrapper">
         <img src={imgUrl} style={{width:500, height:120}}/>
         <br/>
@@ -142,15 +191,6 @@ function UserSetup({ setComponent, username, password }) {
           />
           <br/>
           <TextField
-            sx={{width: '35%', mb: 1}}
-            id="outlined-basic"
-            size="small"
-            label="Age"
-            onChange={handleAgeChange}
-            {...ageError ? {error: true, helperText: 'Enter a valid age'} : null}
-          />
-          <br/>
-          <TextField
             InputProps={{
               endAdornment: <InputAdornment position="start">lb</InputAdornment>
             }}
@@ -162,11 +202,33 @@ function UserSetup({ setComponent, username, password }) {
             {...goalWeightError ? {error: true, helperText: 'Enter a valid goal weight'} : null}
           />
           <br/>
+        <div className="dateBox">
+          <span className="heightText">Date of Birth </span>
+          <DatePicker
+        size="small"
+        onChange={handleAgeChange}
+        sx={{ml: 2}}
+        renderInput={(params) => <TextField size="small" {...params}/>}
+        {...ageError ? {error: true, helperText: 'Enter a valid date of birth'} : null}
+        /><br/><br/>
         </div>
+        <div className="goalBox">
+          <span className="heightText">Goal Date</span>
+        <DatePicker
+        size="small"
+        onChange={handleGoalDateChange}
+        sx={{ml: 2}}
+        renderInput={(params) => <TextField size="small" {...params}/>}
+        /><br/><br/>
+        </div>
+        </div>
+        {calorieGoal > 0 && goalWeight < weight && <span className="heightText">Your goal will be {Math.floor(calorieGoal)} calories daily.</span>}
+        <br/><br/>
         <Button sx={{mr: 2}} onClick={() => handleSubmit()}>
           Submit
-        </Button>
+        </Button><br/>
       </div>
+    </LocalizationProvider>
     )
 }
 
