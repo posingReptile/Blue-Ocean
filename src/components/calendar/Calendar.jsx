@@ -7,7 +7,6 @@ import { AiFillDelete } from "react-icons/ai";
 // import '../../css/calandar.css'
 import '../../css/calendar.css'
 
-
 function CalendarPage({currentDay, setCurrentDay}) {
   let caloriesCollection = {March2023: [['March 11, 2023', 100, ], ['March 12, 2023', 103], ['March 13, 2023', 104]]}
 
