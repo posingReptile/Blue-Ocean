@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS workouts (
   workout_id SERIAL PRIMARY KEY,
   user_id INT NOT NULL REFERENCES users(user_id),
+  notes VARCHAR (5000),
   date DATE NOT NULL
 );
 
@@ -37,9 +38,7 @@ CREATE TABLE IF NOT EXISTS exercises (
   reps INT,
   duration INT,
   intensity INT,
-  notes VARCHAR (5000),
   calories_burned INT,
-  date DATE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS food (
