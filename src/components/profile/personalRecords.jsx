@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Autocomplete, Table, TableHead, TableFooter, TableBody, TableRow, TableCell, TableContainer, TextField
+  Autocomplete, Paper, Table, TableHead, TableFooter, TableBody, TableRow, TableCell, TableContainer, TextField, Typography
 } from '@mui/material';
 import { createFilterOptions } from '@mui/material/Autocomplete';
 
@@ -47,8 +47,10 @@ function PersonalRecords() {
   const filteredRows = (tableExerciseFilter.length > 0) ? rowsFilteredByMuscles.filter((pr) => filteredByExercise.includes(pr.name)) : rowsFilteredByMuscles;
 
   return (
-    <TableContainer>
-      user's prs
+    <TableContainer sx={{ mt: 4}} component={Paper}>
+      <Typography variant="overline" sx={{ display: 'block', fontWeight: 'bold', fontSize: '16px' }}>
+        Personal Records
+      </Typography>
       <Table>
         <TableHead>
           <TableRow>
@@ -68,23 +70,18 @@ function PersonalRecords() {
           <TableRow key="foot">
             <TableCell>
               <Autocomplete
-                // limitTags={1}
-                // multiple
                 id="pr-muscles"
                 options={muscles}
                 getOptionLabel={(option) => option}
-                // filterSelectedOptions
                 onChange={updateCategoryFilters}
                 renderInput={(params) => <TextField {...params} label="muscles" />}
               />
             </TableCell>
             <TableCell>
               <Autocomplete
-                // multiple
                 id="pr-exercises"
                 options={ex}
                 getOptionLabel={(option) => option}
-                // filterSelectedOptions
                 onChange={updateExerciseFilters}
                 renderInput={(params) => <TextField {...params} label="exercise" />}
               />
