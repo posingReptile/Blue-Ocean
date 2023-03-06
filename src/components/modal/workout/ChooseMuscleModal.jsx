@@ -1,23 +1,53 @@
 import React, { useState } from "react";
 
 import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
 
 // Modal Stuff
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
+import Button from "@mui/material/Button";
 
 import MuscleItem from "./MuscleItem";
 import ChooseExerciseModal from "./ChooseExerciseModal";
 
-function ChooseMuscleModal({ setShowAddModal }) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+function ChooseMuscleModal({ handleClose }) {
+  const [currMuscle, setCurrMuscle] = useState("Test Muscle");
+  const [exerciseOpen, setExerciseOpen] = useState(false); // Open ChooseExerciseModal
+
+  const handleExerciseOpen = (muscleName) => {
+    setCurrMuscle(muscleName);
+    setExerciseOpen(true);
+  };
+
+  const handleExerciseClose = () => {
+    setExerciseOpen(false);
+  };
+
+  // Dynamically load from database types maybe?
+  const muscles = [
+    "Biceps",
+    "Triceps",
+    "Chest",
+    "Abdominals",
+    "Lats",
+    "Trapezius",
+    "Lower Back",
+    "Glutes",
+    "Quadriceps",
+    "Hamstring",
+    "Calves",
+  ];
+
+  // MuscleItem elements created from muscles array.
+  const muscleItems = muscles.map((muscle) => {
+    return (
+      <MuscleItem
+        key={muscle}
+        muscleName={muscle}
+        handleExerciseOpen={handleExerciseOpen}
+      />
+    );
+  });
 
   return (
     <>
@@ -30,17 +60,17 @@ function ChooseMuscleModal({ setShowAddModal }) {
         sx={{ overflow: "auto" }}
         // sx={{ justifyContent: "center", alignItems: "center" }}
       >
-        <MuscleItem />
-        <MuscleItem muscleName={"Chest"} />
-        <MuscleItem muscleName={"Biceps"} />
-        <MuscleItem muscleName={"Quadriceps"} />
-        <MuscleItem muscleName={"Quadriceps"} />
-        <MuscleItem muscleName={"Biceps"} />
-        <MuscleItem muscleName={"Biceps"} />
-        <MuscleItem muscleName={"Biceps"} />
-        <MuscleItem muscleName={"Biceps"} />
+        {muscleItems}
       </Grid>
-      <ChooseExerciseModal />
+      <Button onClick={handleClose} variant="contained">
+        Cancel
+      </Button>
+      <ChooseExerciseModal
+        muscleName={currMuscle}
+        open={exerciseOpen}
+        handleClose={handleExerciseClose}
+        handleOpen={handleExerciseOpen}
+      />
     </>
   );
 }

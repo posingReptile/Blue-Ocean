@@ -122,7 +122,7 @@ function Workout() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
-          <ChooseMuscleModal />
+          <ChooseMuscleModal handleClose={handleClose} />
         </Box>
       </Modal>
     </>

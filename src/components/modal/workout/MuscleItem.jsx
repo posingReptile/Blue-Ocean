@@ -5,7 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
-function MuscleItem({ muscleName = "Test Muscle" }) {
+function MuscleItem({ muscleName = "Test Muscle", handleExerciseOpen }) {
   return (
     <Grid item xs={4} align="center" sx={{ mt: 4 }}>
       <Card
@@ -15,7 +15,7 @@ function MuscleItem({ muscleName = "Test Muscle" }) {
           backgroundColor: "blue",
         }}
       >
-        <CardActionArea>
+        <CardActionArea onClick={() => handleExerciseOpen(muscleName)}>
           <Typography
             sx={{
               width: 100,

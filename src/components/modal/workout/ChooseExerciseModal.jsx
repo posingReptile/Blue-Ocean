@@ -23,15 +23,9 @@ const style = {
   pb: 3,
 };
 
-function ChooseExerciseModal() {
-  const [open, setOpen] = useState(false); // Open exerciselist modal
+function ChooseExerciseModal({ muscleName, open, handleClose, handleOpen }) {
   const [showMore, setShowMore] = useState(false); // Shows the full details of the exercise clicked
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
   return (
     <>
       <Button onClick={handleOpen}>Open Child Modal</Button>
@@ -42,7 +36,7 @@ function ChooseExerciseModal() {
         aria-describedby="child-modal-description"
       >
         <Box sx={{ ...style, width: 800, height: 800 }}>
-          <h1 align="center">Choose Exercise</h1>
+          <h1 align="center">{`Choose ${muscleName} Exercise`}</h1>
           <Grid container>
             <Grid item xs={12}>
               <List>
