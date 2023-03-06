@@ -6,6 +6,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
+
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
@@ -23,7 +25,11 @@ function ExerciseItem({ type = "Strength", handleAddExercise }) {
       <ListItemButton onMouseDown={() => setShowMore(!showMore)}>
         <ListItemAvatar>
           <Avatar>
-            <FitnessCenterIcon color="secondary" />
+            {type === "Strength" ? (
+              <FitnessCenterIcon color="secondary" />
+            ) : (
+              <DirectionsRunIcon color="secondary" />
+            )}
           </Avatar>
         </ListItemAvatar>
         <div>
@@ -51,6 +57,7 @@ function ExerciseItem({ type = "Strength", handleAddExercise }) {
                 <Button
                   variant="contained"
                   size="large"
+                  color="secondary"
                   onMouseDown={(e) => handleAdd(e)}
                   sx={{ mt: 2 }}
                 >

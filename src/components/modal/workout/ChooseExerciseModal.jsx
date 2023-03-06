@@ -51,7 +51,7 @@ function ChooseExerciseModal({
           <h1 align="center">{`Choose ${muscleName} Exercise`}</h1>
           <Grid container>
             <Grid item xs={12}>
-              <List>
+              <List sx={{ height: 450, overflow: "auto" }}>
                 <ExerciseItem
                   type="Strength"
                   handleAddExercise={handleAddExercise}
@@ -67,7 +67,13 @@ function ChooseExerciseModal({
               </List>
             </Grid>
           </Grid>
-          <Button onClick={handleClose}>Close Modal</Button>
+          <Button
+            onClick={handleClose}
+            variant="contained"
+            sx={{ ml: 2, mt: 2 }}
+          >
+            Exit
+          </Button>
         </Box>
       </Modal>
     </>

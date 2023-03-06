@@ -63,7 +63,7 @@ function DayWorkoutListItem({
     <>
       <ListItemButton onMouseDown={() => setShowMore(!showMore)}>
         <ListItemAvatar>
-          <Avatar sx={{ backgroundColor: "lightBlue" }}>
+          <Avatar sx={{ backgroundColor: "" }}>
             {type === "cardio" ? (
               <DirectionsRunIcon color="secondary" />
             ) : (

@@ -79,7 +79,7 @@ function ChooseMuscleModal({ handleClose }) {
         {muscleItems}
       </Grid>
       <Button onClick={handleClose} variant="contained">
-        Cancel
+        Exit
       </Button>
       <ChooseExerciseModal
         muscleName={currMuscle}
