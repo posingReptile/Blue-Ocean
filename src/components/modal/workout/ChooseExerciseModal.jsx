@@ -1,23 +1,12 @@
 import React, { useState } from "react";
+
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-//======
 import Grid from "@mui/material/Grid";
-import Fab from "@mui/material/Fab";
-import ReadMoreIcon from "@mui/icons-material/ReadMore";
 import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Avatar from "@mui/material/Avatar";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
-import TextField from "@mui/material/TextField";
 
-import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
-import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
-
+// React Components
 import ExerciseItem from "./ExerciseItem";
 
 const style = {

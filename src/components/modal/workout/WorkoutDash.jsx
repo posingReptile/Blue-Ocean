@@ -1,32 +1,20 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import NavigationIcon from "@mui/icons-material/Navigation";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemButton from "@mui/material/ListItemButton";
 import TextField from "@mui/material/TextField";
-import Divider from "@mui/material/Divider";
-import Avatar from "@mui/material/Avatar";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
-import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
-import Button from "@mui/material/Button";
-
-import EditWorkout from "./EditWorkout";
-
-import "../../../css/workout.css";
-
 import Modal from "@mui/material/Modal";
 
+// Icons
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+
+// React Components
 import DayWorkoutList from "./DayWorkoutList";
 import ChooseMuscleModal from "./ChooseMuscleModal";
+import "../../../css/workout.css";
 
 const modalStyle = {
   position: "absolute",

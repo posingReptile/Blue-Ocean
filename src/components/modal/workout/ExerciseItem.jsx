@@ -35,7 +35,7 @@ function ExerciseItem({ type = "Strength" }) {
                 onMouseDown={(e) => e.stopPropagation()}
                 style={{ marginTop: 10 }}
               >
-                {type === "strength" ? (
+                {type === "Strength" ? (
                   <div style={{ display: "flex", gap: 10 }}>
                     <TextField label="Weight (lbs)" variant="outlined" />
                     <TextField label="Sets" variant="outlined" />
