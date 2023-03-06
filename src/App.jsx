@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Profile from './components/profile/profile.jsx';
 import LogSign from './components/signlog/LogSign.jsx';
 import UserSetup from './components/signlog/UserSetup.jsx';
-import Calendar from './components/calendar/Calendar.jsx';
+import CalendarPage from './components/calendar/Calendar.jsx';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 import NavBar from './components/navbar/NavBar.jsx';
 import './css/App.css';
@@ -18,7 +18,7 @@ import TabPanel from '@mui/material/Button';
 function App() {
   const [count, setCount] = useState(0);
   const [component, setComponent] = useState('profile');
-
+  const [currentDay, setCurrentDay] = useState(new Date());
   const currComponent = (component) => {
     switch (component) {
       case 'profile' :
@@ -35,7 +35,7 @@ function App() {
         return (<UserSetup setComponent={setComponent}/>);
       case 'calendar' :
         console.log(component);
-        return (<Calendar />);
+        return (<CalendarPage currentDay={currentDay} setCurrentDay={setCurrentDay}/>);
     }
   }
 
