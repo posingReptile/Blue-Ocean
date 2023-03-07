@@ -57,9 +57,7 @@ function App() {
           }}
         >
           {component !== "logsign" && component !== "usersetup" && (
-            // <NavBar setComponent={setComponent} />
-            // <NewNavBar setComponent={setComponent} />
-            <ResponsiveNavBar />
+            <ResponsiveNavBar setComponent={setComponent} />
           )}
         </Box>
       </Container>

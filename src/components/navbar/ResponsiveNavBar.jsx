@@ -14,12 +14,9 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 
-import CardMedia from "@mui/material/CardMedia";
+import "../../css/responsivenavbar.css";
 
-const pages = ["Calender", "Dashboard", "Testing"];
-const settings = ["Profile", "Logout"];
-
-function ResponsiveAppBar() {
+function ResponsiveAppBar({ setComponent }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -27,111 +24,118 @@ function ResponsiveAppBar() {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (componentName) => {
     setAnchorElNav(null);
+    console.log(componentName);
+    // setComponent(componentName);
   };
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (componentName) => {
     setAnchorElUser(null);
+    console.log(componentName);
+    // setComponent(componentName);
   };
 
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <>
-            <FitnessCenterIcon
-              sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-            />
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
+        <Toolbar disableGutters sx={{ pt: 1, pb: 1 }}>
+          {/* large view typography*/}
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{
+              display: { xs: "none", md: "flex" },
+            }}
+          >
+            <img src="./icons/shredded.png" height={50} />
+          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
               sx={{
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-                fontFamily: "monospace",
-                fontWeight: 700,
+                display: { xs: "block", md: "none" },
               }}
             >
-              SHREDDED
-            </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: "block", md: "none" },
-                }}
-              >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          </>
-          <>
-            <FitnessCenterIcon
-              sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-            />
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              href=""
-              sx={{
-                mr: 2,
-                display: { xs: "flex", md: "none" },
-                flexGrow: 1,
-                fontFamily: "monospace",
-                fontWeight: 700,
-              }}
+              <MenuItem onClick={() => handleCloseNavMenu("calender")}>
+                <Typography textAlign="center">Calender</Typography>
+              </MenuItem>
+              <MenuItem onClick={() => handleCloseNavMenu("dashboard")}>
+                <Typography textAlign="center">Dashboard</Typography>
+              </MenuItem>
+            </Menu>
+          </Box>
+
+          {/* Small view typography */}
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            href=""
+            sx={{
+              mr: 2,
+              display: { xs: "flex", md: "none" },
+              flexGrow: 1,
+            }}
+          >
+            <img src="./icons/shredded.png" height={50} />
+          </Typography>
+
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              flexDirection: "row-reverse",
+              mr: 2,
+            }}
+          >
+            <Button
+              onClick={() => handleCloseNavMenu("calender")}
+              sx={{ my: 2, color: "white", display: "block" }}
             >
-              SHREDDED
-            </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "black", display: "block" }}
-                >
-                  {page}
-                </Button>
-              ))}
-            </Box>
-          </>
+              Calender
+            </Button>
+            <Button
+              onClick={() => handleCloseNavMenu("dashboard")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Dashboard
+            </Button>
+          </Box>
+
+          {/* Profile Icon */}
           <>
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <IconButton onClick={handleOpenUserMenu} sx={{ pt: 2, pb: 2 }}>
                   <Avatar />
                 </IconButton>
               </Tooltip>
@@ -151,11 +155,12 @@ function ResponsiveAppBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem onClick={() => handleCloseUserMenu("profile")}>
+                  <Typography textAlign="center">Profile</Typography>
+                </MenuItem>
+                <MenuItem onClick={() => handleCloseUserMenu("logout")}>
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
               </Menu>
             </Box>
           </>
