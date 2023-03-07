@@ -13,7 +13,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import imgUrl from './biceplogo.png'
 import axios from 'axios';
 
-function UserSetup({ setComponent, setLoginComponent, username, password }) {
+function UserSetup({ setComponent, setLoginComponent, username, password, setLoggedUser }) {
   const [feet, setFeet] = useState(1);
   const [inches, setInches] = useState(0);
   const [age, setAge] = useState(0);
@@ -123,6 +123,7 @@ function UserSetup({ setComponent, setLoginComponent, username, password }) {
       }).then((response) => {
         console.log(response.data)
         if(response.data === 'Accepted') {
+          setLoggedUser(username);
           setComponent('profile');
         } else if (response.data === 'USER EXISTS') {
           alert('Username Taken');
