@@ -22,9 +22,9 @@ function CalendarPage({currentDay, setCurrentDay}) {
       addCalories(date, number)
       ) 
     }
-    axios.get(`/daily-meals?month=${calorieMonth}`).then((data) => {
-      console.log(data);
-    })
+    // axios.get(`/daily-meals?month=${calorieMonth}`).then((data) => {
+    //   console.log(data);
+    // })
   }, [calorieMonth])
 
   let workoutCollection = ['Biceps', 'Chest', 'Glutes']
