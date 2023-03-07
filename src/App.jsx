@@ -61,6 +61,7 @@ function App() {
       {component !== "logsign" && component !== "usersetup" && (
         <NavBar setComponent={setComponent} />
       )}
+      {currComponent(component)}
     </div>
   );
 }

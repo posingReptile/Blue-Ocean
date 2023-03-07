@@ -18,7 +18,7 @@ function LogSignMain( {setComponent}) {
   }
 
   return (
-    <div>
+    <div className="wholeLoginWrapper">
       {currComponent(loginComponent)}
     </div>
   );

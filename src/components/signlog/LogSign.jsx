@@ -87,7 +87,7 @@ function Login({ setLoginComponent, setComponent, setPassword, setUsername, user
       {...passwordError ? {error: true, helperText: 'Enter a passsowrd'} : null}
       onChange={handlePasswordChange} />
       <br/>
-      <Button sx={{mr: 2}} onClick={() => handleLogin()}>
+      <Button sx={{mb: 2}} onClick={() => handleLogin()}>
         Login
       </Button>
       <Button onClick={() => handleSignup()}>

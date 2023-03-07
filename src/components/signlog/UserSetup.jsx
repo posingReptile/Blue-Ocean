@@ -23,6 +23,7 @@ function UserSetup({ setComponent, username, password }) {
   const [goalWeightError, setGoalWeightError] = useState(false);
   const [goalWeightDate, setGoalWeightDate] = useState(0);
   const [ageError, setAgeError] = useState(false);
+  const [goalDateError, setGoalDateError] = useState(false);
   const [calorieGoal, setCalorieGoal] = useState(0);
 
   const calculateCalorieGoal = () => {
@@ -83,30 +84,41 @@ function UserSetup({ setComponent, username, password }) {
 
     let weightCheck = (weight <= 0 || typeof weight !== 'number' || isNaN(weight));
     let goalWeightCheck = (goalWeight <= 0 || typeof goalWeight !== 'number' || isNaN(goalWeight));
-    let ageCheck = (age <= 0 || typeof age !== 'number' || isNaN(age));
+    let ageCheck = (age < Date.now() || typeof age !== 'number' || isNaN(age) || age === 0);
+    let goalDateCheck = (goalWeightDate > Date.now() || typeof goalWeightDate !== 'number' || isNaN(goalWeightDate));
 
     if(weight <= 0 || typeof weight !== 'number' || isNaN(weight)) {
       setWeightError(true);
+    } else {
+      setWeightError(false);
     }
     if(goalWeight <= 0 || typeof goalWeight !== 'number' || isNaN(goalWeight)) {
       setGoalWeightError(true);
+    } else {
+      setGoalWeightError(false);
     }
-    if(age <= 0 || typeof age !== 'number' || isNaN(age)) {
+    if(age >= Date.now() || age === 0) {
       setAgeError(true);
+    } else {
+      setAgeError(false);
     }
-    if(goalWeightDate <= 0 || typeof goalWeightDate !== 'number' || isNaN(age)) {
-      setAgeError(true);
+    if(goalWeightDate <= Date.now()) {
+      setGoalDateError(true);
+    } else {
+      setGoalDateError(false);
     }
-    if(!weightCheck && !goalWeightCheck && !ageCheck) {
+
+    if(!weightCheck && !goalWeightCheck && !ageCheck && !goalDateCheck) {
       axios.post('/new-user', {
         username: username,
+        password: password,
         feet: feet,
         inches: inches,
         age: age,
         weight: weight,
         goalWeight: goalWeight,
         goal_date: goalWeightDate,
-        calorie_goal: null,
+        calorie_goal: calorieGoal,
       }).then((response) => {
         console.log(response);
       }).catch((error) => {
@@ -123,6 +135,7 @@ function UserSetup({ setComponent, username, password }) {
     console.log('weightError: ', weightError);
     console.log('goalWeightError: ', goalWeightError);
     console.log('ageError: ', ageError);
+    console.log('goalDateError: ', goalDateError);
   }
 
 
@@ -139,8 +152,8 @@ function UserSetup({ setComponent, username, password }) {
         <div className="loginFieldWrapper">
           <span className="heightText">{username}, please provide the following details</span><br/><br/>
           <div className="heightBox">
-            <span className="heightText">Height</span>
-            <FormControl sx={{width: '12%', mr: 1, ml: 1, mb: 1}} size="small">
+            <span className="heightText">HEIGHT</span>
+            <FormControl sx={{width: '40%', mr: 1, ml: 1, mb: 1}} size="small">
               <InputLabel>Feet</InputLabel>
                 <Select
                   value={feet}
@@ -156,7 +169,7 @@ function UserSetup({ setComponent, username, password }) {
                   <MenuItem value={7}>7</MenuItem>
               </Select>
             </FormControl>
-            <FormControl sx={{width: '12%', mb: 1}} size="small">
+            <FormControl sx={{width: '40%', mb: 1}} size="small">
               <InputLabel>Inch</InputLabel>
                 <Select
                   value={inches}
@@ -182,46 +195,44 @@ function UserSetup({ setComponent, username, password }) {
             InputProps={{
               endAdornment: <InputAdornment position="start">lb</InputAdornment>
             }}
-            sx={{width: '35%', mb: 1}}
+            sx={{width: '45%', mb: 1}}
             id="outlined-basic"
             size="small"
             label="Weight"
             onChange={handleWeightChange}
             {...weightError ? {error: true, helperText: 'Enter a valid weight'} : null}
           />
-          <br/>
           <TextField
             InputProps={{
               endAdornment: <InputAdornment position="start">lb</InputAdornment>
             }}
-            sx={{width: '35%', mb: 1}}
+            sx={{width: '45%', mb: 1}}
             id="outlined-basic"
             size="small"
             label="Goal Weight"
             onChange={handleGoalWeightChange}
             {...goalWeightError ? {error: true, helperText: 'Enter a valid goal weight'} : null}
           />
-          <br/>
         <div className="dateBox">
-          <span className="heightText">Date of Birth </span>
+          <span className="heightText">DATE OF BIRTH</span>
           <DatePicker
         size="small"
         onChange={handleAgeChange}
         sx={{ml: 2}}
-        renderInput={(params) => <TextField size="small" {...params}/>}
-        {...ageError ? {error: true, helperText: 'Enter a valid date of birth'} : null}
-        /><br/><br/>
+        />
         </div>
+        {ageError && <span className="errorText">Enter a valid date of birth</span>}
         <div className="goalBox">
-          <span className="heightText">Goal Date</span>
+          <span className="heightText">GOAL DATE</span>
         <DatePicker
         size="small"
         onChange={handleGoalDateChange}
         sx={{ml: 2}}
-        renderInput={(params) => <TextField size="small" {...params}/>}
-        /><br/><br/>
+        />
+        <br/>
         </div>
         </div>
+        {goalDateError && <span className="errorText">Enter a valid goal date</span>}
         {calorieGoal > 0 && goalWeight < weight && <span className="heightText">Your goal will be {Math.floor(calorieGoal)} calories daily.</span>}
         <br/><br/>
         <Button sx={{mr: 2}} onClick={() => handleSubmit()}>
