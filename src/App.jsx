@@ -1,49 +1,49 @@
 import { useState } from 'react';
 import Profile from './components/profile/profile.jsx';
-import LogSign from './components/signlog/LogSign.jsx';
+import LogSignMain from './components/signlog/LogSignMain.jsx';
 import UserSetup from './components/signlog/UserSetup.jsx';
-import Calendar from './components/calendar/Calendar.jsx';
+import CalendarPage from './components/calendar/Calendar.jsx';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 import NavBar from './components/navbar/NavBar.jsx';
-import './css/App.css';
 import Meals from './components/modal/meals/Meals.jsx'
 
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import TabPanel from '@mui/material/Button';
-// import Button from '@mui/material/Button';
+
 
 
 function App() {
   const [count, setCount] = useState(0);
-  const [component, setComponent] = useState('profile');
+  const [component, setComponent] = useState("profile");
+  const [currentDay, setCurrentDay] = useState(new Date());
 
   const currComponent = (component) => {
     switch (component) {
-      case 'profile' :
+      case "profile":
         console.log(component);
-        return (<Profile />);
-      case 'dashboard' :
+        return <Profile />;
+      case "dashboard":
         console.log(component);
-        return (<Dashboard />);
-      case 'logsign' :
+        return <Dashboard />;
+      case "logsign":
         console.log(component);
-        return (<LogSign setComponent={setComponent}/>);
+        return (<LogSignMain setComponent={setComponent}/>);
       case 'usersetup' :
         console.log(component);
-        return (<UserSetup />);
+        return (<LogSignMain setComponent={setComponent}/>);
       case 'calendar' :
         console.log(component);
-        return (<Calendar />);
+        return (<CalendarPage currentDay={currentDay} setCurrentDay={setCurrentDay}/>);
     }
-  }
+  };
 
   const test = 0;
 
   return (
     <div className="App">
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      {/*<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={test} onChange={() => console.log('hello')} aria-label="basic tabs example">
           <Tab label="Item One" />
           <Tab label="Item Two" />
@@ -58,13 +58,14 @@ function App() {
       </TabPanel>
       <TabPanel value={test} index={2}>
         Item Three
-      </TabPanel>
-      {(component !== ('logsign' || 'usersetup')) &&
-      <NavBar setComponent={setComponent}/>}
+      </TabPanel>*/}
+      {component !== "logsign" && component !== "usersetup" && (
+        <NavBar setComponent={setComponent} currComponent={currComponent}/>
+      )}
       {currComponent(component)}
       <Meals/>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
