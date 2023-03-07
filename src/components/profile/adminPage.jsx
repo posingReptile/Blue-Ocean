@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Box, Paper, Button, TextField, Stack, Typography, Table, TableHead, TableBody, TableRow, TableCell, TableContainer } from '@mui/material';
+import {
+  Box, FormControl, Paper, Button, TextField, Stack, Typography, Table, TableHead, TableBody, TableRow, TableCell, TableContainer
+} from '@mui/material';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 /*
 app analytics
@@ -12,16 +14,25 @@ function AdminPage(props) {
   const { goBack } = props;
   const [bannerMessage, setBannerMessage] = useState('');
 
+  function submitBannerMessage(event) {
+    event.preventDefault();
+    setBannerMessage(event.target.elements.adminMessage.value);
+  }
+
   return (
     <Box>
       <Button onClick={goBack} sx={{ display: 'flex', vertical: 'top', mb: 3 }}>
-          <KeyboardBackspaceIcon />
+        <KeyboardBackspaceIcon />
       </Button>
-      <Stack direction="row" sx={{ display: 'flex', justifyContent: 'left', alignItems: 'left', flexDirection: 'column' }}>
-        <TextField id="admin-message" label="new banner message" variant="outlined" />
-        <Button variant="outlined">remove</Button>
-        <Button variant="contained">post</Button>
-      </Stack>
+      <form onSubmit={submitBannerMessage} style={{ minWidth: '100%' }}>
+        <FormControl onSubmit={submitBannerMessage} sx={{ minWidth: '100%' }}>
+            <Stack direction="row" sx={{ display: 'flex', justifyContent: 'left', alignItems: 'left', flexDirection: 'column' }}>
+              <TextField id="adminMessage" label="new banner message" variant="outlined" />
+              <Button variant="outlined">remove</Button>
+              <Button variant="contained" type="submit">post</Button>
+            </Stack>
+        </FormControl>
+      </form>
       <TableContainer sx={{ mt: 3 }} component={Paper}>
         <Typography>
           Metrics
