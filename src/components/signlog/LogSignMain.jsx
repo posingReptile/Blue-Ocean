@@ -3,6 +3,7 @@ import '../../css/LogSign.css'
 import LogSign from './LogSign.jsx';
 import UserSetup from './UserSetup.jsx';
 
+
 function LogSignMain( {setComponent}) {
   const [loginComponent, setLoginComponent] = useState('logsign');
   const [username, setUsername] = useState('');
@@ -13,7 +14,7 @@ function LogSignMain( {setComponent}) {
       case 'logsign' :
         return (<LogSign username={username} setUsername={setUsername} password={password} setPassword={setPassword}setLoginComponent={setLoginComponent} setComponent={setComponent}/>);
       case 'usersetup' :
-        return (<UserSetup username={username} password={password} setLoginComponent={setLoginComponent} setComponent={setComponent}/>);
+        return (<UserSetup setLoginComponent={setLoginComponent} username={username} password={password} setLoginComponent={setLoginComponent} setComponent={setComponent}/>);
     }
   }
 
