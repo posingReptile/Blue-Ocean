@@ -21,7 +21,9 @@ import { db } from './connect.js';
 import dotenv from 'dotenv';
 import axios from 'axios';
 dotenv.config();
+import cors from 'cors';
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('index.html'));
 
