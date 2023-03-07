@@ -30,14 +30,20 @@ async function seedDatabase(data, name) {
 
     await client.query("COMMIT");
   } catch (error) {
+<<<<<<< HEAD
     await client.query("ROLLBACK");
+=======
+    await client.query('ROLLBACK');
+    console.log(error);
+>>>>>>> main
     throw error;
   } finally {
     console.log(`${name} exercises added!`);
-    client.end();
+    client.release();
   }
 }
 
+<<<<<<< HEAD
 seedDatabase(abdominals, "abdominal");
 seedDatabase(biceps, "bicep");
 seedDatabase(calves, "calf");
@@ -49,3 +55,24 @@ seedDatabase(lower_back, "lower back");
 seedDatabase(quads, "quad");
 seedDatabase(traps, "trap");
 seedDatabase(triceps, "tricep");
+=======
+async function runSeed() {
+  try {
+    await seedDatabase(biceps, 'bicep');
+    await seedDatabase(calves, 'calf');
+    await seedDatabase(abdominals, 'abdominal');
+    await seedDatabase(chest, 'chest');
+    await seedDatabase(glutes, 'glute');
+    await seedDatabase(hamstring, 'hamstring');
+    await seedDatabase(lats, 'lat');
+    await seedDatabase(lower_back, 'lower back');
+    await seedDatabase(quads, 'quad');
+    await seedDatabase(traps, 'trap');
+    await seedDatabase(triceps, 'tricep');
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+runSeed();
+>>>>>>> main

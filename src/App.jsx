@@ -4,8 +4,9 @@ import LogSignMain from "./components/signlog/LogSignMain.jsx";
 import UserSetup from "./components/signlog/UserSetup.jsx";
 import CalendarPage from "./components/calendar/Calendar.jsx";
 import Dashboard from "./components/dashboard/Dashboard.jsx";
-
 import NavBar from "./components/navbar/NavBar.jsx";
+import Meals from "./components/modal/meals/Meals.jsx";
+
 import ResponsiveNavBar from "./components/navbar/ResponsiveNavBar";
 
 import WorkoutDash from "./components/modal/workout/WorkoutDash";
@@ -15,8 +16,6 @@ import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import TabPanel from "@mui/material/Button";
-
-import "./css/App.css";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -46,8 +45,6 @@ function App() {
     }
   };
 
-  currComponent();
-
   const test = 0;
 
   return (
@@ -59,16 +56,13 @@ function App() {
             height: "100vh",
           }}
         >
-          {/* {component !== "logsign" && component !== "usersetup" && (
-            <NavBar setComponent={setComponent} currComponent={currComponent} />
-          )}
-          {currComponent(component)} */}
-
           {component !== "logsign" && component !== "usersetup" && (
             <ResponsiveNavBar setComponent={setComponent} />
           )}
-
-          <WorkoutDash />
+          {/* {currComponent(component)} */}
+          {/* {component !== "logsign" && component !== "usersetup" && (
+            <NavBar setComponent={setComponent} currComponent={currComponent} />
+          )} */}
         </Box>
       </Container>
     </>
