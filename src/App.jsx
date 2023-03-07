@@ -19,7 +19,8 @@ import TabPanel from "@mui/material/Button";
 
 function App() {
   const [count, setCount] = useState(0);
-  const [component, setComponent] = useState("profile");
+  const [loggedUser, setLoggedUser] = useState("");
+  const [component, setComponent] = useState("logsign");
   const [currentDay, setCurrentDay] = useState(new Date());
 
   const currComponent = (component) => {
@@ -33,10 +34,7 @@ function App() {
         return <Dashboard />;
       case "logsign":
         console.log(component);
-        return <LogSignMain setComponent={setComponent} />;
-      case "usersetup":
-        console.log(component);
-        return <LogSignMain setComponent={setComponent} />;
+        return <LogSignMain setLoggedUser={setLoggedUser} setComponent={setComponent} />;
       case "calendar":
         console.log(component);
         return (
@@ -59,7 +57,7 @@ function App() {
           {component !== "logsign" && component !== "usersetup" && (
             <ResponsiveNavBar setComponent={setComponent} />
           )}
-          {/* {currComponent(component)} */}
+          {currComponent(component)}
           {/* {component !== "logsign" && component !== "usersetup" && (
             <NavBar setComponent={setComponent} currComponent={currComponent} />
           )} */}

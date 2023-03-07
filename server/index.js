@@ -45,6 +45,7 @@ app.get('/login', (req, res) =>{
 });
 
 app.post('/new-user', (req, res) => {
+  console.log(req.body)
   let formattedDate = new Date(req.body.goal_date).toISOString().substr(0, 10).replace(/-/g, '');
   console.log(req.body)
   db.query('INSERT INTO users (username, password, age, height_feet, height_inches, weight, goal_weight, goal_date, calorie_goal) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [
