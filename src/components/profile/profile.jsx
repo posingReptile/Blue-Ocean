@@ -69,6 +69,7 @@ function Profile(props) {
           setWeight(userObj.weight);
           setTargetWeight(userObj.goal_weight);
           setCalorieGoal(userObj.calorie_goal);
+          setTargetDate(((userObj.goal_date.split('T')[0]).split('-')).join(''));
         })
         .catch(() => console.log('failed to get profile info'))
     }
@@ -106,6 +107,8 @@ function Profile(props) {
     setTargetDate(year + month + day);
   }
 
+  const formattedDate = targetDate ? targetDate.substring(4, 6) + '/' + targetDate.substring(6) + '/' + targetDate.substring(0, 4) : '';
+
   return (
     <Box sx={{
       maxWidth: '700px',
@@ -140,7 +143,7 @@ function Profile(props) {
             <GridEntry gridValue={weight + ' lbs'} label="current weight" />
             <GridEntry gridValue={targetWeight + ' lbs'} label="target weight" />
 
-            <GridEntry gridValue={targetDate} label="target date" />
+            <GridEntry gridValue={formattedDate} label="target date" />
             <GridEntry gridValue={calorieGoal + ' cals'} label="daily calorie goal" />
           </Box>
         </Box>
