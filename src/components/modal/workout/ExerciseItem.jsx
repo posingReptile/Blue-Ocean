@@ -21,7 +21,18 @@ function ExerciseItem({ handleAddExercise, exercise }) {
   const handleAdd = (e) => {
     e.stopPropagation();
     setShowMore(false);
-    handleAddExercise();
+    const newExerciseObj = {
+      exerciseDetail: exerciseId,
+      userId: 1,
+      date: 20230307,
+      weight: 50,
+      sets: 50,
+      reps: 50,
+      duration: 100,
+      intensity: 3,
+      caloriesBurned: 999,
+    };
+    handleAddExercise(newExerciseObj);
   };
 
   return (

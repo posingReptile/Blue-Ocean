@@ -18,3 +18,6 @@ traps;
 lower_back;
 
 //triceps missing
+
+// for posting a new exercise
+// All columns are integers except date which is a date

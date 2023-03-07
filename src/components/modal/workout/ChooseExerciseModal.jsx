@@ -32,9 +32,10 @@ function ChooseExerciseModal({
   exerciseList,
 }) {
   // Pass down function to post a new exercise to the table
-  const handleAddExercise = () => {
+  const handleAddExercise = (newExerciseObj) => {
     // Make an axios post request here
     console.log("Exercise added to database");
+    axios.post("http://localhost:3000/new-exercise", newExerciseObj);
   };
 
   console.log(exerciseList);
