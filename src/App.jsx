@@ -59,8 +59,9 @@ function App() {
         Item Three
       </TabPanel>*/}
       {component !== "logsign" && component !== "usersetup" && (
-        <NavBar setComponent={setComponent} />
+        <NavBar setComponent={setComponent} currComponent={currComponent}/>
       )}
+      {currComponent(component)}
     </div>
   );
 }
