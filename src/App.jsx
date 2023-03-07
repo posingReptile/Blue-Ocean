@@ -5,6 +5,7 @@ import UserSetup from "./components/signlog/UserSetup.jsx";
 import CalendarPage from "./components/calendar/Calendar.jsx";
 import Dashboard from "./components/dashboard/Dashboard.jsx";
 
+import NavBar from "./components/navbar/NavBar.jsx";
 import ResponsiveNavBar from "./components/navbar/ResponsiveNavBar.jsx";
 
 import Container from "@mui/material/Container";
@@ -56,6 +57,9 @@ function App() {
             height: "100vh",
           }}
         >
+          {component !== "logsign" && component !== "usersetup" && (
+            <NavBar setComponent={setComponent} />
+          )}
           {component !== "logsign" && component !== "usersetup" && (
             <ResponsiveNavBar setComponent={setComponent} />
           )}
