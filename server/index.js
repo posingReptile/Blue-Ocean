@@ -21,7 +21,9 @@ import { db } from './connect.js';
 import dotenv from 'dotenv';
 import axios from 'axios';
 dotenv.config();
+import cors from 'cors';
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('index.html'));
 
@@ -172,9 +174,11 @@ app.delete('/delete-meal', (req, res) => {
 
 // or get all for the month
 app.get('/monthly-meals', (req, res) => {
+  console.log([req.query.month, req.query.year]);
   db.query('SELECT * FROM food WHERE EXTRACT(MONTH FROM date) = $1 AND EXTRACT (YEAR FROM date) = $2', [req.query.month, req.query.year]).then((foods) => {
     res.send(foods.rows)
   })//month year
+  // res.end();
 })
 
 
