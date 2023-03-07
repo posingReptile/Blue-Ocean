@@ -4,21 +4,21 @@ profile pic changes
 */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PersonalRecords from './personalRecords.jsx';
 import defaultProfileImage from '../../assets/pfpic.png';
 import {
   Avatar, Badge, Box, Button, FormControl, Stack, TextField, Typography
 } from '@mui/material';
-// import CancelIcon from '@mui/icons-material/Cancel';
-// import CheckIcon from '@mui/icons-material/Check';
 import EditIcon from '@mui/icons-material/Edit';
-// import '../css/profile.css';
-
-// api or props?
+// import '../../css/profile.css';
 
 function GridEntry(props) {
-  const { gridValue } = props;
+  const { label, gridValue } = props;
   return (
     <Box sx={{ mb: 1 }}>
+      <Typography variant="overline" sx={{ display: 'block', fontWeight: 'bold', mb: 0.5 }}>
+        {label}
+      </Typography>
       <Typography>{gridValue}</Typography>
     </Box>
   );
@@ -96,7 +96,12 @@ function Profile() {
     setEditFields();
   }
   return (
-    <Box>
+    <Box sx={{
+      maxWidth: '700px',
+      margin: '0 auto',
+      padding: '2rem',
+      textAlign: 'center',
+    }}>
 
       {!(editFields) && (
         <Box>
@@ -118,18 +123,13 @@ function Profile() {
             <Typography variant='h4'>{username}</Typography>
           </Box>
           <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-            <GridEntry gridValue={age} />
-            <GridEntry gridValue={weight} />
+            <GridEntry gridValue={age + ' y.o.'} label="age" />
+            <GridEntry gridValue={heightFt + '\'' + ' ' + heightIn + '"'} label="height"/>
 
-            <Stack direction="row" spacing={1} sx={{ justifyContent: 'center' }}>
-                  <GridEntry gridValue={heightFt} />
-                  <GridEntry gridValue={heightIn} />
-            </Stack>
-            <GridEntry gridValue={targetWeight} />
-
-            <GridEntry gridValue="calorie goal" />
-            <GridEntry gridValue={calorieGoal} />
+            <GridEntry gridValue={weight + ' lbs'} label="current weight" />
+            <GridEntry gridValue={targetWeight + ' lbs'} label="target weight" />
           </Box>
+          <GridEntry gridValue={calorieGoal + ' cals'} label="daily calorie goal" />
         </Box>
       )}
 
@@ -160,9 +160,8 @@ function Profile() {
                 <FormEntry identifier="targetWeight" formLabel="target weight" defaultValue={targetWeight} type="number" min="60" max="666" />
 
                 <GridEntry identifier=""/>
-                <FormEntry identifier="calorieGoal" formLabel="calorie goal" defaultValue={calorieGoal} type="number" />
 
-                <Stack direction="row" spacing={2}>
+                <Stack direction="row" spacing={1} sxx={{ m: 'auto', minWidth: '100% ' }}>
                   <Button variant="outlined" onClick={onEdit} >
                     Cancel
                   </Button>
@@ -175,7 +174,7 @@ function Profile() {
           </form>
         </Box>
       )}
-
+      <PersonalRecords />
     </Box>
   );
 }
