@@ -37,7 +37,8 @@ CREATE TABLE IF NOT EXISTS exercises (
   reps INT,
   duration INT,
   intensity INT,
-  calories_burned INT
+  calories_burned INT,
+  date DATE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS food (
