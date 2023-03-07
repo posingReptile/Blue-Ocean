@@ -50,12 +50,26 @@ function Workout() {
   useEffect(() => {
     // Make an axios call here to fetch the current day's workout
     // Finish the axios call with setting exercises using setExercises(data);
+    //=== Need to give as a query object, date and userId ===//
+    // axios.get("http://localhost:3000/daily-workout", {
+    //   params: {
+    //     date: "",
+    //     userId: 1,
+    //   },
+    // });
   }, []);
 
   // Should also grab notes from the database
   useEffect(() => {
     // Make an axios call here to fetch the current day's notes
     // Finish axios call with setCurrNotes(data);
+
+    //=== Need to give as a body: userId, notes, date ===//
+    // axios.post("http://localhost:3000/notes", {
+    //   userId: 1,
+    //   notes: "",
+    //   date: 1,
+    // });
   }, []);
 
   const handleNoteSave = () => {
@@ -66,6 +80,11 @@ function Workout() {
       "The currNotes is:",
       currNotes
     );
+
+    // axios.put("http://localhost:3000/edit-notes", {
+    //   notes: '',
+    //   date: 1
+    // })
   };
 
   // Find a way to calculate today's workout duration

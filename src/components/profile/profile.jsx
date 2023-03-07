@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PersonalRecords from './personalRecords.jsx';
+import AdminPage from './adminPage.jsx';
 import defaultProfileImage from '../../assets/pfpic.png';
 import {
   Avatar, Badge, Box, Button, FormControl, Stack, TextField, Typography
@@ -9,6 +10,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import EditIcon from '@mui/icons-material/Edit';
+import CastleIcon from '@mui/icons-material/Castle';
 // import '../../css/profile.css';
 
 function GridEntry(props) {
@@ -56,6 +58,12 @@ function Profile(props) {
   const [targetDate, setTargetDate] = useState();
   const [age, setAge] = useState();
   const [calorieGoal, setCalorieGoal] = useState();
+  const [isAdmin, setIsAdmin] = useState(true);
+  const [openAdminPage, setOpenAdminPage] = useState(false);
+
+  function onAdminClick() {
+    setOpenAdminPage(!openAdminPage);
+  }
 
   useEffect(() => {
     if (userID) {
@@ -116,8 +124,13 @@ function Profile(props) {
       padding: '2rem',
       textAlign: 'center',
     }}>
-
-      {!(editFields) && (
+      {isAdmin && (!openAdminPage) && (
+        <Button onClick={onAdminClick} sx={{ display: 'flex', vertical: 'top', color: 'red' }}>
+          <CastleIcon />
+        </Button>
+      )}
+      {openAdminPage && (<AdminPage goBack={onAdminClick} />)}
+      {!(editFields) && (!openAdminPage) && (
         <Box>
           <Box>
             <Badge
@@ -149,7 +162,7 @@ function Profile(props) {
         </Box>
       )}
 
-      {(editFields) && (
+      {(editFields) && (!openAdminPage) && (
         <Box>
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
             <Avatar
@@ -192,7 +205,7 @@ function Profile(props) {
           </form>
         </Box>
       )}
-      <PersonalRecords />
+      {(!openAdminPage) && (<PersonalRecords />)}
     </Box>
   );
 }
