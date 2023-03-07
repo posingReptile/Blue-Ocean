@@ -19,12 +19,12 @@ async function seedDatabase(data, name) {
     await client.query('BEGIN');
 
     for (let i = 0; i < data.length; i++) {
-      const { name, type, muscle_group, equipment, difficulty, instructions } =
+      const { name, type, muscle, equipment, difficulty, instructions } =
         data[i];
 
       const result = await client.query(
         'INSERT INTO exercise_details (name, type, muscle_group, equipment, difficulty, instructions) VALUES ($1, $2, $3, $4, $5, $6) RETURNING exercise_detail_id',
-        [name, type, muscle_group, equipment, difficulty, instructions]
+        [name, type, muscle, equipment, difficulty, instructions]
       );
     }
 
