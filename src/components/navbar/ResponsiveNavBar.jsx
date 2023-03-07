@@ -5,14 +5,11 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 
 import "../../css/responsivenavbar.css";
 
@@ -24,7 +21,7 @@ function ResponsiveAppBar({ setComponent }) {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = (componentName) => {
+  const handleCloseNavMenu = (e, componentName) => {
     setAnchorElNav(null);
     console.log(componentName);
     // setComponent(componentName);
@@ -34,7 +31,7 @@ function ResponsiveAppBar({ setComponent }) {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = (componentName) => {
+  const handleCloseUserMenu = (e, componentName) => {
     setAnchorElUser(null);
     console.log(componentName);
     // setComponent(componentName);
@@ -80,15 +77,15 @@ function ResponsiveAppBar({ setComponent }) {
                 horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+              onClose={() => handleCloseNavMenu()}
               sx={{
                 display: { xs: "block", md: "none" },
               }}
             >
-              <MenuItem onClick={() => handleCloseNavMenu("calender")}>
+              <MenuItem onClick={(e) => handleCloseNavMenu(e, "calender")}>
                 <Typography textAlign="center">Calender</Typography>
               </MenuItem>
-              <MenuItem onClick={() => handleCloseNavMenu("dashboard")}>
+              <MenuItem onClick={(e) => handleCloseNavMenu(e, "dashboard")}>
                 <Typography textAlign="center">Dashboard</Typography>
               </MenuItem>
             </Menu>
@@ -118,13 +115,13 @@ function ResponsiveAppBar({ setComponent }) {
             }}
           >
             <Button
-              onClick={() => handleCloseNavMenu("calender")}
+              onClick={(e) => handleCloseNavMenu(e, "calender")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               Calender
             </Button>
             <Button
-              onClick={() => handleCloseNavMenu("dashboard")}
+              onClick={(e) => handleCloseNavMenu(e, "dashboard")}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               Dashboard
@@ -134,18 +131,16 @@ function ResponsiveAppBar({ setComponent }) {
           {/* Profile Icon */}
           <>
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ pt: 2, pb: 2 }}>
-                  <Avatar />
-                </IconButton>
-              </Tooltip>
+              <IconButton onClick={handleOpenUserMenu} sx={{ pt: 2, pb: 2 }}>
+                <Avatar />
+              </IconButton>
               <Menu
-                sx={{ mt: "45px" }}
+                sx={{ mt: "55px" }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
                   vertical: "top",
-                  horizontal: "right",
+                  horizontal: "center",
                 }}
                 keepMounted
                 transformOrigin={{
@@ -153,12 +148,12 @@ function ResponsiveAppBar({ setComponent }) {
                   horizontal: "right",
                 }}
                 open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
+                onClose={() => handleCloseUserMenu()}
               >
-                <MenuItem onClick={() => handleCloseUserMenu("profile")}>
+                <MenuItem onClick={(e) => handleCloseUserMenu(e, "profile")}>
                   <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
-                <MenuItem onClick={() => handleCloseUserMenu("logout")}>
+                <MenuItem onClick={(e) => handleCloseUserMenu(e, "logout")}>
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
               </Menu>

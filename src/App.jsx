@@ -5,8 +5,6 @@ import UserSetup from "./components/signlog/UserSetup.jsx";
 import CalendarPage from "./components/calendar/Calendar.jsx";
 import Dashboard from "./components/dashboard/Dashboard.jsx";
 
-// Testing NavBar production
-import NavBar from "./components/navbar/NavBar.jsx";
 import ResponsiveNavBar from "./components/navbar/ResponsiveNavBar.jsx";
 
 import Container from "@mui/material/Container";
