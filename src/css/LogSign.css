@@ -3,6 +3,56 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-right: 165px;
+}
+
+.errorText {
+  color: #d32f2f;
+  font-size: 14px;
+  margin-bottom: 5px;
+  margin-right: 50px;
+}
+.loginFieldWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.loginWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.loginOuterWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.wholeLoginWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+.dateBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-right: 90px;
+}
+
+.goalBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-right: 62px;
 }
 
 .heightText {
@@ -10,5 +60,4 @@
   color: #1976d2;
   text-align: center;
   margin-top: 0px;
-  margin-bottom: 11px;
 }
