@@ -11,37 +11,43 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import TabPanel from '@mui/material/Button';
 
-import "./css/App.css";
+import './css/App.css';
 
 function App() {
   const [count, setCount] = useState(0);
-  const [component, setComponent] = useState("profile");
+  const [component, setComponent] = useState('profile');
   const [currentDay, setCurrentDay] = useState(new Date());
+
+  console.log(currentDay);
 
   const currComponent = (component) => {
     switch (component) {
-      case "profile":
+      case 'profile':
         console.log(component);
         return <Profile />;
-      case "dashboard":
+      case 'dashboard':
         console.log(component);
-        return <Dashboard />;
-      case "logsign":
+        return (
+          <Dashboard currentDay={currentDay} setCurrentDay={setCurrentDay} />
+        );
+      case 'logsign':
         console.log(component);
-        return (<LogSignMain setComponent={setComponent}/>);
-      case 'usersetup' :
+        return <LogSignMain setComponent={setComponent} />;
+      case 'usersetup':
         console.log(component);
-        return (<LogSignMain setComponent={setComponent}/>);
-      case 'calendar' :
+        return <LogSignMain setComponent={setComponent} />;
+      case 'calendar':
         console.log(component);
-        return (<CalendarPage currentDay={currentDay} setCurrentDay={setCurrentDay}/>);
+        return (
+          <CalendarPage currentDay={currentDay} setCurrentDay={setCurrentDay} />
+        );
     }
   };
 
   const test = 0;
 
   return (
-    <div className="App">
+    <div className='App'>
       {/*<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={test} onChange={() => console.log('hello')} aria-label="basic tabs example">
           <Tab label="Item One" />
@@ -58,8 +64,8 @@ function App() {
       <TabPanel value={test} index={2}>
         Item Three
       </TabPanel>*/}
-      {component !== "logsign" && component !== "usersetup" && (
-        <NavBar setComponent={setComponent} currComponent={currComponent}/>
+      {component !== 'logsign' && component !== 'usersetup' && (
+        <NavBar setComponent={setComponent} currComponent={currComponent} />
       )}
       {currComponent(component)}
     </div>
