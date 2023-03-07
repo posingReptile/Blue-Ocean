@@ -1,7 +1,3 @@
-/*
-recalculate targte calories on edit?
-profile pic changes
-*/
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PersonalRecords from './personalRecords.jsx';
@@ -44,24 +40,36 @@ function FormEntry(props) {
   );
 }
 
-function Profile() {
+function Profile(props) {
+  // const { userID } = props;
+  const userID = 1;
   const [editFields, setEditFields] = useState(false);
-  const [username, setUsername] = useState('user');
+  const [username, setUsername] = useState('');
   const [profilePic, setProfilePic] = useState(defaultProfileImage);
-  const [heightFt, setHeightFt] = useState(10);
-  const [heightIn, setHeightIn] = useState(12);
-  const [weight, setWeight] = useState(666);
-  const [targetWeight, setTargetWeight] = useState(777);
-  const [age, setAge] = useState(999);
-  const [calorieGoal, setCalorieGoal] = useState(2000);
+  const [heightFt, setHeightFt] = useState();
+  const [heightIn, setHeightIn] = useState();
+  const [weight, setWeight] = useState();
+  const [targetWeight, setTargetWeight] = useState();
+  const [targetDate, setTargetDate] = useState();
+  const [age, setAge] = useState();
+  const [calorieGoal, setCalorieGoal] = useState();
 
-  // useEffect(() => {
-    // returns profile's age, weight, target weight, height, calorie goal
-    //   axios.get(`/profiles/${profileID}/`)
-    //     .then((data) => console.log(data))
-    //     .catch(() => console.log('failed to get profile info'))
-
-  // }, []);
+  useEffect(() => {
+    if (userID) {
+      axios.get(`http://localhost:3000/profiles/${userID}/`)
+        .then(({ data }) => {
+          const userObj = data[0];
+          setUsername(userObj.username);
+          setAge(userObj.age);
+          setHeightFt(userObj.height_feet);
+          setHeightIn(userObj.height_inches);
+          setWeight(userObj.weight);
+          setTargetWeight(userObj.goal_weight);
+          setCalorieGoal(userObj.calorie_goal);
+        })
+        .catch(() => console.log('failed to get profile info'))
+    }
+  }, [userID]);
 
   function onEdit() {
     setEditFields(!editFields);
@@ -74,27 +82,20 @@ function Profile() {
     setHeightFt(event.target.elements.heightFt.value);
     setHeightIn(event.target.elements.heightIn.value);
     setTargetWeight(event.target.elements.targetWeight.value);
-    setCalorieGoal(event.target.elements.calorieGoal.value);
     const userInfo = {
       age,
       weight,
-      height: (heightFt * 12) + heightIn,
-      targetWeight,
-      calorieGoal,
+      height_feet: heightFt,
+      height_inches: heightIn,
+      goal_weight: targetWeight,
+      goal_date: targetDate,
+      calories: calorieGoal,
     };
-
-    //   // update changed fields
-    //   axios.post(`/profiles/${profileID}`, {
-    //     age,
-    //     weight,
-    //     targetWeight,
-    //     height,
-    //     calorieGoal
-    //   })
-    //     .catch(() => console.log('failed to update profile info'))
-    //  .finally(() => )
-    setEditFields();
+    axios.post(`http://localhost:3000/profiles/${userID}`, userInfo)
+      .then(() => onEdit())
+      .catch(() => console.log('failed to update profile info'));
   }
+
   return (
     <Box sx={{
       maxWidth: '700px',
