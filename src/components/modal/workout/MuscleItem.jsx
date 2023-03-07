@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 
 // public/icons/chest.png
 
-function MuscleItem({ muscleName = "Test Muscle", handleExerciseOpen }) {
+function MuscleItem({ muscleName, muscleQuery, handleExerciseOpen }) {
   let muscleIcon = "";
   if (["Biceps", "Triceps"].includes(muscleName)) {
     muscleIcon = "./icons/arm.png";
@@ -38,7 +38,6 @@ function MuscleItem({ muscleName = "Test Muscle", handleExerciseOpen }) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        // border: "1px solid blue",
       }}
     >
       <Card
@@ -48,7 +47,9 @@ function MuscleItem({ muscleName = "Test Muscle", handleExerciseOpen }) {
           backgroundColor: "blue",
         }}
       >
-        <CardActionArea onClick={() => handleExerciseOpen(muscleName)}>
+        <CardActionArea
+          onClick={() => handleExerciseOpen(muscleName, muscleQuery)}
+        >
           <Typography
             sx={{
               width: 100,
