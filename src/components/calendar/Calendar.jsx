@@ -2,14 +2,17 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import { BiPencil } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
-// import { IoIosAdd } from "react-icons/Io";
-// import 'react-calendar/dist/Calendar.css';
-// import '../../css/calandar.css'
+import axios from 'axios';
 import '../../css/calendar.css'
 
 
+const monthNames = [
+  "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+];
+
+const caloriesCollection = {March2023: [['March 11, 2023', 100, ], ['March 12, 2023', 103], ['March 13, 2023', 104]]}
+
 function CalendarPage({currentDay, setCurrentDay}) {
-  let caloriesCollection = {March2023: [['March 11, 2023', 100, ], ['March 12, 2023', 103], ['March 13, 2023', 104]]}
 
   const [calorieMonth, setCalorieMonth] = useState('March2023');
 
@@ -19,10 +22,13 @@ function CalendarPage({currentDay, setCurrentDay}) {
       addCalories(date, number)
       ) 
     }
+    // axios.get(`/daily-meals?month=${calorieMonth}`).then((data) => {
+    //   console.log(data);
+    // })
   }, [calorieMonth])
 
   let workoutCollection = ['Biceps', 'Chest', 'Glutes']
-
+  
 
   function addCalories (date , number, trainingType) {
     // date = date ||'March 11, 2023';
@@ -31,11 +37,16 @@ function CalendarPage({currentDay, setCurrentDay}) {
     } else {
       trainingType = '👟';
     }
-    // console.log(document.querySelector(`[aria-label="${date}"]`))
+    // if (document.getElementsByClassName(currentDay.toDateString().trim).length) {
+    //   console.log('conflict', document.getElementsByClassName(currentDay.toDateString()));
+    //   return;
+    // }
     const dateButton = document.querySelector(`[aria-label="${date}"]`).parentElement;
     const calorieDiv = document.createElement('div');
-    const trainIconDiv = document.createElement('div');
+    const trainIconDiv = document.createElement('div');currentDay.toDateString()
+    // calorieDiv.classList.add(currentDay.toDateString().trim());
     calorieDiv.classList.add('calorieCount');
+    // trainIconDiv.classList.add(currentDay.toDateString().trim());
     trainIconDiv.classList.add('trainIcon');
     trainIconDiv.innerText = trainingType
     calorieDiv.innerText = number + 'cal'
@@ -43,23 +54,12 @@ function CalendarPage({currentDay, setCurrentDay}) {
     dateButton.appendChild(trainIconDiv);
   }
 
-// const closingCalDiv = document.getElementsByClassName('react-calendar__month-view');
-
-//  if (closingCalDiv[0]) {
-//     closingCalDiv[0].parentElement.style = {height: "100%"}
-//     console.log(closingCalDiv[0].parentElement.style)
-//  }
 function monthChecker (e) {
-  const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-  ];
   const date = e.activeStartDate;
   const curMonth = monthNames[date.getMonth()]
-  console.log(curMonth + date.getFullYear())
-  console.log("The current month is " + curMonth);
+  console.log("The current month is ", curMonth + date.getFullYear())
   setCalorieMonth((curMonth + date.getFullYear()));
 }
-
 
   return (
     <div className='container'>
@@ -79,7 +79,6 @@ function monthChecker (e) {
           <div id="selectedWorkOutPlan">
             <div className='planTitle'>
               <h2>Workout Plan</h2>
-              {/* <IoIosAdd /> */}
             </div>
             {workoutCollection.map((item, i) => {
                 return (
@@ -94,7 +93,6 @@ function monthChecker (e) {
           <div id="selectedMealPlan">
             <div className='planTitle'>
               <h2>Meal Plan</h2>
-              {/* <IoIosAdd /> */}
             </div>
             {workoutCollection.map((item, i) => {
                 return (
