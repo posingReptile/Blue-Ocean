@@ -22,7 +22,7 @@ function CalendarPage({currentDay, setCurrentDay}) {
       addCalories(date, number)
       ) 
     }
-    // axios.get(`/daily-meals?month=${calorieMonth}`).then((data) => {
+    // axios.get(`http://localhost:3000/monthly-meals?year=2023&month=2`).then((data) => {
     //   console.log(data);
     // })
   }, [calorieMonth])
