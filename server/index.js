@@ -49,17 +49,17 @@ app.post('/new-user', (req, res) => {
   })
 });
 //---------------------------dashboard------------------------------
-app.get('/profiles', (req, res) => {
-  db.query(`SELECT * FROM users WHERE user_id  = ${req.query.profile_id}`).then((userInfo) => {
-    console.log(userInfo.rows)
+app.get('/profiles/:profile_id', (req, res) => {
+  db.query(`SELECT * FROM users WHERE user_id  = ${req.params.profile_id}`).then((userInfo) => {
+    // console.log(userInfo.rows)
     res.send(userInfo.rows);
   })
   // get information from db about users based on profile_id
   // res.send { userimglink, age, weight, target weight, height, calorie goal}
 });
 
-app.post('/profiles', (req, res) => {
-  db.query(`UPDATE users SET age = $1, height_feet = $2, height_inches = $3, weight = $4, goal_weight = $5, goal_date = $6, calorie_goal = $7  WHERE user_id = ${req.query.profile_id} `, [req.body.age, req.body.height_feet, req.body.height_inches, req.body.weight, req.body.goal_weight, req.body.goal_date, req.body.calorie_goal]).then(() => {
+app.post('/profiles/:profile_id', (req, res) => {
+  db.query(`UPDATE users SET age = $1, height_feet = $2, height_inches = $3, weight = $4, goal_weight = $5, goal_date = $6, calorie_goal = $7  WHERE user_id = ${req.params.profile_id} `, [req.body.age, req.body.height_feet, req.body.height_inches, req.body.weight, req.body.goal_weight, req.body.goal_date, req.body.calorie_goal]).then(() => {
     console.log('Update Sucessfully')
     res.send(202)
   })
