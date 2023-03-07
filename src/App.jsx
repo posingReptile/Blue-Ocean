@@ -6,13 +6,13 @@ import Calendar from './components/calendar/Calendar.jsx';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 import NavBar from './components/navbar/NavBar.jsx';
 import './css/App.css';
+import Meals from './components/modal/meals/Meals.jsx'
 
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import TabPanel from '@mui/material/Button';
 // import Button from '@mui/material/Button';
-
 
 
 function App() {
@@ -62,6 +62,7 @@ function App() {
       {(component !== ('logsign' || 'usersetup')) &&
       <NavBar setComponent={setComponent}/>}
       {currComponent(component)}
+      <Meals/>
     </div>
   )
 }
