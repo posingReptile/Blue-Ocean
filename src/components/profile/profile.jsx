@@ -5,6 +5,9 @@ import defaultProfileImage from '../../assets/pfpic.png';
 import {
   Avatar, Badge, Box, Button, FormControl, Stack, TextField, Typography
 } from '@mui/material';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import EditIcon from '@mui/icons-material/Edit';
 // import '../../css/profile.css';
 
@@ -96,6 +99,13 @@ function Profile(props) {
       .catch(() => console.log('failed to update profile info'));
   }
 
+  function upDate(event) {
+    const day = (event.$D > 10) ? event.$D : ('0' + event.$D);
+    const month = ((event.$M + 1) > 10) ? (event.$M + 1) : ('0' + (event.$M + 1))
+    const year = event.$y;
+    setTargetDate(year + month + day);
+  }
+
   return (
     <Box sx={{
       maxWidth: '700px',
@@ -129,8 +139,10 @@ function Profile(props) {
 
             <GridEntry gridValue={weight + ' lbs'} label="current weight" />
             <GridEntry gridValue={targetWeight + ' lbs'} label="target weight" />
+
+            <GridEntry gridValue={targetDate} label="target date" />
+            <GridEntry gridValue={calorieGoal + ' cals'} label="daily calorie goal" />
           </Box>
-          <GridEntry gridValue={calorieGoal + ' cals'} label="daily calorie goal" />
         </Box>
       )}
 
@@ -160,7 +172,9 @@ function Profile(props) {
                 </Stack>
                 <FormEntry identifier="targetWeight" formLabel="target weight" defaultValue={targetWeight} type="number" min="60" max="666" />
 
-                <GridEntry identifier=""/>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker label="goal date" disablePast onChange={upDate} />
+                </LocalizationProvider>
 
                 <Stack direction="row" spacing={1} sxx={{ m: 'auto', minWidth: '100% ' }}>
                   <Button variant="outlined" onClick={onEdit} >
