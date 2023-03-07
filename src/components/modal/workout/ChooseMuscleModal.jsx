@@ -15,17 +15,27 @@ function ChooseMuscleModal({ handleClose }) {
   const [currMuscle, setCurrMuscle] = useState("Test Muscle");
   const [exerciseOpen, setExerciseOpen] = useState(false); // Open ChooseExerciseModal
   const [exerciseList, setExerciseList] = useState([]);
+  // console.log(exerciseList);
 
   // This handler gets invoked when muscle is clicked (axios call made)
-  const handleExerciseOpen = (muscleName) => {
-    setCurrMuscle(muscleName);
-    setExerciseOpen(true);
-    console.log(
-      "Axios call generated,",
-      "Exercises generated from database for specific muscle clicked"
-    );
-    // Axios request should be generated here
-    // Place setExerciseOpen and setCurrMuscle to happen only after success
+  const handleExerciseOpen = (muscleName, muscleQuery) => {
+    console.log(muscleQuery);
+    // List of all muscles:
+    //[abdominals, biceps, calves, chest, glutes, hamstring, lats, lower_back, quads, traps, triceps]
+    axios
+      .get("http://localhost:3000/exercises", {
+        params: {
+          muscle: `${muscleQuery}`,
+        },
+      })
+      .then(({ data }) => {
+        setExerciseList(data);
+        setCurrMuscle(muscleName);
+        setExerciseOpen(true);
+      })
+      .catch((err) => {
+        console.log("An error happened trying to get data for body part");
+      });
   };
 
   const handleExerciseClose = () => {
@@ -34,25 +44,26 @@ function ChooseMuscleModal({ handleClose }) {
 
   // Dynamically load from database types maybe?
   const muscles = [
-    "Biceps",
-    "Triceps",
-    "Chest",
-    "Abdominals",
-    "Lats",
-    "Trapezius",
-    "Lower Back",
-    "Glutes",
-    "Quadriceps",
-    "Hamstring",
-    "Calves",
+    ["Biceps", "biceps"],
+    ["Triceps", "triceps"],
+    ["Chest", "chest"],
+    ["Abdominals", "abdominals"],
+    ["Lats", "lats"],
+    ["Trapezius", "traps"],
+    ["Lower Back", "lower_back"],
+    ["Glutes", "glutes"],
+    ["Quadriceps", "quadriceps"],
+    ["Hamstring", "hamstrings"],
+    ["Calves", "calves"],
   ];
 
   // MuscleItem elements created from muscles array.
   const muscleItems = muscles.map((muscle) => {
     return (
       <MuscleItem
-        key={muscle}
-        muscleName={muscle}
+        key={muscle[0]}
+        muscleName={muscle[0]}
+        muscleQuery={muscle[1]}
         handleExerciseOpen={handleExerciseOpen}
       />
     );

@@ -6,7 +6,9 @@ import CalendarPage from "./components/calendar/Calendar.jsx";
 import Dashboard from "./components/dashboard/Dashboard.jsx";
 
 import NavBar from "./components/navbar/NavBar.jsx";
-import ResponsiveNavBar from "./components/navbar/ResponsiveNavBar.jsx";
+import ResponsiveNavBar from "./components/navbar/ResponsiveNavBar";
+
+import WorkoutDash from "./components/modal/workout/WorkoutDash";
 
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -65,6 +67,8 @@ function App() {
           {component !== "logsign" && component !== "usersetup" && (
             <ResponsiveNavBar setComponent={setComponent} />
           )}
+
+          <WorkoutDash />
         </Box>
       </Container>
     </>

@@ -20,9 +20,11 @@ import bodyParser from 'body-parser';
 import { db } from './connect.js';
 import dotenv from 'dotenv';
 import axios from 'axios';
+import cors from 'cors';
 dotenv.config();
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 app.use(express.static('index.html'));
 
 //---------------------------login------------------------------
@@ -67,16 +69,18 @@ app.post('/profiles', (req, res) => {
 });
 //---------------------------workouts------------------------------
 
-app.get('/excerises', (req, res) => {
+app.get('/exercises', (req, res) => {
+  console.log(req.query);
   db.query('SELECT * FROM exercise_details WHERE muscle_group = $1',[req.query.muscle]).then((exercises) => {
     res.send(exercises.rows)
   })
 });
 
 app.get('/daily-workout', (req, res) => {
-  db.query(`SELECT * FROM exercises  WHERE date = $1 AND user_id = $2`, [req.query.date, req.query.userId]) .then((workouts) => {
-    res.send(workouts.rows)
-  })
+  // console.log(req.query);
+  // db.query(`SELECT * FROM exercises  WHERE date = $1 AND user_id = $2`, [req.query.date, req.query.userId]) .then((workouts) => {
+  //   res.send(workouts.rows)
+  // })
 })
 
 app.post('/new-exercise', (req, res) => {
@@ -102,17 +106,19 @@ app.delete('/delete', (req, res) => {
 })
 
 app.post('/notes', (req, res) => {
-  db.query('INSERT INTO workouts (user_id, notes, date) VALUES ($1, $2, $3 )', [req.body.userId, req.body.notes, req.body.date]).then(() => {
-    console.log('Added Notes Successfully')
-    res.send(202)
-  })
+  // console.log(req.body);
+  // db.query('INSERT INTO workouts (user_id, notes, date) VALUES ($1, $2, $3 )', [req.body.userId, req.body.notes, req.body.date]).then(() => {
+  //   console.log('Added Notes Successfully')
+  //   res.send(202)
+  // })
 })
 
 app.put('/edit-notes', (req, res) => {
-  db.query('UPDATE workouts SET notes = $1 WHERE date = $2', [req.body.notes, req.body.date]).then(() => {
-    console.log('Edit notes Sucessfully')
-    res.send(202);
-  })
+  // console.log(req.body);
+  // db.query('UPDATE workouts SET notes = $1 WHERE date = $2', [req.body.notes, req.body.date]).then(() => {
+  //   console.log('Edit notes Sucessfully')
+  //   res.send(202);
+  // })
 })
 //---------------------------meals---------------------------------
 
