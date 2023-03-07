@@ -174,11 +174,9 @@ app.delete('/delete-meal', (req, res) => {
 
 // or get all for the month
 app.get('/monthly-meals', (req, res) => {
-  console.log([req.query.month, req.query.year]);
   db.query('SELECT * FROM food WHERE EXTRACT(MONTH FROM date) = $1 AND EXTRACT (YEAR FROM date) = $2', [req.query.month, req.query.year]).then((foods) => {
     res.send(foods.rows)
   })//month year
-  // res.end();
 })
 
 
