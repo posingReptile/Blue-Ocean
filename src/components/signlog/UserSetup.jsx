@@ -119,7 +119,7 @@ function UserSetup({ setComponent, setLoginComponent, username, password }) {
         weight: weight,
         goal_weight: goalWeight,
         goal_date: new Date(goalWeightDate),
-        calorie_goal: Math.floor(calorieGoal),
+        calories: Math.floor(calorieGoal),
       }).then((response) => {
         console.log(response.data)
         if(response.data === 'Accepted') {
