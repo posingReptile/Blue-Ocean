@@ -23,7 +23,7 @@ function App() {
   const [currentDay, setCurrentDay] = useState(new Date());
 
   const currComponent = (component) => {
-    console.log("currComponent");
+    console.log("Our current component is:", component);
     switch (component) {
       case "profile":
         console.log(component);
@@ -44,6 +44,8 @@ function App() {
         );
     }
   };
+
+  currComponent();
 
   const test = 0;
 
