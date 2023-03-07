@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS exercise_details (
 
 CREATE TABLE IF NOT EXISTS exercises (
   exercise_id SERIAL PRIMARY KEY,
-  workout_id INT NOT NULL REFERENCES workouts(workout_id),
   exercise_detail_id INT NOT NULL REFERENCES exercise_details(exercise_detail_id),
   user_id INT NOT NULL REFERENCES users(user_id),
   weight INT,
