@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS workouts (
   workout_id SERIAL PRIMARY KEY,
   user_id INT NOT NULL REFERENCES users(user_id),
   notes VARCHAR (5000),
+  meal_notes VARCHAR (5000),
   date DATE NOT NULL
 );
 
