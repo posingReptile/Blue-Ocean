@@ -86,15 +86,31 @@ app.get('/profiles/:profile_id', (req, res) => {
   // res.send { userimglink, age, weight, target weight, height, calorie goal}
 });
 
-app.post('/profiles/:profile_id', (req, res) => {
-  db.query(`UPDATE users SET age = $1, height_feet = $2, height_inches = $3, weight = $4, goal_weight = $5, goal_date = $6, calorie_goal = $7  WHERE user_id = ${req.params.profile_id} `, [req.body.age, req.body.height_feet, req.body.height_inches, req.body.weight, req.body.goal_weight, req.body.goal_date, req.body.calorie_goal]).then(() => {
-    console.log('Update Sucessfully')
-    res.send(202)
-  })
-  // in db find by user profile_id and update the information that has been been passed
-  // {imageURL, age, weight, target weight, height, calorie goal}
-  //front end will display the new information in a state
+app.post("/profiles", (req, res) => {
+  db.query(
+    `UPDATE users SET age = $1, height_feet = $2, height_inches = $3, weight = $4, goal_weight = $5, goal_date = $6, calorie_goal = $7  WHERE user_id = ${req.query.profile_id} `,
+    [
+      req.body.age,
+      req.body.height_feet,
+      req.body.height_inches,
+      req.body.weight,
+      req.body.goal_weight,
+      req.body.goal_date,
+      req.body.calorie_goal,
+    ]
+  ).then(() => {
+    console.log("Update Sucessfully");
+    res.send(202);
+  });
 });
+
+// to get message if there is one from the admin
+
+app.get('/message', (req, res) => {
+  db.query('SELECT message FROM messages WHERE date = $1', [req.query.date]).then((message) =>{
+    res.send(message.rows)
+  })
+})
 //---------------------------workouts------------------------------
 
 app.get("/exercises", (req, res) => {
@@ -107,7 +123,7 @@ app.get("/exercises", (req, res) => {
 });
 
 app.get('/daily-workout', (req, res) => {
-  db.query('SELECT * FROM exercises FULL OUTER JOIN exercise_details ON exercises.exercise_detail_id = exercise_details.exercise_detail_id WHERE exercises.date = $1 AND user_id = $2', [req.query.date, req.query.userId]) .then((workouts) => {
+  db.query('SELECT * FROM exercises FULL OUTER JOIN exercise_details ON exercises.exercise_detail_id = exercise_details.exercise_detail_id WHERE exercises.date = $1 AND user_id = $2 ORDER BY exercises.exercise_id ASC', [req.query.date, req.query.userId]) .then((workouts) => {
     res.send(workouts.rows)
   })
 })
@@ -293,6 +309,34 @@ app.get("/training", (req, res) => {
     res.send(training.rows);
   });
 });
+
+//----------------------------------admin-------------------------------------------------
+
+app.get('/admin-users', (req, res) => {
+  let adminstuff = [];
+  db.query('SELECT COUNT(*) FROM users').then((total) => {
+    adminstuff.push({
+      users: total.rows[0].count
+    })
+  })
+  db.query('SELECT COUNT(*) FROM exercises').then((total) => {
+    adminstuff.push( {
+      exercises : total.rows[0].count
+    })
+    res.send(adminstuff)
+  })
+})
+
+// post a message for users
+
+app.post('/admin-message', (req, res) => {
+  db.query('INSERT INTO messages (message, date) VALUES ($1, $2)', [req.body.message, req.body.date]).then(() => {
+  console.log('Inserted message correctly')
+  res.send(202);
+})
+})
+
+
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
