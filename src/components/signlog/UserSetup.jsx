@@ -13,7 +13,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import imgUrl from './biceplogo.png'
 import axios from 'axios';
 
-function UserSetup({ setComponent, username, password }) {
+function UserSetup({ setComponent, setLoginComponent, username, password, setLoggedUser }) {
   const [feet, setFeet] = useState(1);
   const [inches, setInches] = useState(0);
   const [age, setAge] = useState(0);
@@ -84,8 +84,8 @@ function UserSetup({ setComponent, username, password }) {
 
     let weightCheck = (weight <= 0 || typeof weight !== 'number' || isNaN(weight));
     let goalWeightCheck = (goalWeight <= 0 || typeof goalWeight !== 'number' || isNaN(goalWeight));
-    let ageCheck = (age < Date.now() || typeof age !== 'number' || isNaN(age) || age === 0);
-    let goalDateCheck = (goalWeightDate > Date.now() || typeof goalWeightDate !== 'number' || isNaN(goalWeightDate));
+    let ageCheck = (age >= Date.now() || typeof age !== 'number' || isNaN(age) || age === 0);
+    let goalDateCheck = (goalWeightDate <= Date.now() || typeof goalWeightDate !== 'number' || isNaN(goalWeightDate));
 
     if(weight <= 0 || typeof weight !== 'number' || isNaN(weight)) {
       setWeightError(true);
@@ -109,18 +109,26 @@ function UserSetup({ setComponent, username, password }) {
     }
 
     if(!weightCheck && !goalWeightCheck && !ageCheck && !goalDateCheck) {
-      axios.post('/new-user', {
+      console.log('inside axios')
+      axios.post(`http://localhost:3000/new-user`, {
         username: username,
         password: password,
-        feet: feet,
-        inches: inches,
-        age: age,
+        height_feet: feet,
+        height_inches: inches,
+        age:  Math.floor(age / 31536000000),
         weight: weight,
-        goalWeight: goalWeight,
-        goal_date: goalWeightDate,
-        calorie_goal: calorieGoal,
+        goal_weight: goalWeight,
+        goal_date: new Date(goalWeightDate),
+        calories: Math.floor(calorieGoal),
       }).then((response) => {
-        console.log(response);
+        console.log(response.data)
+        if(response.data === 'Accepted') {
+          setLoggedUser(username);
+          setComponent('profile');
+        } else if (response.data === 'USER EXISTS') {
+          alert('Username Taken');
+          setLoginComponent('logsign')
+        }
       }).catch((error) => {
         console.log(error);
       });
@@ -129,13 +137,14 @@ function UserSetup({ setComponent, username, password }) {
     console.log('username: ', username);
     console.log('feet: ', feet);
     console.log('inches: ', inches);
-    console.log('age: ', age);
+    console.log('age: ', Math.floor(age / 31536000000));
     console.log('weight: ', weight);
     console.log('goalWeight: ', goalWeight);
-    console.log('weightError: ', weightError);
-    console.log('goalWeightError: ', goalWeightError);
-    console.log('ageError: ', ageError);
-    console.log('goalDateError: ', goalDateError);
+    console.log('weightError: ', weightCheck);
+    console.log('goalWeightError: ', goalWeightCheck);
+    console.log('ageError: ', ageCheck);
+    console.log('goalDate: ', new Date(goalWeightDate));
+    console.log('goalDateError: ', goalDateCheck);
   }
 
 
