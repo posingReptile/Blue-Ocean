@@ -5,11 +5,13 @@ profile pic changes
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PersonalRecords from './personalRecords.jsx';
+import AdminPage from './adminPage.jsx';
 import defaultProfileImage from '../../assets/pfpic.png';
 import {
   Avatar, Badge, Box, Button, FormControl, Stack, TextField, Typography
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import CastleIcon from '@mui/icons-material/Castle';
 // import '../../css/profile.css';
 
 function GridEntry(props) {
@@ -54,6 +56,12 @@ function Profile() {
   const [targetWeight, setTargetWeight] = useState(777);
   const [age, setAge] = useState(999);
   const [calorieGoal, setCalorieGoal] = useState(2000);
+  const [isAdmin, setIsAdmin] = useState(true);
+  const [openAdminPage, setOpenAdminPage] = useState(false);
+
+  function onAdminClick() {
+    setOpenAdminPage(!openAdminPage);
+  }
 
   // useEffect(() => {
     // returns profile's age, weight, target weight, height, calorie goal
@@ -102,8 +110,13 @@ function Profile() {
       padding: '2rem',
       textAlign: 'center',
     }}>
-
-      {!(editFields) && (
+      {isAdmin && (!openAdminPage) && (
+        <Button onClick={onAdminClick} sx={{ display: 'flex', vertical: 'top', color: 'red' }}>
+          <CastleIcon />
+        </Button>
+      )}
+      {openAdminPage && (<AdminPage goBack={onAdminClick} />)}
+      {!(editFields) && (!openAdminPage) && (
         <Box>
           <Box>
             <Badge
@@ -133,7 +146,7 @@ function Profile() {
         </Box>
       )}
 
-      {(editFields) && (
+      {(editFields) && (!openAdminPage) && (
         <Box>
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
             <Avatar
@@ -174,7 +187,7 @@ function Profile() {
           </form>
         </Box>
       )}
-      <PersonalRecords />
+      {(!openAdminPage) && (<PersonalRecords />)}
     </Box>
   );
 }

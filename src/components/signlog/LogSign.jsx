@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import imgUrl from './biceplogo.png'
 import axios from 'axios';
 
-function Login({ setLoginComponent, setComponent, setPassword, setUsername, username, password }) {
+function Login({ setLoginComponent, setComponent, setPassword, setUsername, username, password, setLoggedUser }) {
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
@@ -33,15 +33,21 @@ function Login({ setLoginComponent, setComponent, setPassword, setUsername, user
     }
 
     if(username !== '' && password !== '') {
-      axios.post('/login', {
-        username: username,
-        password: password
-      })
+      axios.get(`http://localhost:3000/login?username=${username}&password=${password}`)
       .then((res) => {
-        console.log(res);
-        setComponent('dashboard');
+        console.log('success', res);
+        if(res.data === 'NO USER') {
+          setUsernameError(true);
+          setPasswordError(true);
+        } else if (res.data === 'Accepted') {
+          setUsernameError(false);
+          setPasswordError(false);
+          setLoggedUser(username);
+          setComponent('dashboard');
+        }
       })
       .catch((err) => {
+        console.log('error')
         console.log(err);
       })
     }
@@ -75,7 +81,7 @@ function Login({ setLoginComponent, setComponent, setPassword, setUsername, user
       id="outlined-basic"
       size="small"
       label="Username"
-      {...usernameError ? {error: true, helperText: 'Enter a username'} : null}
+      {...usernameError ? {error: true, helperText: 'Enter a valid username'} : null}
       onChange={handleUsernameChange} />
       <br/>
       <TextField
@@ -84,7 +90,7 @@ function Login({ setLoginComponent, setComponent, setPassword, setUsername, user
       size="small"
       label="Password"
       type="password"
-      {...passwordError ? {error: true, helperText: 'Enter a passsowrd'} : null}
+      {...passwordError ? {error: true, helperText: 'Enter a valid passsword'} : null}
       onChange={handlePasswordChange} />
       <br/>
       <Button sx={{mb: 2}} onClick={() => handleLogin()}>

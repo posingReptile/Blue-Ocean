@@ -1,3 +1,10 @@
+:root {
+  --weekdayColor: rgb(141, 138, 138);
+  --selectDayColor: #006edc;
+  --sideMonthColor: rgb(105, 102, 102);
+  --weekendColor: rgba(255, 0, 0, 0.5);
+}
+
 .container {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -103,7 +110,7 @@ button.react-calendar__tile.react-calendar__month-view__days__day.react-calendar
 }
 
 button.react-calendar__tile.react-calendar__month-view__days__day {
-  background-color: rgb(255 255 255 / 50%);
+  background-color: var(--weekdayColor);
 }
 
 .react-calendar {
@@ -199,10 +206,10 @@ button.react-calendar__tile.react-calendar__month-view__days__day > abbr{
 }
 .react-calendar__month-view__days__day--weekend {
   color: #f3f3f3;
-  background-color: rgba(255, 0, 0, 0.5) !important;
+  background-color: var(--weekendColor) !important;
 }
 .react-calendar__month-view__days__day--neighboringMonth {
-  color: #757575 !important;
+  color: var(--sideMonthColor) !important;
   background-color: rgba(96, 95, 95, 0.5) !important;
 }
 .react-calendar__year-view .react-calendar__tile,
@@ -239,7 +246,7 @@ button.react-calendar__tile.react-calendar__month-view__days__day > abbr{
   background: #a9d4ff;
 }
 .react-calendar__tile--active {
-  background: #006edc !important;
+  background: var(--selectDayColor) !important;
   color: white;
 }
 .react-calendar__tile--active:enabled:hover,

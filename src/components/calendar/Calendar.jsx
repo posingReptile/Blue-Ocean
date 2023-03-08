@@ -22,7 +22,7 @@ function CalendarPage({currentDay, setCurrentDay}) {
       addCalories(date, number)
       ) 
     }
-    // axios.get(`/daily-meals?month=${calorieMonth}`).then((data) => {
+    // axios.get(`http://localhost:3000/monthly-meals?year=2023&month=2`).then((data) => {
     //   console.log(data);
     // })
   }, [calorieMonth])
@@ -37,10 +37,10 @@ function CalendarPage({currentDay, setCurrentDay}) {
     } else {
       trainingType = '👟';
     }
-    // if (document.getElementsByClassName(currentDay.toDateString().trim).length) {
-    //   console.log('conflict', document.getElementsByClassName(currentDay.toDateString()));
-    //   return;
-    // }
+    if (document.getElementsByClassName(currentDay.toDateString().trim).length) {
+      console.log('conflict', document.getElementsByClassName(currentDay.toDateString()));
+      return;
+    }
     const dateButton = document.querySelector(`[aria-label="${date}"]`).parentElement;
     const calorieDiv = document.createElement('div');
     const trainIconDiv = document.createElement('div');currentDay.toDateString()
@@ -65,12 +65,11 @@ function monthChecker (e) {
     <div className='container'>
       <Calendar 
         onChange={setCurrentDay} 
-        // value={value} 
-        // activeStartDate={value}
+        value={currentDay} 
         className='wrapper'
         onActiveStartDateChange={(e) => {monthChecker(e)}}
         tileClassName="whatever"
-        onClickDay={(e, value) => {console.log(e, value)}}
+        // onClickDay={(e, value) => {console.log(e, value)}}
       />
 
       <div>
