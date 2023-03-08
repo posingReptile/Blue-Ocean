@@ -9,14 +9,15 @@ import DayWorkoutListItem from "./DayWorkoutListItem";
 import "../../../css/workout.css";
 
 // Show Modal here
-function DayWorkoutList({ exercises, setExercises, showButtons, currDateInt }) {
-  console.log(exercises);
+function DayWorkoutList({
+  exercises,
+  setExercises,
+  showButtons,
+  currDateInt,
+  userID,
+}) {
   // Handler for saving edits
   const handleEditInfo = (editExerciseObj) => {
-    // Make an axios call here to edit the specified exercise by id? (Change weight etc...)
-    console.log(
-      "Specific exercise in DayWorkoutList editted via axios call to db"
-    );
     axios
       .put("http://localhost:3000/edit-workout", editExerciseObj)
       .then(() => {
@@ -24,11 +25,10 @@ function DayWorkoutList({ exercises, setExercises, showButtons, currDateInt }) {
           .get("http://localhost:3000/daily-workout", {
             params: {
               date: currDateInt,
-              userId: 1,
+              userId: userID,
             },
           })
           .then(({ data }) => {
-            // console.log(data);
             setExercises(data);
           });
       })
@@ -38,9 +38,6 @@ function DayWorkoutList({ exercises, setExercises, showButtons, currDateInt }) {
   };
 
   const handleDelete = (exerciseId) => {
-    // Make an axios call here to delete the specified exercise by id
-    console.log(exerciseId);
-
     axios
       .delete("http://localhost:3000/delete", {
         params: {
@@ -48,12 +45,11 @@ function DayWorkoutList({ exercises, setExercises, showButtons, currDateInt }) {
         },
       })
       .then(() => {
-        // Fetch the new workout list and set it into our exercises list in our workout dash
         axios
           .get("http://localhost:3000/daily-workout", {
             params: {
               date: currDateInt,
-              userId: 1,
+              userId: userID,
             },
           })
           .then(({ data }) => {
@@ -65,15 +61,11 @@ function DayWorkoutList({ exercises, setExercises, showButtons, currDateInt }) {
       });
   };
 
-  // Dynamically render DayWorkoutListItem according to exercises
-  // console.log(exercises);
   const listItems = exercises.map((exercise) => {
     return (
       <DayWorkoutListItem
         key={exercise.exercise_id}
-        // type={exercise.type}
         exercise={exercise}
-        // exerciseName={exercise.name}
         showButtons={showButtons}
         handleEditInfo={handleEditInfo}
         handleDelete={handleDelete}

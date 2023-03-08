@@ -18,6 +18,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import TabPanel from "@mui/material/Button";
 
+import "./css/App.css";
+
 function App() {
   const [count, setCount] = useState(0);
   const [loggedUser, setLoggedUser] = useState("");

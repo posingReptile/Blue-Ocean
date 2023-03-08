@@ -164,7 +164,7 @@ app.post("/new-exercise", (req, res) => {
 });
 
 app.put("/edit-workout", (req, res) => {
-  // Here
+  // Done
   db.query(
     "UPDATE exercises SET weight = $1, sets = $2 , reps = $3, duration = $4, intensity = $5 WHERE exercise_id = $6",
     [
@@ -182,6 +182,7 @@ app.put("/edit-workout", (req, res) => {
 });
 
 app.delete("/delete", (req, res) => {
+  // Done
   db.query("DELETE FROM exercises WHERE exercise_id = $1", [
     req.query.exerciseId,
   ]).then(() => {
