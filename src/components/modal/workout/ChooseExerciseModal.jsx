@@ -31,13 +31,22 @@ function ChooseExerciseModal({
   handleOpen,
   exerciseList,
 }) {
-  const exerciseItems = [];
-
   // Pass down function to post a new exercise to the table
   const handleAddExercise = () => {
     // Make an axios post request here
     console.log("Exercise added to database");
   };
+
+  console.log(exerciseList);
+  const exerciseItems = exerciseList.map((exercise) => {
+    return (
+      <ExerciseItem
+        key={exercise.exercise_detail_id}
+        exercise={exercise}
+        handleAddExercise={handleAddExercise}
+      />
+    );
+  });
 
   return (
     <>
@@ -52,18 +61,7 @@ function ChooseExerciseModal({
           <Grid container>
             <Grid item xs={12}>
               <List sx={{ height: 450, overflow: "auto" }}>
-                <ExerciseItem
-                  type="Strength"
-                  handleAddExercise={handleAddExercise}
-                />
-                <ExerciseItem
-                  type="Cardio"
-                  handleAddExercise={handleAddExercise}
-                />
-                <ExerciseItem
-                  type="Strength"
-                  handleAddExercise={handleAddExercise}
-                />
+                {exerciseItems}
               </List>
             </Grid>
           </Grid>
