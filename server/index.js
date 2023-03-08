@@ -18,70 +18,88 @@ import path from "path";
 import express from "express";
 import bodyParser from "body-parser";
 import { db } from "./connect.js";
+import fs from "fs";
 import dotenv from "dotenv";
 import axios from "axios";
 import cors from "cors";
 import session from "express-session";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static("index.html"));
+app.use(express.static(path.join(__dirname + "/../dist/")));
 app.use(
   session({
-    secret : "secret",
-    resave : true,
-    saveUninitialized : true
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
   })
-)
-
+);
 
 //---------------------------login------------------------------
 
-app.get('/login', (req, res) =>{
-  db.query('SELECT user_id FROM users WHERE username = $1 AND password = $2', [
+app.get("/login", (req, res) => {
+  db.query("SELECT * FROM users WHERE username = $1 AND password = $2", [
     req.query.username,
-    req.query.password
+    req.query.password,
   ]).then((data, err) => {
-    if(data.rows.length === 0) {
-      console.log('User does not exist')
-      res.send(JSON.stringify('NO USER'))
+    if (data.rows.length === 0) {
+      console.log("User does not exist");
+      res.send(JSON.stringify("NO USER"));
     } else {
       req.session.username = req.query.username;
-      res.send(data.rows[0])
+      req.session.user_id = data.rows[0].user_id;
+      console.log(req.session);
+      res.send(data.rows[0]);
     }
   });
 });
 
-app.post('/new-user', (req, res) => {
-  let formattedDate = new Date(req.body.goal_date).toISOString().substr(0, 10).replace(/-/g, '');
-  db.query('INSERT INTO users (username, password, age, height_feet, height_inches, weight, goal_weight, goal_date, calorie_goal) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', [
-    req.body.username,
-    req.body.password,
-    req.body.age,
-    req.body.height_feet,
-    req.body.height_inches,
-    req.body.weight,
-    req.body.goal_weight,
-    req.body.goal_date,
-    req.body.calories
-  ]).then((data) => {
-    console.log('Inserted new user Successfully', data.rows[0])
-    req.session.username = req.body.username;
-    res.send(data.rows[0])
-  }).catch((err) => {
-    console.log(err)
-    res.send(JSON.stringify('USER EXISTS'))
-  })
-
+app.post("/new-user", (req, res) => {
+  let formattedDate = new Date(req.body.goal_date)
+    .toISOString()
+    .substr(0, 10)
+    .replace(/-/g, "");
+  db.query(
+    "INSERT INTO users (username, password, age, height_feet, height_inches, weight, goal_weight, goal_date, calorie_goal, isadmin) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
+    [
+      req.body.username,
+      req.body.password,
+      req.body.age,
+      req.body.height_feet,
+      req.body.height_inches,
+      req.body.weight,
+      req.body.goal_weight,
+      req.body.goal_date,
+      req.body.calories,
+      req.body.isadmin,
+    ]
+  )
+    .then((data) => {
+      console.log("Inserted new user Successfully", data.rows[0]);
+      req.session.username = req.body.username;
+      req.session.user_id = data.rows[0].user_id;
+      console.log(req.session);
+      res.send(data.rows[0]);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(JSON.stringify("USER EXISTS"));
+    });
 });
 //---------------------------dashboard------------------------------
-app.get('/profiles/:profile_id', (req, res) => {
-  db.query(`SELECT * FROM users WHERE user_id  = ${req.params.profile_id}`).then((userInfo) => {
+app.get("/profiles/:profile_id", (req, res) => {
+  db.query(
+    `SELECT * FROM users WHERE user_id  = ${req.params.profile_id}`
+  ).then((userInfo) => {
     // console.log(userInfo.rows)
     res.send(userInfo.rows);
-  })
+  });
   // get information from db about users based on profile_id
   // res.send { userimglink, age, weight, target weight, height, calorie goal}
 });
@@ -106,14 +124,17 @@ app.post("/profiles", (req, res) => {
 
 // to get message if there is one from the admin
 
-app.get('/message', (req, res) => {
-  db.query('SELECT message FROM messages WHERE date = $1', [req.query.date]).then((message) =>{
-    res.send(message.rows)
-  })
-})
+app.get("/message", (req, res) => {
+  db.query("SELECT message FROM messages WHERE date = $1", [
+    req.query.date,
+  ]).then((message) => {
+    res.send(message.rows);
+  });
+});
 //---------------------------workouts------------------------------
 
 app.get("/exercises", (req, res) => {
+  // done
   console.log(req.query);
   db.query("SELECT * FROM exercise_details WHERE muscle_group = $1", [
     req.query.muscle,
@@ -122,13 +143,18 @@ app.get("/exercises", (req, res) => {
   });
 });
 
-app.get('/daily-workout', (req, res) => {
-  db.query('SELECT * FROM exercises FULL OUTER JOIN exercise_details ON exercises.exercise_detail_id = exercise_details.exercise_detail_id WHERE exercises.date = $1 AND user_id = $2 ORDER BY exercises.exercise_id ASC', [req.query.date, req.query.userId]) .then((workouts) => {
-    res.send(workouts.rows)
-  })
-})
+app.get("/daily-workout", (req, res) => {
+  // done
+  db.query(
+    "SELECT * FROM exercises FULL OUTER JOIN exercise_details ON exercises.exercise_detail_id = exercise_details.exercise_detail_id WHERE exercises.date = $1 AND user_id = $2 ORDER BY exercises.exercise_id ASC",
+    [req.query.date, req.query.userId]
+  ).then((workouts) => {
+    res.send(workouts.rows);
+  });
+});
 
 app.post("/new-exercise", (req, res) => {
+  //done
   db.query(
     "INSERT INTO exercises (exercise_detail_id, user_id, date, weight, sets, reps, duration, intensity, calories_burned) VALUES ($1, $2, $3,$4,$5,$6,$7,$8, $9)",
     [
@@ -149,14 +175,16 @@ app.post("/new-exercise", (req, res) => {
 });
 
 app.put("/edit-workout", (req, res) => {
+  // Done
   db.query(
-    "UPDATE exercises SET weight = $1, sets = $2 , reps = $3, duration = $4, intensity = $5 WHERE exercise_id = $6",
+    "UPDATE exercises SET weight = $1, sets = $2 , reps = $3, duration = $4, intensity = $5, calories_burned = $6 WHERE exercise_id = $7",
     [
       req.body.weight,
       req.body.sets,
       req.body.reps,
       req.body.duration,
       req.body.intensity,
+      req.body.caloriesBurned,
       req.body.exerciseId,
     ]
   ).then(() => {
@@ -165,29 +193,64 @@ app.put("/edit-workout", (req, res) => {
   });
 });
 
-
-
-app.delete('/delete', (req, res) => {
-    db.query('DELETE FROM exercises WHERE exercise_id = $1', [req.query.exerciseId]).then(() => {
-      console.log('Deleted Succesfully')
-      res.send(202)
-    })
-})
-
-app.post('/notes', (req, res) => {
-  db.query('INSERT INTO workouts (user_id, notes, date) VALUES ($1, $2, $3 )', [req.body.userId, req.body.notes, req.body.date]).then(() => {
-    console.log('Added Notes Successfully')
-    res.send(202)
-  })
-})
-
-app.put('/edit-notes', (req, res) => {
-  db.query('UPDATE workouts SET notes = $1 WHERE date = $2', [req.body.notes, req.body.date]).then(() => {
-    console.log('Edit notes Sucessfully')
+app.delete("/delete", (req, res) => {
+  db.query("DELETE FROM exercises WHERE exercise_id = $1", [
+    req.query.exerciseId,
+  ]).then(() => {
+    console.log("Deleted Succesfully");
     res.send(202);
   });
 });
 
+app.post("/notes", (req, res) => {
+  db.query("INSERT INTO workouts (user_id, notes, date) VALUES ($1, $2, $3 )", [
+    req.body.userId,
+    req.body.notes,
+    req.body.date,
+  ]).then(() => {
+    console.log("Added Notes Successfully");
+    res.send(202);
+  });
+});
+
+app.get("/notes", (req, res) => {
+  db.query("SELECT * FROM workouts WHERE date = $1 AND user_id = $2", [
+    req.query.date,
+    req.query.userId,
+  ]).then((notes) => {
+    if (notes.rows.length === 0) {
+      db.query(
+        "INSERT INTO workouts (user_id, date) VALUES ($1, $2) RETURNING *",
+        [req.query.userId, req.query.date]
+      ).then((newRow) => {
+        res.send(newRow.rows);
+      });
+    } else {
+      res.send(notes.rows);
+    }
+  });
+});
+
+app.put("/edit-notes", (req, res) => {
+  db.query("UPDATE workouts SET notes = $1 WHERE date = $2 RETURNING *", [
+    req.body.notes,
+    req.body.date,
+  ]).then((newRow) => {
+    res.send(newRow.rows);
+    console.log("Edit notes Sucessfully");
+  });
+});
+
+app.post("/notes", (req, res) => {
+  db.query("INSERT INTO workouts (user_id, notes, date) VALUES ($1, $2, $3 )", [
+    req.body.userId,
+    req.body.notes,
+    req.body.date,
+  ]).then(() => {
+    console.log("Added Notes Successfully");
+    res.send(202);
+  });
+});
 
 //---------------------------meals---------------------------------
 
@@ -315,30 +378,35 @@ app.get("/training", (req, res) => {
 
 //----------------------------------admin-------------------------------------------------
 
-app.get('/admin-users', (req, res) => {
+app.get("/admin-users", (req, res) => {
   let adminstuff = [];
-  db.query('SELECT COUNT(*) FROM users').then((total) => {
-    adminstuff.push({
-      users: total.rows[0].count
+  db.query("SELECT COUNT(*) FROM users")
+    .then((total) => {
+      adminstuff.push({
+        users: total.rows[0].count,
+      });
     })
-  })
-  db.query('SELECT COUNT(*) FROM exercises').then((total) => {
-    adminstuff.push( {
-      exercises : total.rows[0].count
-    })
-    res.send(adminstuff)
-  })
-})
+    .then(() =>
+      db.query("SELECT COUNT(*) FROM exercises").then((total) => {
+        adminstuff.push({
+          exercises: total.rows[0].count,
+        });
+        res.send(adminstuff);
+      })
+    );
+});
 
 // post a message for users
 
-app.post('/admin-message', (req, res) => {
-  db.query('INSERT INTO messages (message, date) VALUES ($1, $2)', [req.body.message, req.body.date]).then(() => {
-  console.log('Inserted message correctly')
-  res.send(202);
-})
-})
-
+app.post("/admin-message", (req, res) => {
+  db.query("INSERT INTO messages (message, date) VALUES ($1, $2)", [
+    req.body.message,
+    req.body.date,
+  ]).then(() => {
+    console.log("Inserted message correctly");
+    res.send(202);
+  });
+});
 
 const PORT = process.env.PORT || 8080;
 
