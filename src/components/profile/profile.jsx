@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import dayjs from 'dayjs';
 import PersonalRecords from './personalRecords.jsx';
 import AdminPage from './adminPage.jsx';
 import defaultProfileImage from '../../assets/pfpic.png';
@@ -60,6 +61,7 @@ function Profile(props) {
   const [calorieGoal, setCalorieGoal] = useState();
   const [isAdmin, setIsAdmin] = useState(true);
   const [openAdminPage, setOpenAdminPage] = useState(false);
+  const [validDate, setValidDate] = useState(true);
 
   function onAdminClick() {
     setOpenAdminPage(!openAdminPage);
@@ -89,30 +91,39 @@ function Profile(props) {
   function updateFields(event) {
     event.preventDefault();
 
-    setAge(event.target.elements.age.value);
-    setWeight(event.target.elements.weight.value);
-    setHeightFt(event.target.elements.heightFt.value);
-    setHeightIn(event.target.elements.heightIn.value);
-    setTargetWeight(event.target.elements.targetWeight.value);
-    const userInfo = {
-      age,
-      weight,
-      height_feet: heightFt,
-      height_inches: heightIn,
-      goal_weight: targetWeight,
-      goal_date: targetDate,
-      calories: calorieGoal,
-    };
-    axios.post(`http://localhost:3000/profiles/${userID}`, userInfo)
-      .then(() => onEdit())
-      .catch(() => console.log('failed to update profile info'));
+    if (validDate) {
+      setAge(event.target.elements.age.value);
+      setWeight(event.target.elements.weight.value);
+      setHeightFt(event.target.elements.heightFt.value);
+      setHeightIn(event.target.elements.heightIn.value);
+      setTargetWeight(event.target.elements.targetWeight.value);
+      const userInfo = {
+        age,
+        weight,
+        height_feet: heightFt,
+        height_inches: heightIn,
+        goal_weight: targetWeight,
+        goal_date: targetDate,
+        calories: calorieGoal,
+      };
+      axios.post(`http://localhost:3000/profiles/${userID}`, userInfo)
+        .then(() => onEdit())
+        .catch(() => console.log('failed to update profile info'));
+    }
   }
 
   function upDate(event) {
     const day = (event.$D >= 10) ? event.$D : ('0' + event.$D);
     const month = ((event.$M + 1) >= 10) ? (event.$M + 1) : ('0' + (event.$M + 1))
     const year = event.$y;
-    setTargetDate(year + month + day);
+
+    if (dayjs(event).isAfter(dayjs())){
+      setValidDate(true);
+      setTargetDate(year + month + day);
+    } else {
+      setTargetDate((od) => od);
+      setValidDate(false);
+    }
   }
 
   const formattedDate = targetDate ? targetDate.substring(4, 6) + '/' + targetDate.substring(6) + '/' + targetDate.substring(0, 4) : '';
@@ -189,9 +200,12 @@ function Profile(props) {
 
                 <FormEntry identifier="targetWeight" formLabel="target weight" defaultValue={targetWeight} type="number" min="60" max="666" />
 
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker label="goal date" disablePast onChange={upDate} />
-                </LocalizationProvider>
+                <Box>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker label="goal date" disablePast onChange={upDate} value={dayjs(formattedDate)} />
+                    {!validDate && <div className="errorText">Enter a valid date</div>}
+                  </LocalizationProvider>
+                </Box>
                 <GridEntry />
 
                 <Box sx={{ textAlign: 'right', mr: 1, mt: 1}}>
