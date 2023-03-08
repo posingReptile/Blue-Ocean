@@ -21,11 +21,20 @@ import { db } from "./connect.js";
 import dotenv from "dotenv";
 import axios from "axios";
 import cors from "cors";
+import session from "express-session";
+
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static("index.html"));
+app.use(
+  session({
+    secret : "secret",
+    resave : true,
+    saveUninitialized : true
+  })
+)
 
 
 //---------------------------login------------------------------
@@ -39,16 +48,15 @@ app.get('/login', (req, res) =>{
       console.log('User does not exist')
       res.send(JSON.stringify('NO USER'))
     } else {
-      res.send(202);
+      req.session.username = req.query.username;
+      res.send(data.rows[0])
     }
   });
 });
 
 app.post('/new-user', (req, res) => {
-  console.log(req.body)
   let formattedDate = new Date(req.body.goal_date).toISOString().substr(0, 10).replace(/-/g, '');
-  console.log(req.body)
-  db.query('INSERT INTO users (username, password, age, height_feet, height_inches, weight, goal_weight, goal_date, calorie_goal) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [
+  db.query('INSERT INTO users (username, password, age, height_feet, height_inches, weight, goal_weight, goal_date, calorie_goal) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', [
     req.body.username,
     req.body.password,
     req.body.age,
@@ -58,9 +66,10 @@ app.post('/new-user', (req, res) => {
     req.body.goal_weight,
     req.body.goal_date,
     req.body.calories
-  ]).then(() => {
-    console.log('Inserted new user Successfully')
-    res.send(202)
+  ]).then((data) => {
+    console.log('Inserted new user Successfully', data.rows[0])
+    req.session.username = req.body.username;
+    res.send(data.rows[0])
   }).catch((err) => {
     console.log(err)
     res.send(JSON.stringify('USER EXISTS'))
