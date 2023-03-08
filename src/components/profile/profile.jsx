@@ -47,7 +47,7 @@ function FormEntry(props) {
 }
 
 function Profile(props) {
-  const { user } = props;
+  const { userID } = props;
 
   const [editFields, setEditFields] = useState(false);
   const [username, setUsername] = useState('');
@@ -69,33 +69,23 @@ function Profile(props) {
 
   useEffect(() => {
     // console.log(user);
-    if (user) {
-      setUsername(user.username);
-      setAge(user.age);
-      setHeightFt(user.height_feet);
-      setHeightIn(user.height_inches);
-      setWeight(user.weight);
-      setTargetWeight(user.goal_weight);
-      setCalorieGoal(user.calorie_goal);
-      setTargetDate(((user.goal_date.split('T')[0]).split('-')).join(''));
-      setIsAdmin(user.isadmin);
+    if (userID) {
+      axios.get(`http://localhost:3000/profiles/${userID}/`)
+        .then(({ data }) => {
+          const userObj = data[0];
+          setIsAdmin(userObj.isadmin);
+          setUsername(userObj.username);
+          setAge(userObj.age);
+          setHeightFt(userObj.height_feet);
+          setHeightIn(userObj.height_inches);
+          setWeight(userObj.weight);
+          setTargetWeight(userObj.goal_weight);
+          setCalorieGoal(userObj.calorie_goal);
+          setTargetDate(((userObj.goal_date.split('T')[0]).split('-')).join(''));
+        })
+        .catch(() => console.log('failed to get profile info'))
     }
-    // if (user) {
-    //   axios.get(`http://localhost:3000/profiles/${user.user_id}/`)
-    //     .then(({ data }) => {
-    //       const userObj = data[0];
-    //       setUsername(userObj.username);
-    //       setAge(userObj.age);
-    //       setHeightFt(userObj.height_feet);
-    //       setHeightIn(userObj.height_inches);
-    //       setWeight(userObj.weight);
-    //       setTargetWeight(userObj.goal_weight);
-    //       setCalorieGoal(userObj.calorie_goal);
-    //       setTargetDate(((userObj.goal_date.split('T')[0]).split('-')).join(''));
-    //     })
-    //     .catch(() => console.log('failed to get profile info'))
-    // }
-  }, [user]);
+  }, [userID]);
 
   function onEdit() {
     setEditFields(!editFields);

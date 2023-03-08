@@ -33,7 +33,7 @@ function App() {
     switch (component) {
       case "profile":
         // console.log(component);
-        return <Profile user={userObject} />;
+        return <Profile userID={userObject.user_id} />;
       case "dashboard":
         console.log(component);
         return (

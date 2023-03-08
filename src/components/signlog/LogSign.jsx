@@ -43,7 +43,7 @@ function Login({ setLoginComponent, setUserObject, setComponent, setPassword, se
           setUsernameError(false);
           setPasswordError(false);
           setComponent('dashboard');
-          setUserObject(res.data);
+          setUserObject({username: res.data.username, user_id: res.data.user_id, isadmin: res.data.isadmin});
         }
       })
       .catch((err) => {
