@@ -70,6 +70,7 @@ function App() {
           {/* {component !== "logsign" && component !== "usersetup" && (
             <NavBar setComponent={setComponent} currComponent={currComponent} />
           )} */}
+          {/* <Meals/> */}
         </Box>
       </Container>
     </>

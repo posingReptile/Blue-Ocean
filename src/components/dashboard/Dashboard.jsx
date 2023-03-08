@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import WorkoutDash from '../modal/workout/WorkoutDash';
 import DatePickerComponent from './DatePickerComponent';
+import Meals from '../modal/meals/Meals.jsx'
+
 
 const Dashboard = ({ currentDay, setCurrentDay }) => {
   return (
@@ -18,6 +20,7 @@ const Dashboard = ({ currentDay, setCurrentDay }) => {
           justifyContent: 'center',
         }}
       >
+        <Meals/>
         <Typography variant='h5' sx={{ textAlign: 'center' }}>
           Daily Wisdom
         </Typography>

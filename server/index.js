@@ -219,7 +219,8 @@ app.get("/nutrition", (req, res) => {
           req.query.description,
           foody.serving_size_g,
         ]
-      ).then(() => {
+      )
+      .then(() => {
         console.log("Added to database");
         res.send(foody);
       });
@@ -227,6 +228,7 @@ app.get("/nutrition", (req, res) => {
 });
 
 app.get("/daily-meals", (req, res) => {
+  console.log('daily meal')
   console.log(req.query);
   db.query(
     "SELECT * FROM food WHERE date = $1 AND user_id =  $2 ORDER BY category DESC",
@@ -236,9 +238,9 @@ app.get("/daily-meals", (req, res) => {
   });
 });
 
-app.put("/edit-meal", (req, res) => {
+app.put("/edit-meal/:foodId", (req, res) => {
   db.query("UPDATE food SET quantity = $2 WHERE id= $1", [
-    req.body.foodId,
+    req.params.foodId,
     req.body.quantity,
   ]).then(() => {
     console.log("Edited food successfully");
@@ -246,8 +248,9 @@ app.put("/edit-meal", (req, res) => {
   });
 });
 
-app.delete("/delete-meal", (req, res) => {
-  db.query("DELETE FROM food WHERE foodId = $1", [req.body.foodId]).then(() => {
+app.delete("/delete-meal/:foodId", (req, res) => {
+  console.log(req)
+  db.query("DELETE FROM food WHERE food_id = $1", [req.params.foodId]).then(() => {
     console.log("Deleted meal successfully");
     res.send(202);
   });
