@@ -22,25 +22,26 @@ function App() {
   const [loggedUser, setLoggedUser] = useState('');
   const [component, setComponent] = useState('logsign');
   const [currentDay, setCurrentDay] = useState(new Date());
+  const [userID, setUserID] = useState(0);
 
   const currComponent = (component) => {
     console.log('Our current component is:', component);
     switch (component) {
       case 'profile':
         console.log(component);
-        return <Profile />;
-      case 'dashboard':
+        return <Profile userID={userID} />;
+      case "dashboard":
         console.log(component);
         return (
           <Dashboard currentDay={currentDay} setCurrentDay={setCurrentDay} />
         );
       case 'logsign':
         console.log(component);
-
         return (
           <LogSignMain
             setLoggedUser={setLoggedUser}
             setComponent={setComponent}
+            setUserID={setUserID}
           />
         );
       case 'calendar':

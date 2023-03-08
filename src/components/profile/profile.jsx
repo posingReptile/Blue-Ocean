@@ -1,7 +1,3 @@
-/*
-recalculate targte calories on edit?
-profile pic changes
-*/
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PersonalRecords from './personalRecords.jsx';
@@ -10,6 +6,9 @@ import defaultProfileImage from '../../assets/pfpic.png';
 import {
   Avatar, Badge, Box, Button, FormControl, Stack, TextField, Typography
 } from '@mui/material';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import EditIcon from '@mui/icons-material/Edit';
 import CastleIcon from '@mui/icons-material/Castle';
 // import '../../css/profile.css';
@@ -27,11 +26,11 @@ function GridEntry(props) {
 }
 
 function FormEntry(props) {
-  const { identifier, formLabel, defaultValue, type, min, max } = props;
+  const { identifier, formLabel, defaultValue, type, min, max, width } = props;
   return (
     <TextField
       variant="outlined"
-      sx={{ mb: 1 }}
+      sx={{ mb: 1, width: width }}
       id={identifier}
       name={identifier}
       label={formLabel}
@@ -46,16 +45,19 @@ function FormEntry(props) {
   );
 }
 
-function Profile() {
+function Profile(props) {
+  const { userID } = props;
+
   const [editFields, setEditFields] = useState(false);
-  const [username, setUsername] = useState('user');
+  const [username, setUsername] = useState('');
   const [profilePic, setProfilePic] = useState(defaultProfileImage);
-  const [heightFt, setHeightFt] = useState(10);
-  const [heightIn, setHeightIn] = useState(12);
-  const [weight, setWeight] = useState(666);
-  const [targetWeight, setTargetWeight] = useState(777);
-  const [age, setAge] = useState(999);
-  const [calorieGoal, setCalorieGoal] = useState(2000);
+  const [heightFt, setHeightFt] = useState();
+  const [heightIn, setHeightIn] = useState();
+  const [weight, setWeight] = useState();
+  const [targetWeight, setTargetWeight] = useState();
+  const [targetDate, setTargetDate] = useState();
+  const [age, setAge] = useState();
+  const [calorieGoal, setCalorieGoal] = useState();
   const [isAdmin, setIsAdmin] = useState(true);
   const [openAdminPage, setOpenAdminPage] = useState(false);
 
@@ -63,13 +65,23 @@ function Profile() {
     setOpenAdminPage(!openAdminPage);
   }
 
-  // useEffect(() => {
-    // returns profile's age, weight, target weight, height, calorie goal
-    //   axios.get(`/profiles/${profileID}/`)
-    //     .then((data) => console.log(data))
-    //     .catch(() => console.log('failed to get profile info'))
-
-  // }, []);
+  useEffect(() => {
+    if (userID) {
+      axios.get(`http://localhost:3000/profiles/${userID}/`)
+        .then(({ data }) => {
+          const userObj = data[0];
+          setUsername(userObj.username);
+          setAge(userObj.age);
+          setHeightFt(userObj.height_feet);
+          setHeightIn(userObj.height_inches);
+          setWeight(userObj.weight);
+          setTargetWeight(userObj.goal_weight);
+          setCalorieGoal(userObj.calorie_goal);
+          setTargetDate(((userObj.goal_date.split('T')[0]).split('-')).join(''));
+        })
+        .catch(() => console.log('failed to get profile info'))
+    }
+  }, [userID]);
 
   function onEdit() {
     setEditFields(!editFields);
@@ -82,27 +94,29 @@ function Profile() {
     setHeightFt(event.target.elements.heightFt.value);
     setHeightIn(event.target.elements.heightIn.value);
     setTargetWeight(event.target.elements.targetWeight.value);
-    setCalorieGoal(event.target.elements.calorieGoal.value);
     const userInfo = {
       age,
       weight,
-      height: (heightFt * 12) + heightIn,
-      targetWeight,
-      calorieGoal,
+      height_feet: heightFt,
+      height_inches: heightIn,
+      goal_weight: targetWeight,
+      goal_date: targetDate,
+      calories: calorieGoal,
     };
-
-    //   // update changed fields
-    //   axios.post(`/profiles/${profileID}`, {
-    //     age,
-    //     weight,
-    //     targetWeight,
-    //     height,
-    //     calorieGoal
-    //   })
-    //     .catch(() => console.log('failed to update profile info'))
-    //  .finally(() => )
-    setEditFields();
+    axios.post(`http://localhost:3000/profiles/${userID}`, userInfo)
+      .then(() => onEdit())
+      .catch(() => console.log('failed to update profile info'));
   }
+
+  function upDate(event) {
+    const day = (event.$D > 10) ? event.$D : ('0' + event.$D);
+    const month = ((event.$M + 1) > 10) ? (event.$M + 1) : ('0' + (event.$M + 1))
+    const year = event.$y;
+    setTargetDate(year + month + day);
+  }
+
+  const formattedDate = targetDate ? targetDate.substring(4, 6) + '/' + targetDate.substring(6) + '/' + targetDate.substring(0, 4) : '';
+
   return (
     <Box sx={{
       maxWidth: '700px',
@@ -141,8 +155,10 @@ function Profile() {
 
             <GridEntry gridValue={weight + ' lbs'} label="current weight" />
             <GridEntry gridValue={targetWeight + ' lbs'} label="target weight" />
+
+            <GridEntry gridValue={formattedDate} label="target date" />
+            <GridEntry gridValue={calorieGoal + ' cals'} label="daily calorie goal" />
           </Box>
-          <GridEntry gridValue={calorieGoal + ' cals'} label="daily calorie goal" />
         </Box>
       )}
 
@@ -166,22 +182,28 @@ function Profile() {
                 <FormEntry identifier="age" formLabel="age" defaultValue={age} type="number" min="12" max="130" />
                 <FormEntry identifier="weight" formLabel="weight" defaultValue={weight} type="number" min="60" max="666"/>
 
-                <Stack direction="row" spacing={2}>
-                  <FormEntry identifier="heightFt" formLabel="ft" defaultValue={heightFt} type="number" min="4" max="8" />
-                  <FormEntry identifier="heightIn" formLabel="in" defaultValue={heightIn} type="number" min="0" max="11" />
+                <Stack direction="row">
+                    <FormEntry identifier="heightFt" formLabel="ft" defaultValue={heightFt} type="number" min="4" max="8" width={1} />
+                    <FormEntry identifier="heightIn" formLabel="in" defaultValue={heightIn} type="number" min="0" max="11" width={1} />
                 </Stack>
+
                 <FormEntry identifier="targetWeight" formLabel="target weight" defaultValue={targetWeight} type="number" min="60" max="666" />
 
-                <GridEntry identifier=""/>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker label="goal date" disablePast onChange={upDate} />
+                </LocalizationProvider>
+                <GridEntry />
 
-                <Stack direction="row" spacing={1} sxx={{ m: 'auto', minWidth: '100% ' }}>
-                  <Button variant="outlined" onClick={onEdit} >
+                <Box sx={{ textAlign: 'right', mr: 1, mt: 1}}>
+                  <Button variant="outlined" onClick={onEdit}>
                     Cancel
                   </Button>
+                </Box>
+                <Box sx={{ textAlign: 'left', ml: 1, mt: 1 }}>
                   <Button type="submit" variant="contained">
                     Done
                   </Button>
-                </Stack>
+                </Box>
               </Box>
             </FormControl>
           </form>
