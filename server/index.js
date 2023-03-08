@@ -153,12 +153,7 @@ app.put("/edit-workout", (req, res) => {
   });
 });
 
-app.put('/edit-workout', (req, res) => {
-  db.query('UPDATE exercises SET weight = $1, sets = $2 , reps = $3, duration = $4, intensity = $5 WHERE exercise_id = $6', [req.body.weight, req.body.sets, req.body.reps, req.body.duration, req.body.intensity, req.body.exerciseId ]).then(() => {
-    console.log('Update Workout Success')
-    res.send(202)
-  })
-})
+
 
 app.delete('/delete', (req, res) => {
     db.query('DELETE FROM exercises WHERE exercise_id = $1', [req.query.exerciseId]).then(() => {
@@ -181,21 +176,7 @@ app.put('/edit-notes', (req, res) => {
   });
 });
 
-app.post("/notes", (req, res) => {
-  // console.log(req.body);
-  // db.query('INSERT INTO workouts (user_id, notes, date) VALUES ($1, $2, $3 )', [req.body.userId, req.body.notes, req.body.date]).then(() => {
-  //   console.log('Added Notes Successfully')
-  //   res.send(202)
-  // })
-});
 
-app.put("/edit-notes", (req, res) => {
-  // console.log(req.body);
-  // db.query('UPDATE workouts SET notes = $1 WHERE date = $2', [req.body.notes, req.body.date]).then(() => {
-  //   console.log('Edit notes Sucessfully')
-  //   res.send(202);
-  // })
-});
 //---------------------------meals---------------------------------
 
 app.get("/nutrition", (req, res) => {
