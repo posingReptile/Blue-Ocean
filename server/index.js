@@ -185,6 +185,17 @@ app.post('/notes', (req, res) => {
     res.send(202)
   })
 })
+app.get('/notes', (req, res) => {
+  db.query('SELECT * FROM workouts WHERE date = $1 AND user_id = $2', [req.query.date, req.query.userId]).then((notes) => {
+    if(notes.rows.length === 0 ) {
+      db.query('INSERT INTO workouts (user_id, date) VALUES ($1, $2) RETURNING *', [req.query.userId, req.query.date]).then((newRow) =>{
+        res.send(newRow.rows)
+      })
+    } else {
+      res.send(notes.rows)
+    }
+  })
+})
 
 app.put('/edit-notes', (req, res) => {
   db.query('UPDATE workouts SET notes = $1 WHERE date = $2', [req.body.notes, req.body.date]).then(() => {
@@ -324,12 +335,12 @@ app.get('/admin-users', (req, res) => {
       users: total.rows[0].count
     })
   })
-  db.query('SELECT COUNT(*) FROM exercises').then((total) => {
+  .then(() => db.query('SELECT COUNT(*) FROM exercises').then((total) => {
     adminstuff.push( {
       exercises : total.rows[0].count
     })
     res.send(adminstuff)
-  })
+  }))
 })
 
 // post a message for users
