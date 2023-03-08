@@ -183,8 +183,8 @@ function Profile(props) {
                 <FormEntry identifier="weight" formLabel="weight" defaultValue={weight} type="number" min="60" max="666"/>
 
                 <Stack direction="row">
-                    <FormEntry identifier="heightFt" formLabel="ft" defaultValue={heightFt} type="number" min="4" max="8" width={1} />
-                    <FormEntry identifier="heightIn" formLabel="in" defaultValue={heightIn} type="number" min="0" max="11" width={1} />
+                  <FormEntry identifier="heightFt" formLabel="ft" defaultValue={heightFt} type="number" min="4" max="8" width={1} />
+                  <FormEntry identifier="heightIn" formLabel="in" defaultValue={heightIn} type="number" min="0" max="11" width={1} />
                 </Stack>
 
                 <FormEntry identifier="targetWeight" formLabel="target weight" defaultValue={targetWeight} type="number" min="60" max="666" />

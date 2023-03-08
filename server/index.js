@@ -39,7 +39,7 @@ app.use(
 //---------------------------login------------------------------
 
 app.get("/login", (req, res) => {
-  db.query("SELECT user_id FROM users WHERE username = $1 AND password = $2", [
+  db.query("SELECT * FROM users WHERE username = $1 AND password = $2", [
     req.query.username,
     req.query.password,
   ]).then((data, err) => {
@@ -48,6 +48,8 @@ app.get("/login", (req, res) => {
       res.send(JSON.stringify("NO USER"));
     } else {
       req.session.username = req.query.username;
+      req.session.user_id = data.rows[0].user_id;
+      console.log(req.session);
       res.send(data.rows[0]);
     }
   });
@@ -59,7 +61,7 @@ app.post("/new-user", (req, res) => {
     .substr(0, 10)
     .replace(/-/g, "");
   db.query(
-    "INSERT INTO users (username, password, age, height_feet, height_inches, weight, goal_weight, goal_date, calorie_goal) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
+    "INSERT INTO users (username, password, age, height_feet, height_inches, weight, goal_weight, goal_date, calorie_goal, isadmin) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
     [
       req.body.username,
       req.body.password,
@@ -70,11 +72,14 @@ app.post("/new-user", (req, res) => {
       req.body.goal_weight,
       req.body.goal_date,
       req.body.calories,
+      req.body.isadmin,
     ]
   )
     .then((data) => {
       console.log("Inserted new user Successfully", data.rows[0]);
       req.session.username = req.body.username;
+      req.session.user_id = data.rows[0].user_id;
+      console.log(req.session);
       res.send(data.rows[0]);
     })
     .catch((err) => {
@@ -183,11 +188,48 @@ app.put("/edit-workout", (req, res) => {
 });
 
 app.delete("/delete", (req, res) => {
-  // Done
   db.query("DELETE FROM exercises WHERE exercise_id = $1", [
     req.query.exerciseId,
   ]).then(() => {
     console.log("Deleted Succesfully");
+    res.send(202);
+  });
+});
+
+app.post("/notes", (req, res) => {
+  db.query("INSERT INTO workouts (user_id, notes, date) VALUES ($1, $2, $3 )", [
+    req.body.userId,
+    req.body.notes,
+    req.body.date,
+  ]).then(() => {
+    console.log("Added Notes Successfully");
+    res.send(202);
+  });
+});
+app.get("/notes", (req, res) => {
+  db.query("SELECT * FROM workouts WHERE date = $1 AND user_id = $2", [
+    req.query.date,
+    req.query.userId,
+  ]).then((notes) => {
+    if (notes.rows.length === 0) {
+      db.query(
+        "INSERT INTO workouts (user_id, date) VALUES ($1, $2) RETURNING *",
+        [req.query.userId, req.query.date]
+      ).then((newRow) => {
+        res.send(newRow.rows);
+      });
+    } else {
+      res.send(notes.rows);
+    }
+  });
+});
+
+app.put("/edit-notes", (req, res) => {
+  db.query("UPDATE workouts SET notes = $1 WHERE date = $2", [
+    req.body.notes,
+    req.body.date,
+  ]).then(() => {
+    console.log("Edit notes Sucessfully");
     res.send(202);
   });
 });
@@ -338,17 +380,20 @@ app.get("/training", (req, res) => {
 
 app.get("/admin-users", (req, res) => {
   let adminstuff = [];
-  db.query("SELECT COUNT(*) FROM users").then((total) => {
-    adminstuff.push({
-      users: total.rows[0].count,
-    });
-  });
-  db.query("SELECT COUNT(*) FROM exercises").then((total) => {
-    adminstuff.push({
-      exercises: total.rows[0].count,
-    });
-    res.send(adminstuff);
-  });
+  db.query("SELECT COUNT(*) FROM users")
+    .then((total) => {
+      adminstuff.push({
+        users: total.rows[0].count,
+      });
+    })
+    .then(() =>
+      db.query("SELECT COUNT(*) FROM exercises").then((total) => {
+        adminstuff.push({
+          exercises: total.rows[0].count,
+        });
+        res.send(adminstuff);
+      })
+    );
 });
 
 // post a message for users

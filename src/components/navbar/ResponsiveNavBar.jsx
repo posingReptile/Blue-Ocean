@@ -24,6 +24,7 @@ function ResponsiveAppBar({ setComponent }) {
   const handleCloseNavMenu = (event, componentName) => {
     setAnchorElNav(null);
     console.log(componentName);
+    setComponent('calendar')
     // setComponent(componentName);
   };
 
