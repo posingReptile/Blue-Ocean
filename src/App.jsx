@@ -22,7 +22,7 @@ function App() {
   const [loggedUser, setLoggedUser] = useState("");
   const [component, setComponent] = useState("logsign");
   const [currentDay, setCurrentDay] = useState(new Date());
-  const [userID, setUserID] = useState(0);
+  // const [userID, setUserID] = useState(0);
   const [userObject, setUserObject] = useState({});
 
   const currDateInt = Number(format(new Date(currentDay), "yyyyMMdd"));
@@ -32,8 +32,8 @@ function App() {
     console.log("Our current component is:", component);
     switch (component) {
       case "profile":
-        console.log(component);
-        return <Profile userID={userID} />;
+        // console.log(component);
+        return <Profile userID={userObject.user_id} />;
       case "dashboard":
         console.log(component);
         return (

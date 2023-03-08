@@ -104,9 +104,9 @@ app.get("/profiles/:profile_id", (req, res) => {
   // res.send { userimglink, age, weight, target weight, height, calorie goal}
 });
 
-app.post("/profiles", (req, res) => {
+app.post("/profiles/:profile_id", (req, res) => {
   db.query(
-    `UPDATE users SET age = $1, height_feet = $2, height_inches = $3, weight = $4, goal_weight = $5, goal_date = $6, calorie_goal = $7  WHERE user_id = ${req.query.profile_id} `,
+    `UPDATE users SET age = $1, height_feet = $2, height_inches = $3, weight = $4, goal_weight = $5, goal_date = $6, calorie_goal = $7  WHERE user_id = ${req.params.profile_id} `,
     [
       req.body.age,
       req.body.height_feet,
