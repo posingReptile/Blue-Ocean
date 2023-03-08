@@ -71,7 +71,7 @@ function EditExerciseModal({
               </Select>
             </FormControl>
             <TextField
-              label="Duration (min)"
+              label="Duration ( min(s) )"
               variant="outlined"
               value={durationInput}
               onChange={(e) => setDurationInput(e.target.value)}
@@ -82,7 +82,7 @@ function EditExerciseModal({
         ) : (
           <>
             <TextField
-              label="Weight (lb)"
+              label="Weight ( lb(s) )"
               variant="outlined"
               value={weightInput}
               onChange={(e) => setWeightInput(e.target.value)}

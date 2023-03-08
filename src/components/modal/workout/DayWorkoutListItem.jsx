@@ -88,7 +88,7 @@ function DayWorkoutListItem({
                 </span>
               ) : (
                 <span className="workout-details">
-                  <span>{`Weight: ${weight} lbs`}</span>|
+                  <span>{`Weight: ${weight} lb(s)`}</span>|
                   <span>{`Sets: ${sets}`}</span>|<span>{`Reps: ${reps}`}</span>
                 </span>
               )}
