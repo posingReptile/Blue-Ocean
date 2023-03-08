@@ -26,11 +26,11 @@ function AdminPage(props) {
       </Button>
       <form onSubmit={submitBannerMessage} style={{ minWidth: '100%' }}>
         <FormControl onSubmit={submitBannerMessage} sx={{ minWidth: '100%' }}>
-            <Stack direction="row" sx={{ display: 'flex', justifyContent: 'left', alignItems: 'left', flexDirection: 'column' }}>
-              <TextField id="adminMessage" label="new banner message" variant="outlined" />
+            <TextField id="adminMessage" label="new banner message" variant="outlined" />
+            <Box direction="row" sx={{ textAlign: 'right', width: '100%' }}>
               <Button variant="outlined">remove</Button>
               <Button variant="contained" type="submit">post</Button>
-            </Stack>
+            </Box>
         </FormControl>
       </form>
       <TableContainer sx={{ mt: 3 }} component={Paper}>

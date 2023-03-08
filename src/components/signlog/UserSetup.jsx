@@ -13,7 +13,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import imgUrl from './biceplogo.png'
 import axios from 'axios';
 
-function UserSetup({ setComponent, setLoginComponent, username, password, setLoggedUser }) {
+function UserSetup({ setComponent, setUserID, setLoginComponent, username, password, setLoggedUser }) {
   const [feet, setFeet] = useState(1);
   const [inches, setInches] = useState(0);
   const [age, setAge] = useState(0);
@@ -122,8 +122,9 @@ function UserSetup({ setComponent, setLoginComponent, username, password, setLog
         calories: Math.floor(calorieGoal),
       }).then((response) => {
         console.log(response.data)
-        if(response.data === 'Accepted') {
+        if(response.data.user_id) {
           setLoggedUser(username);
+          setUserID(response.data.user_id);
           setComponent('profile');
         } else if (response.data === 'USER EXISTS') {
           alert('Username Taken');
@@ -162,7 +163,7 @@ function UserSetup({ setComponent, setLoginComponent, username, password, setLog
           <span className="heightText">{username}, please provide the following details</span><br/><br/>
           <div className="heightBox">
             <span className="heightText">HEIGHT</span>
-            <FormControl sx={{width: '40%', mr: 1, ml: 1, mb: 1}} size="small">
+            <FormControl sx={{width: '45%', mr: 1, ml: 1, mb: 1}} size="small">
               <InputLabel>Feet</InputLabel>
                 <Select
                   value={feet}
@@ -178,7 +179,7 @@ function UserSetup({ setComponent, setLoginComponent, username, password, setLog
                   <MenuItem value={7}>7</MenuItem>
               </Select>
             </FormControl>
-            <FormControl sx={{width: '40%', mb: 1}} size="small">
+            <FormControl sx={{width: '53%', mb: 1}} size="small">
               <InputLabel>Inch</InputLabel>
                 <Select
                   value={inches}
