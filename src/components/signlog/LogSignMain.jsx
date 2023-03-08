@@ -14,7 +14,7 @@ function LogSignMain({ setComponent, setLoggedUser, setUserID }) {
       case 'logsign' :
         return (<LogSign setLoggedUser={setLoggedUser} username={username} setUsername={setUsername} password={password} setPassword={setPassword}setLoginComponent={setLoginComponent} setComponent={setComponent} setUserID={setUserID} />);
       case 'usersetup' :
-        return (<UserSetup setLoggedUser={setLoggedUser} setUsername={setUsername} username={username} password={password} setLoginComponent={setLoginComponent} setComponent={setComponent}/>);
+        return (<UserSetup setUserID={setUserID} setLoggedUser={setLoggedUser} setUsername={setUsername} username={username} password={password} setLoginComponent={setLoginComponent} setComponent={setComponent}/>);
     }
   }
 

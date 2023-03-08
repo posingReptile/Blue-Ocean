@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS users (
   weight INT NOT NULL,
   goal_weight INT NOT NULL,
   goal_date DATE,
-  calorie_goal INT
+  calorie_goal INT,
+  isAdmin BOOLEAN NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS workouts (
@@ -52,3 +53,15 @@ CREATE TABLE IF NOT EXISTS food (
   protein INT NOT NULL,
   description VARCHAR(5000)
 );
+
+CREATE TABLE IF NOT EXISTS quotes (
+  quote_id SERIAL PRIMARY KEY,
+  quote_text VARCHAR(5000)
+);
+
+CREATE TABLE IF NOT EXISTS messages (
+  message_id SERIAL PRIMARY KEY,
+  message VARCHAR(5000),
+  date DATE NOT NULL
+);
+
