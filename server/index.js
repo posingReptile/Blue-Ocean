@@ -18,16 +18,21 @@ import path from "path";
 import express from "express";
 import bodyParser from "body-parser";
 import { db } from "./connect.js";
+import fs from "fs";
 import dotenv from "dotenv";
 import axios from "axios";
 import cors from "cors";
 import session from "express-session";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static("index.html"));
+app.use(express.static(path.join(__dirname + "/../dist/")));
 app.use(
   session({
     secret : "secret",
