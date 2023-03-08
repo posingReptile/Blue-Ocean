@@ -11,11 +11,13 @@ import Button from "@mui/material/Button";
 import MuscleItem from "./MuscleItem";
 import ChooseExerciseModal from "./ChooseExerciseModal";
 
-function ChooseMuscleModal({ handleClose }) {
+function ChooseMuscleModal({ handleClose, currDateInt }) {
   const [currMuscle, setCurrMuscle] = useState("Test Muscle");
   const [exerciseOpen, setExerciseOpen] = useState(false); // Open ChooseExerciseModal
   const [exerciseList, setExerciseList] = useState([]);
   // console.log(exerciseList);
+  console.log(currDateInt);
+  console.log("I AM IN THE MUSCLE MDOAL");
 
   // This handler gets invoked when muscle is clicked (axios call made)
   const handleExerciseOpen = (muscleName, muscleQuery) => {
@@ -98,6 +100,7 @@ function ChooseMuscleModal({ handleClose }) {
         handleClose={handleExerciseClose}
         handleOpen={handleExerciseOpen}
         exerciseList={exerciseList}
+        currDateInt={currDateInt}
       />
     </>
   );

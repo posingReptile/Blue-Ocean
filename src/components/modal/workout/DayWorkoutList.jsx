@@ -9,7 +9,7 @@ import DayWorkoutListItem from "./DayWorkoutListItem";
 import "../../../css/workout.css";
 
 // Show Modal here
-function DayWorkoutList({ exercises, setExercises, showButtons }) {
+function DayWorkoutList({ exercises, setExercises, showButtons, currDateInt }) {
   console.log(exercises);
   // Handler for saving edits
   const handleEditInfo = (editExerciseObj) => {

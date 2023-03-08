@@ -30,6 +30,7 @@ function ChooseExerciseModal({
   handleClose,
   handleOpen,
   exerciseList,
+  currDateInt,
 }) {
   // Pass down function to post a new exercise to the table
   const handleAddExercise = (newExerciseObj) => {
@@ -45,6 +46,8 @@ function ChooseExerciseModal({
         key={exercise.exercise_detail_id}
         exercise={exercise}
         handleAddExercise={handleAddExercise}
+        userId={1}
+        currDateInt={currDateInt}
       />
     );
   });

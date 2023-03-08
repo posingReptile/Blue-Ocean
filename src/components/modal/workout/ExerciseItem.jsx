@@ -18,7 +18,7 @@ import Select from "@mui/material/Select";
 
 // Needs userId and date prop drilled down to each item
 // Need to implement a formula for calories burned
-function ExerciseItem({ handleAddExercise, exercise, userId, date }) {
+function ExerciseItem({ handleAddExercise, exercise, userId, currDateInt }) {
   const [showMore, setShowMore] = useState(false); // Shows the full details of the exercise clicked
   const [intensity, setIntensity] = useState(undefined);
   const [duration, setDuration] = useState(undefined);
@@ -30,13 +30,13 @@ function ExerciseItem({ handleAddExercise, exercise, userId, date }) {
   const { type, instructions, name, difficulty } = exercise;
   const exerciseId = exercise.exercise_detail_id;
 
-  const handleAdd = (e) => {
-    e.stopPropagation();
+  const handleAdd = (event) => {
+    event.stopPropagation();
     setShowMore(false);
     const newExerciseObj = {
       exerciseDetail: exerciseId,
       userId: 1,
-      date: 20230307,
+      date: currDateInt,
       weight: weight || null,
       sets: sets || null,
       reps: reps || null,

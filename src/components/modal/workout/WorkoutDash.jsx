@@ -38,15 +38,16 @@ const modalStyle = {
 };
 
 // Component for Dashboard (Showing today's workout)
-function Workout() {
+function Workout({ currDateInt }) {
   const [exercises, setExercises] = useState([]); // Today's exercises
   const [currNotes, setCurrNotes] = useState(undefined); // Today's notes
   const [showButtons, setShowButtons] = useState(false); // Shows edit and clear button
   const [open, setOpen] = useState(false); // Opens add ChooseMuscleModal
   const handleOpen = () => setOpen(true); // Handles when Add (+) is clicked
   const handleClose = () => setOpen(false); // Handles modal outside click (closes)
-
+  // console.log(currDateInt);
   // console.log(exercises);
+  console.log(currDateInt);
 
   // Should get a list of the current days exercises on initial render and anytime it updates
   useEffect(() => {
@@ -56,7 +57,7 @@ function Workout() {
     axios
       .get("http://localhost:3000/daily-workout", {
         params: {
-          date: 20230307,
+          date: currDateInt,
           userId: 1,
         },
       })
@@ -64,7 +65,7 @@ function Workout() {
         // console.log(data);
         setExercises(data);
       });
-  }, []);
+  }, [currDateInt]);
 
   // Should also grab notes from the database
   useEffect(() => {
@@ -130,6 +131,7 @@ function Workout() {
             showButtons={showButtons}
             exercises={exercises}
             setExercises={setExercises}
+            currDateInt={currDateInt}
           />
           <Grid
             item
@@ -185,7 +187,10 @@ function Workout() {
       </Box>
       <Modal open={open} onClose={handleClose}>
         <Box sx={modalStyle}>
-          <ChooseMuscleModal handleClose={handleClose} />
+          <ChooseMuscleModal
+            handleClose={handleClose}
+            currDateInt={currDateInt}
+          />
         </Box>
       </Modal>
     </>
