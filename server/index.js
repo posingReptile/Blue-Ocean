@@ -21,11 +21,20 @@ import { db } from "./connect.js";
 import dotenv from "dotenv";
 import axios from "axios";
 import cors from "cors";
+import session from "express-session";
+
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static("index.html"));
+app.use(
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
 
 //---------------------------login------------------------------
 
@@ -38,20 +47,19 @@ app.get("/login", (req, res) => {
       console.log("User does not exist");
       res.send(JSON.stringify("NO USER"));
     } else {
-      res.send(202);
+      req.session.username = req.query.username;
+      res.send(data.rows[0]);
     }
   });
 });
 
 app.post("/new-user", (req, res) => {
-  console.log(req.body);
   let formattedDate = new Date(req.body.goal_date)
     .toISOString()
     .substr(0, 10)
     .replace(/-/g, "");
-  console.log(req.body);
   db.query(
-    "INSERT INTO users (username, password, age, height_feet, height_inches, weight, goal_weight, goal_date, calorie_goal) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
+    "INSERT INTO users (username, password, age, height_feet, height_inches, weight, goal_weight, goal_date, calorie_goal) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
     [
       req.body.username,
       req.body.password,
@@ -64,9 +72,10 @@ app.post("/new-user", (req, res) => {
       req.body.calories,
     ]
   )
-    .then(() => {
-      console.log("Inserted new user Successfully");
-      res.send(202);
+    .then((data) => {
+      console.log("Inserted new user Successfully", data.rows[0]);
+      req.session.username = req.body.username;
+      res.send(data.rows[0]);
     })
     .catch((err) => {
       console.log(err);
@@ -74,20 +83,20 @@ app.post("/new-user", (req, res) => {
     });
 });
 //---------------------------dashboard------------------------------
-app.get("/profiles", (req, res) => {
-  db.query(`SELECT * FROM users WHERE user_id  = ${req.query.profile_id}`).then(
-    (userInfo) => {
-      console.log(userInfo.rows);
-      res.send(userInfo.rows);
-    }
-  );
+app.get("/profiles/:profile_id", (req, res) => {
+  db.query(
+    `SELECT * FROM users WHERE user_id  = ${req.params.profile_id}`
+  ).then((userInfo) => {
+    // console.log(userInfo.rows)
+    res.send(userInfo.rows);
+  });
   // get information from db about users based on profile_id
   // res.send { userimglink, age, weight, target weight, height, calorie goal}
 });
 
-app.post("/profiles", (req, res) => {
+app.post("/profiles/:profile_id", (req, res) => {
   db.query(
-    `UPDATE users SET age = $1, height_feet = $2, height_inches = $3, weight = $4, goal_weight = $5, goal_date = $6, calorie_goal = $7  WHERE user_id = ${req.query.profile_id} `,
+    `UPDATE users SET age = $1, height_feet = $2, height_inches = $3, weight = $4, goal_weight = $5, goal_date = $6, calorie_goal = $7  WHERE user_id = ${req.params.profile_id} `,
     [
       req.body.age,
       req.body.height_feet,

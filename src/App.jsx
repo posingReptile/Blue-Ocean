@@ -23,6 +23,7 @@ function App() {
   const [loggedUser, setLoggedUser] = useState("");
   const [component, setComponent] = useState("logsign");
   const [currentDay, setCurrentDay] = useState(new Date());
+  const [userID, setUserID] = useState(0);
 
   const currDateInt = Number(format(new Date(currentDay), "yyyyMMdd"));
   // console.log(currDateInt);
@@ -32,7 +33,7 @@ function App() {
     switch (component) {
       case "profile":
         console.log(component);
-        return <Profile />;
+        return <Profile userID={userID} />;
       case "dashboard":
         console.log(component);
         return (
@@ -44,11 +45,11 @@ function App() {
         );
       case "logsign":
         console.log(component);
-
         return (
           <LogSignMain
             setLoggedUser={setLoggedUser}
             setComponent={setComponent}
+            setUserID={setUserID}
           />
         );
       case "calendar":
