@@ -109,8 +109,8 @@ function Profile(props) {
   }
 
   function upDate(event) {
-    const day = (event.$D > 10) ? event.$D : ('0' + event.$D);
-    const month = ((event.$M + 1) > 10) ? (event.$M + 1) : ('0' + (event.$M + 1))
+    const day = (event.$D >= 10) ? event.$D : ('0' + event.$D);
+    const month = ((event.$M + 1) >= 10) ? (event.$M + 1) : ('0' + (event.$M + 1))
     const year = event.$y;
     setTargetDate(year + month + day);
   }
