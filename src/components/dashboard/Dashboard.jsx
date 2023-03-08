@@ -11,6 +11,23 @@ const Dashboard = ({ currentDay, setCurrentDay }) => {
     <Paper elevation={10} sx={{ width: '1400px' }}>
       <Box
         sx={{
+          paddingTop: 5,
+          marginBottom: 5,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
+      >
+        <Typography variant='h5' sx={{ textAlign: 'center' }}>
+          Daily Wisdom
+        </Typography>
+        <Typography sx={{ textAlign: 'center', fontStyle: 'italic' }}>
+          "The only way to stop me from lifting is if I'm on my death bed, and
+          even then I'll probably ask for a spotter."
+        </Typography>
+      </Box>
+      <Box
+        sx={{
           marginTop: 5,
           marginBottom: 5,
           display: 'flex',
@@ -22,24 +39,16 @@ const Dashboard = ({ currentDay, setCurrentDay }) => {
           setCurrentDay={setCurrentDay}
         />
       </Box>
-      <Paper elevation={3}>
-        <Typography variant='h4' sx={{ textAlign: 'center' }}>
-          Daily Stats
-        </Typography>
-        <Typography sx={{ textAlign: 'center' }}>Calories Consumed</Typography>
-        <Typography sx={{ textAlign: 'center' }}>Calories Burned:</Typography>
-        <Typography sx={{ textAlign: 'center' }}>Calorie Burn</Typography>
-      </Paper>
 
       {/* Planned Workout and Meals */}
 
       {/* Planned Workout and Meals */}
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <WorkoutDash />
+          <WorkoutDash currentDay={currentDay} />
         </Grid>
         <Grid item xs={6}>
-          <WorkoutDash />
+          <WorkoutDash currentDay={currentDay} />
         </Grid>
       </Grid>
     </Paper>
