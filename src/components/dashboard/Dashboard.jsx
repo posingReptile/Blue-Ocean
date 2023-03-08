@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import WorkoutDash from "../modal/workout/WorkoutDash";
 import DatePickerComponent from "./DatePickerComponent";
 
-const Dashboard = ({ currentDay, setCurrentDay, currDateInt }) => {
+const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
   // console.log(currDateInt);
   return (
     <Paper elevation={10} sx={{ width: "1400px" }}>
@@ -46,10 +46,18 @@ const Dashboard = ({ currentDay, setCurrentDay, currDateInt }) => {
       {/* Planned Workout and Meals */}
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <WorkoutDash currentDay={currentDay} currDateInt={currDateInt} />
+          <WorkoutDash
+            currentDay={currentDay}
+            currDateInt={currDateInt}
+            userID={userID}
+          />
         </Grid>
         <Grid item xs={6}>
-          <WorkoutDash currentDay={currentDay} currDateInt={currDateInt} />
+          <WorkoutDash
+            currentDay={currentDay}
+            currDateInt={currDateInt}
+            userID={userID}
+          />
         </Grid>
       </Grid>
     </Paper>

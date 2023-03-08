@@ -41,6 +41,7 @@ function App() {
             currentDay={currentDay}
             setCurrentDay={setCurrentDay}
             currDateInt={currDateInt}
+            userID={userID}
           />
         );
       case "logsign":

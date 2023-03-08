@@ -38,7 +38,7 @@ const modalStyle = {
 };
 
 // Component for Dashboard (Showing today's workout)
-function Workout({ currDateInt }) {
+function Workout({ currDateInt, userID }) {
   const [exercises, setExercises] = useState([]); // Today's exercises
   const [currNotes, setCurrNotes] = useState(undefined); // Today's notes
   const [showButtons, setShowButtons] = useState(false); // Shows edit and clear button
@@ -56,7 +56,7 @@ function Workout({ currDateInt }) {
       .get("http://localhost:3000/daily-workout", {
         params: {
           date: currDateInt,
-          userId: 1,
+          userId: userID,
         },
       })
       .then(({ data }) => {
@@ -71,7 +71,7 @@ function Workout({ currDateInt }) {
     // Finish axios call with setCurrNotes(data);
     //=== Need to give as a body: userId, notes, date ===//
     // axios.post("http://localhost:3000/notes", {
-    //   userId: 1,
+    //   userId: userID,
     //   notes: "",
     //   date: 1,
     // });
@@ -130,6 +130,7 @@ function Workout({ currDateInt }) {
             exercises={exercises}
             setExercises={setExercises}
             currDateInt={currDateInt}
+            userID={userID}
           />
           <Grid
             item
@@ -188,6 +189,8 @@ function Workout({ currDateInt }) {
           <ChooseMuscleModal
             handleClose={handleClose}
             currDateInt={currDateInt}
+            userID={userID}
+            setExercises={setExercises}
           />
         </Box>
       </Modal>

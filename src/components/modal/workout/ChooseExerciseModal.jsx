@@ -31,12 +31,31 @@ function ChooseExerciseModal({
   handleOpen,
   exerciseList,
   currDateInt,
+  userID,
+  setExercises,
 }) {
   // Pass down function to post a new exercise to the table
   const handleAddExercise = (newExerciseObj) => {
     // Make an axios post request here
     console.log("Exercise added to database");
-    axios.post("http://localhost:3000/new-exercise", newExerciseObj);
+    axios
+      .post("http://localhost:3000/new-exercise", newExerciseObj)
+      .then(() => {
+        axios
+          .get("http://localhost:3000/daily-workout", {
+            params: {
+              date: currDateInt,
+              userId: userID,
+            },
+          })
+          .then(({ data }) => {
+            // console.log(data);
+            setExercises(data);
+          });
+      })
+      .catch(() => {
+        console.log("Error adding exercise to users workouts");
+      });
   };
 
   console.log(exerciseList);
@@ -46,7 +65,7 @@ function ChooseExerciseModal({
         key={exercise.exercise_detail_id}
         exercise={exercise}
         handleAddExercise={handleAddExercise}
-        userId={1}
+        userID={userID}
         currDateInt={currDateInt}
       />
     );
