@@ -202,16 +202,16 @@ app.delete("/delete", (req, res) => {
   });
 });
 
-app.post("/notes", (req, res) => {
-  db.query("INSERT INTO workouts (user_id, notes, date) VALUES ($1, $2, $3 )", [
-    req.body.userId,
-    req.body.notes,
-    req.body.date,
-  ]).then(() => {
-    console.log("Added Notes Successfully");
-    res.send(202);
-  });
-});
+// app.post("/notes", (req, res) => {
+//   db.query("INSERT INTO workouts (user_id, notes, date) VALUES ($1, $2, $3 )", [
+//     req.body.userId,
+//     req.body.notes,
+//     req.body.date,
+//   ]).then(() => {
+//     console.log("Added Notes Successfully");
+//     res.send(202);
+//   });
+// });
 
 app.get("/notes", (req, res) => {
   db.query("SELECT * FROM workouts WHERE date = $1 AND user_id = $2", [
@@ -242,18 +242,23 @@ app.get("/notes", (req, res) => {
 
 app.put("/notes", (req, res) => {
   if(req.body.type === 'workout') {
-  db.query("UPDATE workouts SET notes = $1 WHERE date = $2 RETURNING *", [
+  db.query("UPDATE workouts SET notes = $1 WHERE date = $2 AND user_id = $3 RETURNING *", [
     req.body.notes,
     req.body.date,
+    req.body.userId
   ]).then((updatedNotes) => {
     console.log("Added Notes Successfully");
     res.send(updatedNotes.rows);
   });
 }
 if(req.body.type === 'meal') {
-  db.query('UPDATE workouts SET meal_notes = $1 WHERE date = $2 RETURNING *', [req.body.notes, req.body.date]).then((updatedNotes) => {
+  db.query('UPDATE workouts SET meal_notes = $1 WHERE date = $2 AND user_id = $3 RETURNING *', [
+    req.body.notes,
+    req.body.date,
+    req.body.userId
+  ]).then((updatedNotes) => {
     console.log('Edit notes Sucessfully')
-    res.send(updatedNotes);
+    res.send(updatedNotes.rows);
   });
 }
 });
