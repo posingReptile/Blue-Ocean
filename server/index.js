@@ -78,6 +78,7 @@ app.get("/login", (req, res) => {
     } else {
       req.session.username = req.query.username;
       req.session.user_id = data.rows[0].user_id;
+      req.session.isadmin = data.rows[0].isadmin;
       res.send(data.rows[0])
     }
   });
@@ -105,8 +106,12 @@ app.post("/new-user", (req, res) => {
   )
     .then((data) => {
       console.log("Inserted new user Successfully", data.rows[0]);
+      for(key in data.rows[0]){
+        req.session(key) = data.rows[0](key)
+      }
       req.session.username = req.body.username;
       req.session.user_id = data.rows[0].user_id;
+      req.session.isadmin = data.rows[0].isadmin;
       console.log(req.session);
       res.send(data.rows[0]);
     })

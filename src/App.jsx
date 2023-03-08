@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { format } from "date-fns";
 import Profile from './components/profile/profile.jsx';
 import LogSignMain from './components/signlog/LogSignMain.jsx';
 import UserSetup from './components/signlog/UserSetup.jsx';
@@ -24,6 +25,7 @@ function App() {
   const [currentDay, setCurrentDay] = useState(new Date());
   const [userID, setUserID] = useState(0);
   const [userObject, setUserObject] = useState({});
+
 
   useEffect(() => {
     axios.get('http://localhost:3000/session').then((res) => {
@@ -88,7 +90,7 @@ function App() {
           }}
         >
           {component !== 'logsign' && component !== 'usersetup' && (
-            <ResponsiveNavBar setUserObject={setUserObject} setComponent={setComponent} />
+            <ResponsiveNavBar sx={{width: '100%'}} setUserObject={setUserObject} setComponent={setComponent} />
           )}
           {currComponent(component)}
         </Box>
