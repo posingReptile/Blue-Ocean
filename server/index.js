@@ -49,6 +49,8 @@ app.get('/login', (req, res) =>{
       res.send(JSON.stringify('NO USER'))
     } else {
       req.session.username = req.query.username;
+      req.session.user_id = data.rows[0].user_id;
+      console.log(req.session)
       res.send(data.rows[0])
     }
   });
@@ -69,6 +71,8 @@ app.post('/new-user', (req, res) => {
   ]).then((data) => {
     console.log('Inserted new user Successfully', data.rows[0])
     req.session.username = req.body.username;
+    req.session.user_id = data.rows[0].user_id;
+    console.log(req.session)
     res.send(data.rows[0])
   }).catch((err) => {
     console.log(err)
