@@ -319,12 +319,12 @@ app.get('/admin-users', (req, res) => {
       users: total.rows[0].count
     })
   })
-  db.query('SELECT COUNT(*) FROM exercises').then((total) => {
+  .then(() => db.query('SELECT COUNT(*) FROM exercises').then((total) => {
     adminstuff.push( {
       exercises : total.rows[0].count
     })
     res.send(adminstuff)
-  })
+  }))
 })
 
 // post a message for users
