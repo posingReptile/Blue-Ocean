@@ -31,6 +31,25 @@ function ExerciseItem({ handleAddExercise, exercise, userID, currDateInt }) {
   const exerciseId = exercise.exercise_detail_id;
 
   const handleAdd = (event) => {
+    const estimatedStrCals = sets * reps * 1; // Cals from str exercises
+    const estimatedCardioCals = intensity * duration * 5; // Cals from cardio
+    let estimatedTotalCals = 0;
+    if (estimatedStrCals) {
+      estimatedTotalCals += estimatedStrCals;
+    }
+    if (estimatedCardioCals) {
+      estimatedTotalCals += estimatedCardioCals;
+    }
+
+    const estimatedStrDuration = Math.ceil(2 * sets * (reps / 10));
+    let estimatedTotalDuration = 0;
+    if (duration) {
+      estimatedTotalDuration += duration;
+    }
+    if (estimatedStrDuration) {
+      estimatedTotalDuration += estimatedStrDuration;
+    }
+
     event.stopPropagation();
     setShowMore(false);
     const newExerciseObj = {
@@ -40,9 +59,9 @@ function ExerciseItem({ handleAddExercise, exercise, userID, currDateInt }) {
       weight: weight || null,
       sets: sets || null,
       reps: reps || null,
-      duration: duration || null,
+      duration: estimatedTotalDuration || null,
       intensity: intensity || null,
-      caloriesBurned: 999,
+      caloriesBurned: estimatedTotalCals,
     };
     handleAddExercise(newExerciseObj);
   };

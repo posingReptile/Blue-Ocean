@@ -45,8 +45,16 @@ function Workout({ currDateInt, userID }) {
   const [open, setOpen] = useState(false); // Opens add ChooseMuscleModal
   const handleOpen = () => setOpen(true); // Handles when Add (+) is clicked
   const handleClose = () => setOpen(false); // Handles modal outside click (closes)
-  // console.log(exercises);
+  console.log(exercises);
 
+  const totalWorkoutDuration = exercises.reduce((acc, exercise) => {
+    return (acc += exercise.duration);
+  }, 0);
+
+  const totalCalsBurned = exercises.reduce((acc, exercise) => {
+    return (acc += exercise.calories_burned);
+  }, 0);
+  // console.log(totalCalsBurned);
   // Should get a list of the current days exercises on initial render and anytime it updates
   useEffect(() => {
     // Make an axios call here to fetch the current day's workout
@@ -72,10 +80,10 @@ function Workout({ currDateInt, userID }) {
     //=== Need to give as a body: userId, notes, date ===//
     // axios.post("http://localhost:3000/notes", {
     //   userId: userID,
-    //   notes: "",
-    //   date: 1,
+    //   notes: currNotes,
+    //   currDateInt: 1,
     // });
-  }, []);
+  }, [currDateInt]);
 
   const handleNoteSave = () => {
     // Send an axios request to the database to update the notes saved so it persists
@@ -87,8 +95,8 @@ function Workout({ currDateInt, userID }) {
     );
 
     // axios.put("http://localhost:3000/edit-notes", {
-    //   notes: '',
-    //   date: 1
+    //   notes: currNotes,
+    //   date: currDateInt
     // })
   };
 
@@ -142,14 +150,14 @@ function Workout({ currDateInt, userID }) {
             }}
           >
             <Typography sx={{ ml: 4 }} variant="h6" component="div">
-              Calories Burned Today: 1,000,000 (Should be dynamic)
+              Estimated Calories Burned: {totalCalsBurned}
             </Typography>
             <Typography
               sx={{ mt: 2, mb: 3, ml: 4 }}
               variant="h6"
               component="div"
             >
-              Today's Workout Duration: 1 Light year (Should be dynamic)
+              Estimated Workout Duration: {totalWorkoutDuration} min(s)
             </Typography>
           </Grid>
           <Grid

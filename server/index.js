@@ -166,13 +166,14 @@ app.post("/new-exercise", (req, res) => {
 app.put("/edit-workout", (req, res) => {
   // Done
   db.query(
-    "UPDATE exercises SET weight = $1, sets = $2 , reps = $3, duration = $4, intensity = $5 WHERE exercise_id = $6",
+    "UPDATE exercises SET weight = $1, sets = $2 , reps = $3, duration = $4, intensity = $5, calories_burned = $6 WHERE exercise_id = $7",
     [
       req.body.weight,
       req.body.sets,
       req.body.reps,
       req.body.duration,
       req.body.intensity,
+      req.body.caloriesBurned,
       req.body.exerciseId,
     ]
   ).then(() => {

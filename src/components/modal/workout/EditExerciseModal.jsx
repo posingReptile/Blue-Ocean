@@ -24,21 +24,42 @@ function EditExerciseModal({
   reps,
 }) {
   const [intensityInput, setIntensityInput] = useState(intensity);
-  const [durationInput, setDurationInput] = useState(duration);
+  const [durationInput, setDurationInput] = useState(
+    type === "cardio" ? duration : 0
+  );
   const [weightInput, setWeightInput] = useState(weight);
   const [setsInput, setSetsInput] = useState(sets);
   const [repsInput, setRepsInput] = useState(reps);
 
   const handleEditSave = () => {
     handleClose();
-    // handleEditInfo needs an object
+    const estimatedStrCals = setsInput * repsInput * 1; // Cals from str exercises
+    const estimatedCardioCals = intensityInput * durationInput * 5; // Cals from cardio
+    let estimatedTotalCals = 0;
+    if (estimatedStrCals) {
+      estimatedTotalCals += estimatedStrCals;
+    }
+    if (estimatedCardioCals) {
+      estimatedTotalCals += estimatedCardioCals;
+    }
+
+    const estimatedStrDuration = Math.ceil(2 * setsInput * (repsInput / 10));
+    let estimatedTotalDuration = 0;
+    if (durationInput) {
+      estimatedTotalDuration += durationInput;
+    }
+    if (estimatedStrDuration) {
+      estimatedTotalDuration += estimatedStrDuration;
+    }
+
     const editExerciseObj = {
-      exerciseId: exerciseId,
       weight: weightInput,
       sets: setsInput,
       reps: repsInput,
-      duration: durationInput,
+      duration: estimatedTotalDuration,
       intensity: intensityInput,
+      caloriesBurned: estimatedTotalCals,
+      exerciseId: exerciseId,
     };
     handleEditInfo(editExerciseObj);
   };
