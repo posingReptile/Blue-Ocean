@@ -40,7 +40,7 @@ app.use(
 //---------------------------login------------------------------
 
 app.get('/login', (req, res) =>{
-  db.query('SELECT user_id FROM users WHERE username = $1 AND password = $2', [
+  db.query('SELECT * FROM users WHERE username = $1 AND password = $2', [
     req.query.username,
     req.query.password
   ]).then((data, err) => {
@@ -49,6 +49,8 @@ app.get('/login', (req, res) =>{
       res.send(JSON.stringify('NO USER'))
     } else {
       req.session.username = req.query.username;
+      req.session.user_id = data.rows[0].user_id;
+      console.log(req.session)
       res.send(data.rows[0])
     }
   });
@@ -56,7 +58,7 @@ app.get('/login', (req, res) =>{
 
 app.post('/new-user', (req, res) => {
   let formattedDate = new Date(req.body.goal_date).toISOString().substr(0, 10).replace(/-/g, '');
-  db.query('INSERT INTO users (username, password, age, height_feet, height_inches, weight, goal_weight, goal_date, calorie_goal) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', [
+  db.query('INSERT INTO users (username, password, age, height_feet, height_inches, weight, goal_weight, goal_date, calorie_goal, isadmin) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *', [
     req.body.username,
     req.body.password,
     req.body.age,
@@ -65,10 +67,13 @@ app.post('/new-user', (req, res) => {
     req.body.weight,
     req.body.goal_weight,
     req.body.goal_date,
-    req.body.calories
+    req.body.calories,
+    req.body.isadmin
   ]).then((data) => {
     console.log('Inserted new user Successfully', data.rows[0])
     req.session.username = req.body.username;
+    req.session.user_id = data.rows[0].user_id;
+    console.log(req.session)
     res.send(data.rows[0])
   }).catch((err) => {
     console.log(err)

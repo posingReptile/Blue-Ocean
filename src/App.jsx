@@ -23,6 +23,8 @@ function App() {
   const [component, setComponent] = useState('logsign');
   const [currentDay, setCurrentDay] = useState(new Date());
   const [userID, setUserID] = useState(0);
+  const [userObject, setUserObject] = useState({});
+
 
   const currComponent = (component) => {
     console.log('Our current component is:', component);
@@ -39,9 +41,8 @@ function App() {
         console.log(component);
         return (
           <LogSignMain
-            setLoggedUser={setLoggedUser}
+            setUserObject={setUserObject}
             setComponent={setComponent}
-            setUserID={setUserID}
           />
         );
       case 'calendar':
