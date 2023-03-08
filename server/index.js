@@ -198,10 +198,18 @@ app.get('/notes', (req, res) => {
 })
 
 app.put('/edit-notes', (req, res) => {
+  if(req.body.type === 'workout') {
   db.query('UPDATE workouts SET notes = $1 WHERE date = $2', [req.body.notes, req.body.date]).then(() => {
     console.log('Edit notes Sucessfully')
     res.send(202);
   });
+}
+if(req.body.type === 'meal') {
+  db.query('UPDATE workouts SET meal_notes = $1 WHERE date = $2', [req.body.notes, req.body.date]).then(() => {
+    console.log('Edit notes Sucessfully')
+    res.send(202);
+  });
+}
 });
 
 
@@ -353,7 +361,7 @@ app.post('/admin-message', (req, res) => {
 })
 
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Running on port: ${PORT}`);
