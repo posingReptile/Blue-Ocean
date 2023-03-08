@@ -229,31 +229,31 @@ app.get("/notes", (req, res) => {
       res.send(notes.rows);
     }
   })
-app.put("/edit-notes", (req, res) => {
+})
+// app.put("/edit-notes", (req, res) => {
+//   db.query("UPDATE workouts SET notes = $1 WHERE date = $2 RETURNING *", [
+//     req.body.notes,
+//     req.body.date,
+//   ]).then((newRow) => {
+//     res.send(newRow.rows);
+//     console.log("Edit notes Sucessfully");
+//   });
+// });
+
+app.put("/notes", (req, res) => {
+  if(req.body.type === 'workout') {
   db.query("UPDATE workouts SET notes = $1 WHERE date = $2 RETURNING *", [
     req.body.notes,
     req.body.date,
-  ]).then((newRow) => {
-    res.send(newRow.rows);
-    console.log("Edit notes Sucessfully");
-  });
-});
-
-app.post("/notes", (req, res) => {
-  if(req.body.type === 'workout') {
-  db.query("INSERT INTO workouts (user_id, notes, date) VALUES ($1, $2, $3 )", [
-    req.body.userId,
-    req.body.notes,
-    req.body.date,
-  ]).then(() => {
+  ]).then((updatedNotes) => {
     console.log("Added Notes Successfully");
-    res.send(202);
+    res.send(updatedNotes.rows);
   });
 }
 if(req.body.type === 'meal') {
-  db.query('UPDATE workouts SET meal_notes = $1 WHERE date = $2', [req.body.notes, req.body.date]).then(() => {
+  db.query('UPDATE workouts SET meal_notes = $1 WHERE date = $2 RETURNING *', [req.body.notes, req.body.date]).then((updatedNotes) => {
     console.log('Edit notes Sucessfully')
-    res.send(202);
+    res.send(updatedNotes);
   });
 }
 });
