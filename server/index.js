@@ -202,16 +202,16 @@ app.delete("/delete", (req, res) => {
   });
 });
 
-app.post("/notes", (req, res) => {
-  db.query("INSERT INTO workouts (user_id, notes, date) VALUES ($1, $2, $3 )", [
-    req.body.userId,
-    req.body.notes,
-    req.body.date,
-  ]).then(() => {
-    console.log("Added Notes Successfully");
-    res.send(202);
-  });
-});
+// app.post("/notes", (req, res) => {
+//   db.query("INSERT INTO workouts (user_id, notes, date) VALUES ($1, $2, $3 )", [
+//     req.body.userId,
+//     req.body.notes,
+//     req.body.date,
+//   ]).then(() => {
+//     console.log("Added Notes Successfully");
+//     res.send(202);
+//   });
+// });
 
 app.get("/notes", (req, res) => {
   db.query("SELECT * FROM workouts WHERE date = $1 AND user_id = $2", [
@@ -228,28 +228,39 @@ app.get("/notes", (req, res) => {
     } else {
       res.send(notes.rows);
     }
-  });
-});
+  })
+})
+// app.put("/edit-notes", (req, res) => {
+//   db.query("UPDATE workouts SET notes = $1 WHERE date = $2 RETURNING *", [
+//     req.body.notes,
+//     req.body.date,
+//   ]).then((newRow) => {
+//     res.send(newRow.rows);
+//     console.log("Edit notes Sucessfully");
+//   });
+// });
 
-app.put("/edit-notes", (req, res) => {
-  db.query("UPDATE workouts SET notes = $1 WHERE date = $2 RETURNING *", [
+app.put("/notes", (req, res) => {
+  if(req.body.type === 'workout') {
+  db.query("UPDATE workouts SET notes = $1 WHERE date = $2 AND user_id = $3 RETURNING *", [
     req.body.notes,
     req.body.date,
-  ]).then((newRow) => {
-    res.send(newRow.rows);
-    console.log("Edit notes Sucessfully");
-  });
-});
-
-app.post("/notes", (req, res) => {
-  db.query("INSERT INTO workouts (user_id, notes, date) VALUES ($1, $2, $3 )", [
-    req.body.userId,
-    req.body.notes,
-    req.body.date,
-  ]).then(() => {
+    req.body.userId
+  ]).then((updatedNotes) => {
     console.log("Added Notes Successfully");
-    res.send(202);
+    res.send(updatedNotes.rows);
   });
+}
+if(req.body.type === 'meal') {
+  db.query('UPDATE workouts SET meal_notes = $1 WHERE date = $2 AND user_id = $3 RETURNING *', [
+    req.body.notes,
+    req.body.date,
+    req.body.userId
+  ]).then((updatedNotes) => {
+    console.log('Edit notes Sucessfully')
+    res.send(updatedNotes.rows);
+  });
+}
 });
 
 //---------------------------meals---------------------------------
@@ -405,7 +416,7 @@ app.post("/admin-message", (req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Running on port: ${PORT}`);
