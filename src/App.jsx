@@ -18,8 +18,6 @@ function App() {
   const [component, setComponent] = useState('profile');
   const [currentDay, setCurrentDay] = useState(new Date());
 
-  console.log(currentDay);
-
   const currComponent = (component) => {
     switch (component) {
       case 'profile':
