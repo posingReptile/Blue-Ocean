@@ -7,7 +7,7 @@ import WorkoutDash from "../modal/workout/WorkoutDash";
 import DatePickerComponent from "./DatePickerComponent";
 
 const Dashboard = ({ currentDay, setCurrentDay, currDateInt }) => {
-  console.log(currDateInt);
+  // console.log(currDateInt);
   return (
     <Paper elevation={10} sx={{ width: "1400px" }}>
       <Box

@@ -17,7 +17,24 @@ function DayWorkoutList({ exercises, setExercises, showButtons, currDateInt }) {
     console.log(
       "Specific exercise in DayWorkoutList editted via axios call to db"
     );
-    axios.put("http://localhost:3000/edit-workout", editExerciseObj);
+    axios
+      .put("http://localhost:3000/edit-workout", editExerciseObj)
+      .then(() => {
+        axios
+          .get("http://localhost:3000/daily-workout", {
+            params: {
+              date: currDateInt,
+              userId: 1,
+            },
+          })
+          .then(({ data }) => {
+            // console.log(data);
+            setExercises(data);
+          });
+      })
+      .catch(() => {
+        console.log("Error editting current workout");
+      });
   };
 
   const handleDelete = (exerciseId) => {
@@ -35,7 +52,7 @@ function DayWorkoutList({ exercises, setExercises, showButtons, currDateInt }) {
         axios
           .get("http://localhost:3000/daily-workout", {
             params: {
-              date: 20230307,
+              date: currDateInt,
               userId: 1,
             },
           })
@@ -54,9 +71,9 @@ function DayWorkoutList({ exercises, setExercises, showButtons, currDateInt }) {
     return (
       <DayWorkoutListItem
         key={exercise.exercise_id}
-        type="cardio"
+        // type={exercise.type}
         exercise={exercise}
-        exerciseName={"Running Exercise TEST"}
+        // exerciseName={exercise.name}
         showButtons={showButtons}
         handleEditInfo={handleEditInfo}
         handleDelete={handleDelete}

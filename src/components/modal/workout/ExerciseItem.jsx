@@ -74,8 +74,6 @@ function ExerciseItem({ handleAddExercise, exercise, userId, currDateInt }) {
                     <FormControl sx={{ width: 130 }}>
                       <InputLabel>Intensity</InputLabel>
                       <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
                         value={intensity}
                         label="Intensity"
                         onChange={(e) => setIntensity(e.target.value)}

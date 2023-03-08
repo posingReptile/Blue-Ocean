@@ -45,9 +45,7 @@ function Workout({ currDateInt }) {
   const [open, setOpen] = useState(false); // Opens add ChooseMuscleModal
   const handleOpen = () => setOpen(true); // Handles when Add (+) is clicked
   const handleClose = () => setOpen(false); // Handles modal outside click (closes)
-  // console.log(currDateInt);
   // console.log(exercises);
-  console.log(currDateInt);
 
   // Should get a list of the current days exercises on initial render and anytime it updates
   useEffect(() => {

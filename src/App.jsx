@@ -77,7 +77,6 @@ function App() {
           {/* {component !== "logsign" && component !== "usersetup" && (
             <NavBar setComponent={setComponent} currComponent={currComponent} />
           )} */}
-          <WorkoutDash currDateInt={currDateInt} />
         </Box>
       </Container>
     </>

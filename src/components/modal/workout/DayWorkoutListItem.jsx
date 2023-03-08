@@ -23,29 +23,32 @@ import "../../../css/workout.css";
 import EditExerciseModal from "./EditExerciseModal";
 
 function DayWorkoutListItem({
-  // Current expected props
   handleEditInfo,
   handleDelete,
   showButtons,
   exercise,
-  exerciseName = "Test Exercise Name",
-  instructions = "Test Instructions",
-  type = "cardio",
-  intensity = "High",
-  duration = 999,
-  weight = 400,
-  sets = 4,
-  reps = 20,
 }) {
   const [showMore, setShowMore] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null); // Anchor for edit button popover
 
-  // Handles open state for popover
+  // Handles open state for edit popover
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
+  const exerciseName = exercise.name;
   const exerciseId = exercise.exercise_id;
+  const { instructions, type, intensity, duration, weight, sets, reps } =
+    exercise;
+
+  let intensityName = "";
+  if (intensity === 1) {
+    intensityName = "Low";
+  } else if (intensity === 2) {
+    intensityName = "Medium";
+  } else {
+    intensityName = "High";
+  }
 
   // Toggles popover
   const handleEditClick = (e) => {
@@ -80,16 +83,16 @@ function DayWorkoutListItem({
             <>
               {type === "cardio" ? (
                 <span className="workout-details">
-                  <span>{`Intensity: ${intensity}`}</span> |
-                  <span>{`Duration: ${duration} Hour(s)`}</span>
+                  <span>{`Intensity: ${intensityName}`}</span> |
+                  <span>{`Duration: ${duration} minute(s)`}</span>
                 </span>
               ) : (
                 <span className="workout-details">
-                  <span>{`Weight: ${weight}`}</span>|
+                  <span>{`Weight: ${weight} lbs`}</span>|
                   <span>{`Sets: ${sets}`}</span>|<span>{`Reps: ${reps}`}</span>
                 </span>
               )}
-              {showMore && <div>{instructions}</div>}
+              {showMore && <div>Instructions: {instructions}</div>}
             </>
           }
         />
@@ -119,9 +122,15 @@ function DayWorkoutListItem({
               style={{ marginRight: 4 }}
             >
               <EditExerciseModal
-                type={"strength"}
+                exerciseId={exerciseId}
+                type={type}
                 handleClose={handleClose}
                 handleEditInfo={handleEditInfo}
+                intensity={intensity}
+                duration={duration}
+                weight={weight}
+                sets={sets}
+                reps={reps}
               />
             </Popover>
             <Fab
