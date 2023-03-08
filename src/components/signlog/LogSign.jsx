@@ -39,12 +39,12 @@ function Login({ setLoginComponent, setComponent, setPassword, setUsername, user
         if(res.data === 'NO USER') {
           setUsernameError(true);
           setPasswordError(true);
-        } else if (res.statusText === 'Accepted') {
+        } else if (res.data.user_id) {
           setUsernameError(false);
           setPasswordError(false);
           setLoggedUser(username);
           setComponent('dashboard');
-          setUserID(res.data[0].user_id)
+          setUserID(res.data.user_id)
         }
       })
       .catch((err) => {
