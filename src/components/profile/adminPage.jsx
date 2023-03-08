@@ -72,7 +72,7 @@ function AdminPage(props) {
           </Box>
           <TextField id="adminMessage" label="message" variant="outlined" required />
           <Box direction="row" sx={{ textAlign: 'right', width: '100%', mt: 1 }}>
-            <Button variant="outlined">remove</Button>
+            {/* <Button variant="outlined">remove</Button> */}
             <Button variant="contained" type="submit">post</Button>
           </Box>
         </FormControl>
