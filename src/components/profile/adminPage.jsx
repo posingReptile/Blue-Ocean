@@ -18,6 +18,8 @@ function AdminPage(props) {
 
   const [messageDate, setMessageDate] = useState(null);
   const [clicked, setClicked] = useState(false);
+  const [userCount, setUserCount] = useState(null);
+  const [exerciseCount, setExerciseCount] = useState(null);
 
   function upDate(event) {
     const day = (event.$D > 10) ? event.$D : ('0' + event.$D);
@@ -35,7 +37,7 @@ function AdminPage(props) {
     if (messageDateError) setClicked(true);
     else {
       if (clicked) setClicked(false);
-      axios.post(/admin-message/, {
+      axios.post('http://localhost:3000/admin-message/', {
         message: event.target.elements.adminMessage.value,
         date: messageDate
       })
@@ -45,9 +47,10 @@ function AdminPage(props) {
   }
 
   useEffect(() => {
-    axios.get('/admin-users')
+    axios.get('http://localhost:3000/admin-users')
       .then(({data}) => {
-        console.log(data);
+        setUserCount(data[0].users);
+        setExerciseCount(data[1].exercises);
       })
       .catch(() => console.log('failed to get admin data'));
   }, []);
@@ -88,16 +91,16 @@ function AdminPage(props) {
           <TableBody>
             <TableRow>
               <TableCell align="left">users</TableCell>
-              <TableCell align="right"># of users</TableCell>
+              <TableCell align="right">{userCount}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell align="left">workouts planned</TableCell>
-              <TableCell align="right"># of workouts planned</TableCell>
+              <TableCell align="right">{exerciseCount}</TableCell>
             </TableRow>
-            <TableRow>
+            {/* <TableRow>
               <TableCell align="left">completed calorie goals</TableCell>
               <TableCell align="right"># of completed calorie goals</TableCell>
-            </TableRow>
+            </TableRow> */}
           </TableBody>
         </Table>
       </TableContainer>
