@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import imgUrl from './biceplogo.png'
 import axios from 'axios';
 
-function Login({ setLoginComponent, setComponent, setPassword, setUsername, username, password, setLoggedUser, setUserID }) {
+function Login({ setLoginComponent, setUserObject, setComponent, setPassword, setUsername, username, password}) {
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
@@ -42,9 +42,8 @@ function Login({ setLoginComponent, setComponent, setPassword, setUsername, user
         } else if (res.data.user_id) {
           setUsernameError(false);
           setPasswordError(false);
-          setLoggedUser(username);
           setComponent('dashboard');
-          setUserID(res.data.user_id)
+          setUserObject({username: res.data.username, user_id: res.data.user_id, isadmin: res.data.isadmin});
         }
       })
       .catch((err) => {

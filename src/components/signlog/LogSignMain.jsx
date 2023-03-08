@@ -4,7 +4,7 @@ import LogSign from './LogSign.jsx';
 import UserSetup from './UserSetup.jsx';
 
 
-function LogSignMain({ setComponent, setLoggedUser, setUserID }) {
+function LogSignMain({ setComponent, setUserObject }) {
   const [loginComponent, setLoginComponent] = useState('logsign');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -12,9 +12,9 @@ function LogSignMain({ setComponent, setLoggedUser, setUserID }) {
   const currComponent = (loginComponent) => {
     switch (loginComponent) {
       case 'logsign' :
-        return (<LogSign setLoggedUser={setLoggedUser} username={username} setUsername={setUsername} password={password} setPassword={setPassword}setLoginComponent={setLoginComponent} setComponent={setComponent} setUserID={setUserID} />);
+        return (<LogSign setUserObject={setUserObject} username={username} setUsername={setUsername} password={password} setPassword={setPassword}setLoginComponent={setLoginComponent} setComponent={setComponent} />);
       case 'usersetup' :
-        return (<UserSetup setUserID={setUserID} setLoggedUser={setLoggedUser} setUsername={setUsername} username={username} password={password} setLoginComponent={setLoginComponent} setComponent={setComponent}/>);
+        return (<UserSetup setUserObject={setUserObject} setUsername={setUsername} username={username} password={password} setLoginComponent={setLoginComponent} setComponent={setComponent}/>);
     }
   }
 

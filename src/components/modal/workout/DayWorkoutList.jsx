@@ -9,64 +9,75 @@ import DayWorkoutListItem from "./DayWorkoutListItem";
 import "../../../css/workout.css";
 
 // Show Modal here
-function DayWorkoutList({ exercises, showButtons }) {
+function DayWorkoutList({
+  exercises,
+  setExercises,
+  showButtons,
+  currDateInt,
+  userID,
+}) {
   // Handler for saving edits
-  const handleEditInfo = () => {
-    // Make an axios call here to edit the specified exercise by id? (Change weight etc...)
-    console.log(
-      "Specific exercise in DayWorkoutList editted via axios call to db"
-    );
+  const handleEditInfo = (editExerciseObj) => {
+    axios
+      .put("http://localhost:3000/edit-workout", editExerciseObj)
+      .then(() => {
+        axios
+          .get("http://localhost:3000/daily-workout", {
+            params: {
+              date: currDateInt,
+              userId: userID,
+            },
+          })
+          .then(({ data }) => {
+            setExercises(data);
+          });
+      })
+      .catch(() => {
+        console.log("Error editting current workout");
+      });
   };
 
-  const handleDelete = () => {
-    // Make an axios call here to delete the specified exercise by id
-    console.log(
-      "Deleting specific exercise from the DayWorkoutList via axios call"
-    );
+  const handleDelete = (exerciseId) => {
+    axios
+      .delete("http://localhost:3000/delete", {
+        params: {
+          exerciseId: exerciseId,
+        },
+      })
+      .then(() => {
+        axios
+          .get("http://localhost:3000/daily-workout", {
+            params: {
+              date: currDateInt,
+              userId: userID,
+            },
+          })
+          .then(({ data }) => {
+            setExercises(data);
+          });
+      })
+      .catch(() => {
+        console.log("Error deleting the exercise from our daily workout");
+      });
   };
 
-  // Dynamically render DayWorkoutListItem according to exercises
-  const listItems = [];
+  const listItems = exercises.map((exercise) => {
+    return (
+      <DayWorkoutListItem
+        key={exercise.exercise_id}
+        exercise={exercise}
+        showButtons={showButtons}
+        handleEditInfo={handleEditInfo}
+        handleDelete={handleDelete}
+      />
+    );
+  });
 
   return (
     <>
       <Grid item xs={12} md={12}>
         <List sx={{ ml: 4, mr: 4, height: 300, overflow: "auto" }}>
-          <DayWorkoutListItem
-            type="cardio"
-            exerciseName={"Running Exercise 1"}
-            showButtons={showButtons}
-            handleEditInfo={handleEditInfo}
-            handleDelete={handleDelete}
-          />
-          <DayWorkoutListItem
-            type="strength"
-            exerciseName={"Bicep Curls"}
-            showButtons={showButtons}
-            handleEditInfo={handleEditInfo}
-            handleDelete={handleDelete}
-          />
-          <DayWorkoutListItem
-            type="strength"
-            exerciseName={"Chest Press"}
-            showButtons={showButtons}
-            handleEditInfo={handleEditInfo}
-            handleDelete={handleDelete}
-          />
-          <DayWorkoutListItem
-            type="strength"
-            exerciseName={"Chest Press"}
-            showButtons={showButtons}
-            handleEditInfo={handleEditInfo}
-            handleDelete={handleDelete}
-          />
-          <DayWorkoutListItem
-            type="strength"
-            exerciseName={"Chest Press"}
-            showButtons={showButtons}
-            handleEditInfo={handleEditInfo}
-            handleDelete={handleDelete}
-          />
+          {listItems}
         </List>
       </Grid>
     </>

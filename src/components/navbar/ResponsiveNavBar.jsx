@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,16 +14,17 @@ import Button from "@mui/material/Button";
 import "../../css/responsivenavbar.css";
 
 function ResponsiveAppBar({ setComponent }) {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = (e, componentName) => {
+  const handleCloseNavMenu = (event, componentName) => {
     setAnchorElNav(null);
     console.log(componentName);
+    setComponent('calendar')
     // setComponent(componentName);
   };
 
@@ -31,7 +32,7 @@ function ResponsiveAppBar({ setComponent }) {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = (e, componentName) => {
+  const handleCloseUserMenu = (event, componentName) => {
     setAnchorElUser(null);
     // console.log(componentName);
     setComponent(componentName);
