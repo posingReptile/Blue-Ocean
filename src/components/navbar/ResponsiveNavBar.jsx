@@ -10,10 +10,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import axios from "axios";
 
 import "../../css/responsivenavbar.css";
 
-function ResponsiveAppBar({ setComponent }) {
+function ResponsiveAppBar({ setComponent, setUserObject }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -34,7 +35,12 @@ function ResponsiveAppBar({ setComponent }) {
 
   const handleCloseUserMenu = (e, componentName) => {
     setAnchorElUser(null);
-    // console.log(componentName);
+    if(componentName === 'logsign') {
+      axios.get('http://localhost:3000/logout').then((res) => {
+        console.log('res.data', res.data);
+        setUserObject({});
+      });
+    }
     setComponent(componentName);
   };
 
@@ -154,7 +160,7 @@ function ResponsiveAppBar({ setComponent }) {
                 <MenuItem onClick={(e) => handleCloseUserMenu(e, "profile")}>
                   <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
-                <MenuItem onClick={(e) => handleCloseUserMenu(e, "logout")}>
+                <MenuItem onClick={(e) => handleCloseUserMenu(e, "logsign")}>
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
               </Menu>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Profile from './components/profile/profile.jsx';
 import LogSignMain from './components/signlog/LogSignMain.jsx';
 import UserSetup from './components/signlog/UserSetup.jsx';
@@ -6,6 +6,7 @@ import CalendarPage from './components/calendar/Calendar.jsx';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 import NavBar from './components/navbar/NavBar.jsx';
 import Meals from './components/modal/meals/Meals.jsx';
+import axios from 'axios';
 
 import ResponsiveNavBar from './components/navbar/ResponsiveNavBar';
 
@@ -24,6 +25,22 @@ function App() {
   const [currentDay, setCurrentDay] = useState(new Date());
   const [userID, setUserID] = useState(0);
   const [userObject, setUserObject] = useState({});
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/session').then((res) => {
+      console.log('res.data', res.data);
+      if (res.data.user_id) {
+        setUserID(res.data.user_id);
+        setComponent('dashboard');
+        setUserObject({
+          username: res.data.username,
+          user_id: res.data.user_id,
+          isadmin: res.data.isadmin,
+        });
+      }
+    });
+  }, []);
+
 
 
   const currComponent = (component) => {
@@ -65,7 +82,7 @@ function App() {
           }}
         >
           {component !== 'logsign' && component !== 'usersetup' && (
-            <ResponsiveNavBar setComponent={setComponent} />
+            <ResponsiveNavBar setUserObject={setUserObject} setComponent={setComponent} />
           )}
           {currComponent(component)}
           {/* {component !== "logsign" && component !== "usersetup" && (

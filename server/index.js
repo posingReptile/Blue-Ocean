@@ -24,25 +24,48 @@ import axios from "axios";
 import cors from "cors";
 import session from "express-session";
 import { fileURLToPath } from 'url';
+import pgSession from 'connect-pg-simple';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const createLog = (req, res, next) => {
+  res.on("finish", function() {
+    console.log(req.method, req.session, decodeURI(req.url), res.statusCode, res.statusMessage);
+  });
+  next();
+};
 
 dotenv.config();
 const app = express();
 app.use(cors());
+app.use(createLog);
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname + "/../dist/")));
 app.use(
   session({
+    store : new (pgSession(session))({
+      createTableIfMissing : true,
+      pool : db
+    }),
     secret : "secret",
     resave : true,
+    unset: 'destroy',
     saveUninitialized : true
   })
 )
 
+//---------------------------Session----------------------------
+app.get('/session', (req, res) => {
+  console.log(req)
+  res.send(req.session)
+})
 
 //---------------------------login------------------------------
+app.get('/logout', (req, res) => {
+  console.log('logging out')
+  req.session = null;
+  res.send('logged out')
+})
 
 app.get('/login', (req, res) =>{
   db.query('SELECT * FROM users WHERE username = $1 AND password = $2', [
@@ -55,7 +78,6 @@ app.get('/login', (req, res) =>{
     } else {
       req.session.username = req.query.username;
       req.session.user_id = data.rows[0].user_id;
-      console.log(req.session)
       res.send(data.rows[0])
     }
   });
@@ -86,6 +108,7 @@ app.post('/new-user', (req, res) => {
   })
 
 });
+
 //---------------------------dashboard------------------------------
 app.get('/profiles/:profile_id', (req, res) => {
   db.query(`SELECT * FROM users WHERE user_id  = ${req.params.profile_id}`).then((userInfo) => {
