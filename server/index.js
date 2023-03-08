@@ -39,7 +39,8 @@ app.get('/login', (req, res) =>{
       console.log('User does not exist')
       res.send(JSON.stringify('NO USER'))
     } else {
-      res.send(202);
+      res.status(202);
+      res.send(data.rows);
     }
   });
 });
