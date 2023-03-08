@@ -44,7 +44,7 @@ function Login({ setLoginComponent, setComponent, setPassword, setUsername, user
           setPasswordError(false);
           setLoggedUser(username);
           setComponent('dashboard');
-          setUserID(res.data[0])
+          setUserID(res.data[0].user_id)
         }
       })
       .catch((err) => {

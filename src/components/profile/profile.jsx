@@ -46,8 +46,8 @@ function FormEntry(props) {
 }
 
 function Profile(props) {
-  // const { userID } = props;
-  const userID = 1;
+  const { userID } = props;
+
   const [editFields, setEditFields] = useState(false);
   const [username, setUsername] = useState('');
   const [profilePic, setProfilePic] = useState(defaultProfileImage);
