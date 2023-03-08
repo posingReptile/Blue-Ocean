@@ -7,6 +7,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
+import Divider from "@mui/material/Divider";
 
 // Icons
 import Button from "@mui/material/Button";
@@ -113,31 +114,92 @@ function Workout({ currDateInt, userID }) {
       <Box
         sx={{
           minHeight: 600,
+          width: 500,
           backgroundColor: "primary.light",
           borderRadius: 4,
           margin: 4,
         }}
       >
         <Grid container spacing={2}>
-          <Grid item xs={8}>
-            <Typography variant="h4" component="div" align="center">
-              Today's Workout
-            </Typography>
-          </Grid>
-          <Grid item xs={4} align="end" sx={{ pr: 4 }}>
-            <Fab
-              color="primary"
-              onClick={() => {
-                setShowButtons(!showButtons);
+          <Grid
+            item
+            xs={12}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              backgroundColor: "lightblue",
+              marginLeft: 2,
+              borderTopLeftRadius: 15,
+              borderTopRightRadius: 15,
+            }}
+          >
+            <Grid item xs={12} sx={{ display: "flex", marginBottom: 2 }}>
+              <Grid item xs={8}>
+                <Typography
+                  variant="h4"
+                  component="div"
+                  sx={{
+                    display: "flex",
+                    paddingTop: 1,
+                    paddingLeft: 2,
+                  }}
+                >
+                  Today's Workout
+                </Typography>
+              </Grid>
+              <Grid item xs={4} align="end" sx={{ pr: 4 }}>
+                <Fab
+                  color="primary"
+                  onClick={() => {
+                    setShowButtons(!showButtons);
+                  }}
+                  sx={{ mr: 2 }}
+                >
+                  <EditIcon />
+                </Fab>
+                <Fab color="primary" onClick={handleOpen}>
+                  <AddIcon />
+                </Fab>
+              </Grid>
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-end",
               }}
-              sx={{ mr: 2 }}
             >
-              <EditIcon />
-            </Fab>
-            <Fab color="primary" onClick={handleOpen}>
-              <AddIcon />
-            </Fab>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  paddingBottom: 10,
+                }}
+              >
+                <Typography
+                  sx={{ ml: 2, fontSize: 18 }}
+                  variant="h6"
+                  component="div"
+                >
+                  <span style={{ fontWeight: 700 }}>Calories 🔥:</span> ~
+                  {totalCalsBurned} cals
+                </Typography>
+                <Typography
+                  sx={{ mr: 4, fontSize: 18 }}
+                  variant="h6"
+                  component="div"
+                >
+                  <span style={{ fontWeight: 700 }}>Workout 🕛:</span> ~
+                  {totalWorkoutDuration} min(s)
+                </Typography>
+              </div>
+              {/* <Divider /> */}
+            </Grid>
           </Grid>
+
           <DayWorkoutList
             showButtons={showButtons}
             exercises={exercises}
@@ -145,35 +207,17 @@ function Workout({ currDateInt, userID }) {
             currDateInt={currDateInt}
             userID={userID}
           />
+
           <Grid
             item
-            xs={6}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-            }}
-          >
-            <Typography sx={{ ml: 4 }} variant="h6" component="div">
-              Estimated Calories Burned: {totalCalsBurned} cals
-            </Typography>
-            <Typography
-              sx={{ mt: 2, mb: 3, ml: 4 }}
-              variant="h6"
-              component="div"
-            >
-              Estimated Workout Duration: {totalWorkoutDuration} min(s)
-            </Typography>
-          </Grid>
-          <Grid
-            item
-            xs={6}
+            xs={12}
             sx={{
               display: "flex",
               flexDirection: "column",
               alignItems: "flex-end",
               justifyContent: "center",
               paddingRight: 4,
+              marginLeft: 4,
               paddingBottom: 3,
             }}
           >
@@ -183,8 +227,8 @@ function Workout({ currDateInt, userID }) {
               value={currNotes}
               onChange={(e) => setCurrNotes(e.target.value)}
               multiline
-              sx={{ width: 300 }}
-              rows={8}
+              sx={{ width: "100%" }}
+              rows={5}
             />
             <Button
               variant="contained"
