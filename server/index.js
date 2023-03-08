@@ -139,6 +139,7 @@ app.get("/exercises", (req, res) => {
 });
 
 app.get("/daily-workout", (req, res) => {
+  // done
   db.query(
     "SELECT * FROM exercises FULL OUTER JOIN exercise_details ON exercises.exercise_detail_id = exercise_details.exercise_detail_id WHERE exercises.date = $1 AND user_id = $2 ORDER BY exercises.exercise_id ASC",
     [req.query.date, req.query.userId]
@@ -206,6 +207,7 @@ app.post("/notes", (req, res) => {
     res.send(202);
   });
 });
+
 app.get("/notes", (req, res) => {
   db.query("SELECT * FROM workouts WHERE date = $1 AND user_id = $2", [
     req.query.date,
@@ -225,12 +227,12 @@ app.get("/notes", (req, res) => {
 });
 
 app.put("/edit-notes", (req, res) => {
-  db.query("UPDATE workouts SET notes = $1 WHERE date = $2", [
+  db.query("UPDATE workouts SET notes = $1 WHERE date = $2 RETURNING *", [
     req.body.notes,
     req.body.date,
-  ]).then(() => {
+  ]).then((newRow) => {
+    res.send(newRow.rows);
     console.log("Edit notes Sucessfully");
-    res.send(202);
   });
 });
 
@@ -241,16 +243,6 @@ app.post("/notes", (req, res) => {
     req.body.date,
   ]).then(() => {
     console.log("Added Notes Successfully");
-    res.send(202);
-  });
-});
-
-app.put("/edit-notes", (req, res) => {
-  db.query("UPDATE workouts SET notes = $1 WHERE date = $2", [
-    req.body.notes,
-    req.body.date,
-  ]).then(() => {
-    console.log("Edit notes Sucessfully");
     res.send(202);
   });
 });

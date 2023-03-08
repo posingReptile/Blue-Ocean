@@ -40,12 +40,14 @@ const modalStyle = {
 // Component for Dashboard (Showing today's workout)
 function Workout({ currDateInt, userID }) {
   const [exercises, setExercises] = useState([]); // Today's exercises
-  const [currNotes, setCurrNotes] = useState(undefined); // Today's notes
+  const [currNotes, setCurrNotes] = useState(""); // Today's notes
   const [showButtons, setShowButtons] = useState(false); // Shows edit and clear button
   const [open, setOpen] = useState(false); // Opens add ChooseMuscleModal
   const handleOpen = () => setOpen(true); // Handles when Add (+) is clicked
   const handleClose = () => setOpen(false); // Handles modal outside click (closes)
-  console.log(exercises);
+  // console.log(exercises);
+  // console.log(userID);
+  // console.log(currNotes);
 
   const totalWorkoutDuration = exercises.reduce((acc, exercise) => {
     return (acc += exercise.duration);
@@ -54,12 +56,9 @@ function Workout({ currDateInt, userID }) {
   const totalCalsBurned = exercises.reduce((acc, exercise) => {
     return (acc += exercise.calories_burned);
   }, 0);
-  // console.log(totalCalsBurned);
-  // Should get a list of the current days exercises on initial render and anytime it updates
+
+  // Grab today's workout (A list of exercises)
   useEffect(() => {
-    // Make an axios call here to fetch the current day's workout
-    // Finish the axios call with setting exercises using setExercises(data);
-    //=== Need to give as a query object, date and userId ===//
     axios
       .get("http://localhost:3000/daily-workout", {
         params: {
@@ -68,40 +67,45 @@ function Workout({ currDateInt, userID }) {
         },
       })
       .then(({ data }) => {
-        // console.log(data);
         setExercises(data);
       });
   }, [currDateInt]);
 
-  // Should also grab notes from the database
+  // Grab the current day's workout notes
   useEffect(() => {
-    // Make an axios call here to fetch the current day's notes
-    // Finish axios call with setCurrNotes(data);
-    //=== Need to give as a body: userId, notes, date ===//
-    // axios.post("http://localhost:3000/notes", {
-    //   userId: userID,
-    //   notes: currNotes,
-    //   currDateInt: 1,
-    // });
+    axios
+      .get("http://localhost:3000/notes", {
+        params: {
+          date: currDateInt,
+          userId: userID,
+        },
+      })
+      .then(({ data }) => {
+        if (!data[0].notes) {
+          setCurrNotes("");
+        } else {
+          setCurrNotes(data[0].notes);
+        }
+      })
+      .catch(() => {
+        console.log("Error gathering notes for the day");
+      });
   }, [currDateInt]);
 
+  // Send a put request when clicking save notes
   const handleNoteSave = () => {
-    // Send an axios request to the database to update the notes saved so it persists
-    // Do not save in state
-    console.log(
-      "Sending an axios request to PUT to the database and edit the note",
-      "The currNotes is:",
-      currNotes
-    );
-
-    // axios.put("http://localhost:3000/edit-notes", {
-    //   notes: currNotes,
-    //   date: currDateInt
-    // })
+    axios
+      .put("http://localhost:3000/edit-notes", {
+        notes: currNotes,
+        date: currDateInt,
+      })
+      .then(({ data }) => {
+        setCurrNotes(data[0].notes);
+      })
+      .catch(() => {
+        console.log("Error updating notes");
+      });
   };
-
-  // Find a way to calculate today's workout duration
-  // Find a way to calculate calories burned today via exercises combined
 
   return (
     <>
@@ -150,7 +154,7 @@ function Workout({ currDateInt, userID }) {
             }}
           >
             <Typography sx={{ ml: 4 }} variant="h6" component="div">
-              Estimated Calories Burned: {totalCalsBurned}
+              Estimated Calories Burned: {totalCalsBurned} cals
             </Typography>
             <Typography
               sx={{ mt: 2, mb: 3, ml: 4 }}
@@ -173,7 +177,6 @@ function Workout({ currDateInt, userID }) {
             }}
           >
             <TextField
-              id="outlined-basic"
               label="Notes"
               variant="outlined"
               value={currNotes}

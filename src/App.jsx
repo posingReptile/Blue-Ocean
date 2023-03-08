@@ -7,10 +7,7 @@ import CalendarPage from "./components/calendar/Calendar.jsx";
 import Dashboard from "./components/dashboard/Dashboard.jsx";
 import NavBar from "./components/navbar/NavBar.jsx";
 import Meals from "./components/modal/meals/Meals.jsx";
-
 import ResponsiveNavBar from "./components/navbar/ResponsiveNavBar";
-
-import WorkoutDash from "./components/modal/workout/WorkoutDash";
 
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -44,7 +41,7 @@ function App() {
             currentDay={currentDay}
             setCurrentDay={setCurrentDay}
             currDateInt={currDateInt}
-            userID={userID}
+            userID={userObject.user_id}
           />
         );
       case "logsign":
@@ -78,9 +75,6 @@ function App() {
             <ResponsiveNavBar setComponent={setComponent} />
           )}
           {currComponent(component)}
-          {/* {component !== "logsign" && component !== "usersetup" && (
-            <NavBar setComponent={setComponent} currComponent={currComponent} />
-          )} */}
         </Box>
       </Container>
     </>
