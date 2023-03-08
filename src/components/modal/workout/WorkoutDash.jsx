@@ -98,6 +98,7 @@ function Workout({ currDateInt, userID }) {
       .put("http://localhost:3000/edit-notes", {
         notes: currNotes,
         date: currDateInt,
+        type: "workout",
       })
       .then(({ data }) => {
         setCurrNotes(data[0].notes);
