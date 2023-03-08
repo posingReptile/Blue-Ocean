@@ -114,6 +114,7 @@ function Workout({ currDateInt, userID }) {
       <Box
         sx={{
           minHeight: 600,
+          // height: 600,
           width: 500,
           backgroundColor: "primary.light",
           borderRadius: 4,
@@ -228,7 +229,7 @@ function Workout({ currDateInt, userID }) {
               onChange={(e) => setCurrNotes(e.target.value)}
               multiline
               sx={{ width: "100%" }}
-              rows={5}
+              rows={3}
             />
             <Button
               variant="contained"

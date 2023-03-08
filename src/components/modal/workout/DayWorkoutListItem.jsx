@@ -86,11 +86,17 @@ function DayWorkoutListItem({
         sx={{ mr: 1 }}
       >
         <ListItemAvatar>
-          <Avatar sx={{ backgroundColor: "" }}>
+          <Avatar sx={{ backgroundColor: "white" }}>
             {type === "cardio" ? (
-              <DirectionsRunIcon color="secondary" />
+              <DirectionsRunIcon
+                color="primary"
+                sx={{ "&:hover": { color: "#006edc" } }}
+              />
             ) : (
-              <FitnessCenterIcon color="secondary" />
+              <FitnessCenterIcon
+                color="primary"
+                sx={{ "&:hover": { color: "#006edc" } }}
+              />
             )}
           </Avatar>
         </ListItemAvatar>

@@ -24,7 +24,7 @@ function ResponsiveAppBar({ setComponent }) {
   const handleCloseNavMenu = (event, componentName) => {
     setAnchorElNav(null);
     console.log(componentName);
-    setComponent('calendar')
+    setComponent("calendar");
     // setComponent(componentName);
   };
 
@@ -35,6 +35,7 @@ function ResponsiveAppBar({ setComponent }) {
   const handleCloseUserMenu = (event, componentName) => {
     setAnchorElUser(null);
     // console.log(componentName);
+    if (!componentName) return;
     setComponent(componentName);
   };
 
