@@ -31,7 +31,7 @@ function App() {
     axios.get('http://localhost:3000/session').then((res) => {
       console.log('res.data', res.data);
       if (res.data.user_id) {
-        setUserID(res.data.user_id);
+        //setUserID(res.data.user_id);
         setComponent('dashboard');
         setUserObject({
           username: res.data.username,
