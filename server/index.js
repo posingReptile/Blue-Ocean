@@ -76,7 +76,7 @@ app.get('/excerises', (req, res) => {
 });
 
 app.get('/daily-workout', (req, res) => {
-  db.query(`SELECT * FROM exercises  WHERE date = $1 AND user_id = $2`, [req.query.date, req.query.userId]) .then((workouts) => {
+  db.query('SELECT * FROM exercises FULL OUTER JOIN exercise_details ON exercises.exercise_detail_id = exercise_details.exercise_detail_id WHERE exercises.date = '$1' AND user_id = $2', [req.query.date, req.query.userId]) .then((workouts) => {
     res.send(workouts.rows)
   })
 })
