@@ -26,11 +26,11 @@ function GridEntry(props) {
 }
 
 function FormEntry(props) {
-  const { identifier, formLabel, defaultValue, type, min, max } = props;
+  const { identifier, formLabel, defaultValue, type, min, max, width } = props;
   return (
     <TextField
       variant="outlined"
-      sx={{ mb: 1 }}
+      sx={{ mb: 1, width: width }}
       id={identifier}
       name={identifier}
       label={formLabel}
@@ -182,24 +182,28 @@ function Profile(props) {
                 <FormEntry identifier="age" formLabel="age" defaultValue={age} type="number" min="12" max="130" />
                 <FormEntry identifier="weight" formLabel="weight" defaultValue={weight} type="number" min="60" max="666"/>
 
-                <Stack direction="row" spacing={2}>
-                  <FormEntry identifier="heightFt" formLabel="ft" defaultValue={heightFt} type="number" min="4" max="8" />
-                  <FormEntry identifier="heightIn" formLabel="in" defaultValue={heightIn} type="number" min="0" max="11" />
+                <Stack direction="row">
+                    <FormEntry identifier="heightFt" formLabel="ft" defaultValue={heightFt} type="number" min="4" max="8" width={1} />
+                    <FormEntry identifier="heightIn" formLabel="in" defaultValue={heightIn} type="number" min="0" max="11" width={1} />
                 </Stack>
+
                 <FormEntry identifier="targetWeight" formLabel="target weight" defaultValue={targetWeight} type="number" min="60" max="666" />
 
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker label="goal date" disablePast onChange={upDate} />
                 </LocalizationProvider>
+                <GridEntry />
 
-                <Stack direction="row" spacing={1} sxx={{ m: 'auto', minWidth: '100% ' }}>
-                  <Button variant="outlined" onClick={onEdit} >
+                <Box sx={{ textAlign: 'right', mr: 1, mt: 1}}>
+                  <Button variant="outlined" onClick={onEdit}>
                     Cancel
                   </Button>
+                </Box>
+                <Box sx={{ textAlign: 'left', ml: 1, mt: 1 }}>
                   <Button type="submit" variant="contained">
                     Done
                   </Button>
-                </Stack>
+                </Box>
               </Box>
             </FormControl>
           </form>
