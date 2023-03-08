@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -22,7 +22,7 @@ function ResponsiveAppBar({ setComponent, setUserObject }) {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = (e, componentName) => {
+  const handleCloseNavMenu = (event, componentName) => {
     setAnchorElNav(null);
     console.log(componentName);
     setComponent('calendar')
@@ -33,7 +33,7 @@ function ResponsiveAppBar({ setComponent, setUserObject }) {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = (e, componentName) => {
+  const handleCloseUserMenu = (event, componentName) => {
     setAnchorElUser(null);
     if(componentName === 'logsign') {
       axios.get('http://localhost:3000/logout').then((res) => {

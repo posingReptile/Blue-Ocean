@@ -6,22 +6,21 @@ import CalendarPage from './components/calendar/Calendar.jsx';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 import NavBar from './components/navbar/NavBar.jsx';
 import Meals from './components/modal/meals/Meals.jsx';
+import ResponsiveNavBar from './components/navbar/ResponsiveNavBar.jsx';
 import axios from 'axios';
 
-import ResponsiveNavBar from './components/navbar/ResponsiveNavBar';
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import TabPanel from "@mui/material/Button";
 
-import WorkoutDash from './components/modal/workout/WorkoutDash';
-
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import TabPanel from '@mui/material/Button';
+import "./css/App.css";
 
 function App() {
   const [count, setCount] = useState(0);
-  const [loggedUser, setLoggedUser] = useState('');
-  const [component, setComponent] = useState('logsign');
+  const [loggedUser, setLoggedUser] = useState("");
+  const [component, setComponent] = useState("logsign");
   const [currentDay, setCurrentDay] = useState(new Date());
   const [userID, setUserID] = useState(0);
   const [userObject, setUserObject] = useState({});
@@ -42,19 +41,26 @@ function App() {
   }, []);
 
 
+  const currDateInt = Number(format(new Date(currentDay), "yyyyMMdd"));
+  // console.log(currDateInt);
 
   const currComponent = (component) => {
-    console.log('Our current component is:', component);
+    console.log("Our current component is:", component);
     switch (component) {
-      case 'profile':
+      case "profile":
         console.log(component);
         return <Profile userID={userID} />;
       case "dashboard":
         console.log(component);
         return (
-          <Dashboard currentDay={currentDay} setCurrentDay={setCurrentDay} />
+          <Dashboard
+            currentDay={currentDay}
+            setCurrentDay={setCurrentDay}
+            currDateInt={currDateInt}
+            userID={userObject.user_id}
+          />
         );
-      case 'logsign':
+      case "logsign":
         console.log(component);
         return (
           <LogSignMain
@@ -62,7 +68,7 @@ function App() {
             setComponent={setComponent}
           />
         );
-      case 'calendar':
+      case "calendar":
         console.log(component);
         return (
           <CalendarPage currentDay={currentDay} setCurrentDay={setCurrentDay} />
@@ -74,20 +80,17 @@ function App() {
 
   return (
     <>
-      <Container maxWidth='lg'>
+      <Container maxWidth="lg">
         <Box
           sx={{
-            bgcolor: '#cfe8fc',
-            height: '100vh',
+            bgcolor: "#cfe8fc",
+            height: "100vh",
           }}
         >
           {component !== 'logsign' && component !== 'usersetup' && (
             <ResponsiveNavBar setUserObject={setUserObject} setComponent={setComponent} />
           )}
           {currComponent(component)}
-          {/* {component !== "logsign" && component !== "usersetup" && (
-            <NavBar setComponent={setComponent} currComponent={currComponent} />
-          )} */}
         </Box>
       </Container>
     </>

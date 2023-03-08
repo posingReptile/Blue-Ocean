@@ -46,26 +46,27 @@ VALUES
   (1, 7, 125, 5, 8, NULL, NULL, 280, '2023-03-09'),
   (2, 7, 135, 5, 10, NULL, NULL, 320, '2023-03-09');
 
-INSERT INTO workouts (user_id, notes, date)
+INSERT INTO workouts (user_id, notes, meal_notes, date)
 VALUES
-  (1, 'Leg day!', '2023-03-09'),
-  (1, 'Chest and triceps', '2023-03-10'),
-  (1, 'Back and biceps', '2023-03-13'),
-  (2, 'Back and biceps', '2023-03-09'),
-  (2, 'Shoulders and abs', '2023-03-10'),
-  (2, 'Chest and triceps', '2023-03-14'),
-  (3, 'Full body workout', '2023-03-09'),
-  (3, 'Leg day!', '2023-03-10'),
-  (3, 'HIIT training', '2023-03-11'),
-  (4, 'Chest and triceps', '2023-03-09'),
-  (4, 'Full body workout', '2023-03-10'),
-  (4, 'Shoulders and abs', '2023-03-14'),
-  (5, 'Back and biceps', '2023-03-09'),
-  (5, 'Leg day!', '2023-03-11'),
-  (5, 'Shoulders and abs', '2023-03-12'),
-  (6, 'Full body workout', '2023-03-09'),
-  (6, 'Leg day!', '2023-03-10'),
-  (6, 'Back and biceps', '2023-03-13');
+  (1, 'Leg day!', 'Had a protein shake before the workout', '2023-03-09'),
+  (1, 'Chest and triceps', 'Ate grilled chicken and veggies for lunch', '2023-03-10'),
+  (1, 'Back and biceps', 'Had a banana as a pre-workout snack', '2023-03-13'),
+  (2, 'Back and biceps', 'Ate a turkey sandwich after the workout', '2023-03-09'),
+  (2, 'Shoulders and abs', 'Had a protein bar before the workout', '2023-03-10'),
+  (2, 'Chest and triceps', 'Ate brown rice and grilled salmon for dinner', '2023-03-14'),
+  (3, 'Full body workout', 'Had a green smoothie as a post-workout snack', '2023-03-09'),
+  (3, 'Leg day!', 'Ate oatmeal with fruit for breakfast', '2023-03-10'),
+  (3, 'HIIT training', 'Had a peanut butter sandwich as a pre-workout snack', '2023-03-11'),
+  (4, 'Chest and triceps', 'Ate a spinach salad for lunch', '2023-03-09'),
+  (4, 'Full body workout', 'Had a turkey and avocado wrap for lunch', '2023-03-10'),
+  (4, 'Shoulders and abs', 'Ate a sweet potato after the workout', '2023-03-14'),
+  (5, 'Back and biceps', 'Had a protein shake after the workout', '2023-03-09'),
+  (5, 'Leg day!', 'Ate grilled chicken and broccoli for dinner', '2023-03-11'),
+  (5, 'Shoulders and abs', 'Ate a quinoa salad for lunch', '2023-03-12'),
+  (6, 'Full body workout', 'Ate a turkey burger with sweet potato fries for dinner', '2023-03-09'),
+  (6, 'Leg day!', 'Had a banana as a pre-workout snack', '2023-03-10'),
+  (6, 'Back and biceps', 'Ate a Greek yogurt with berries for breakfast', '2023-03-13');
+
 
 INSERT INTO messages (message, date) VALUES
 ('Please remember to log your meals and exercises today.', '2023-03-08'),

@@ -11,17 +11,59 @@ import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-function ExerciseItem({ handleAddExercise, exercise }) {
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+
+// Needs userId and date prop drilled down to each item
+// Need to implement a formula for calories burned
+function ExerciseItem({ handleAddExercise, exercise, userID, currDateInt }) {
   const [showMore, setShowMore] = useState(false); // Shows the full details of the exercise clicked
+  const [intensity, setIntensity] = useState(undefined);
+  const [duration, setDuration] = useState(undefined);
+  const [weight, setWeight] = useState(undefined);
+  const [sets, setSets] = useState(undefined);
+  const [reps, setReps] = useState(undefined);
   // console.log(exercise);
 
   const { type, instructions, name, difficulty } = exercise;
   const exerciseId = exercise.exercise_detail_id;
 
-  const handleAdd = (e) => {
-    e.stopPropagation();
+  const handleAdd = (event) => {
+    const estimatedStrCals = sets * reps * 1; // Cals from str exercises
+    const estimatedCardioCals = intensity * duration * 5; // Cals from cardio
+    let estimatedTotalCals = 0;
+    if (estimatedStrCals) {
+      estimatedTotalCals += estimatedStrCals;
+    }
+    if (estimatedCardioCals) {
+      estimatedTotalCals += estimatedCardioCals;
+    }
+
+    const estimatedStrDuration = Math.ceil(2 * sets * (reps / 10));
+    let estimatedTotalDuration = 0;
+    if (duration) {
+      estimatedTotalDuration += duration;
+    }
+    if (estimatedStrDuration) {
+      estimatedTotalDuration += estimatedStrDuration;
+    }
+
+    event.stopPropagation();
     setShowMore(false);
-    handleAddExercise();
+    const newExerciseObj = {
+      exerciseDetail: exerciseId,
+      userId: userID,
+      date: currDateInt,
+      weight: weight || null,
+      sets: sets || null,
+      reps: reps || null,
+      duration: estimatedTotalDuration || null,
+      intensity: intensity || null,
+      caloriesBurned: estimatedTotalCals,
+    };
+    handleAddExercise(newExerciseObj);
   };
 
   return (
@@ -48,20 +90,64 @@ function ExerciseItem({ handleAddExercise, exercise }) {
               >
                 {type === "cardio" ? (
                   <div style={{ display: "flex", gap: 10 }}>
-                    <TextField label="Intensity" variant="outlined" />
-                    <TextField label="Duration" variant="outlined" />
+                    <FormControl sx={{ width: 130 }}>
+                      <InputLabel>Intensity</InputLabel>
+                      <Select
+                        value={intensity}
+                        label="Intensity"
+                        onChange={(e) => setIntensity(e.target.value)}
+                      >
+                        <MenuItem value={1}>Low</MenuItem>
+                        <MenuItem value={2}>Medium</MenuItem>
+                        <MenuItem value={3}>High</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <TextField
+                      label="Duration (mins)"
+                      variant="outlined"
+                      value={duration}
+                      onChange={(e) => setDuration(e.target.value)}
+                      type="number"
+                      inputProps={{ min: 0 }}
+                    />
                   </div>
                 ) : (
                   <div style={{ display: "flex", gap: 10 }}>
-                    <TextField label="Weight (lbs)" variant="outlined" />
-                    <TextField label="Sets" variant="outlined" />
-                    <TextField label="Reps" variant="outlined" />
+                    <TextField
+                      label="Weight (lbs)"
+                      variant="outlined"
+                      value={weight}
+                      onChange={(e) => setWeight(e.target.value)}
+                      type="number"
+                      inputProps={{ min: 0 }}
+                    />
+                    <TextField
+                      label="Sets"
+                      variant="outlined"
+                      value={sets}
+                      onChange={(e) => setSets(e.target.value)}
+                      type="number"
+                      inputProps={{ min: 0 }}
+                    />
+                    <TextField
+                      label="Reps"
+                      variant="outlined"
+                      value={reps}
+                      onChange={(e) => setReps(e.target.value)}
+                      type="number"
+                      inputProps={{ min: 0 }}
+                    />
                   </div>
                 )}
                 <Button
                   variant="contained"
                   size="large"
                   color="secondary"
+                  disabled={
+                    (weight && sets && reps) || (intensity && duration)
+                      ? false
+                      : true
+                  }
                   onMouseDown={(e) => handleAdd(e)}
                   sx={{ mt: 2 }}
                 >
