@@ -27,6 +27,7 @@ function DayWorkoutListItem({
   handleEditInfo,
   handleDelete,
   showButtons,
+  exercise,
   exerciseName = "Test Exercise Name",
   instructions = "Test Instructions",
   type = "cardio",
@@ -44,6 +45,8 @@ function DayWorkoutListItem({
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
+  const exerciseId = exercise.exercise_id;
+
   // Toggles popover
   const handleEditClick = (e) => {
     e.stopPropagation();
@@ -54,9 +57,9 @@ function DayWorkoutListItem({
     setAnchorEl(null);
   };
 
-  const handleDeleteClick = (e) => {
+  const handleDeleteClick = (e, exerciseId) => {
     e.stopPropagation();
-    handleDelete();
+    handleDelete(exerciseId);
   };
 
   return (
@@ -126,7 +129,7 @@ function DayWorkoutListItem({
               aria-label="edit"
               size="medium"
               sx={{ ml: 1 }}
-              onClick={handleDeleteClick}
+              onClick={(e) => handleDeleteClick(e, exerciseId)}
             >
               <ClearIcon />
             </Fab>

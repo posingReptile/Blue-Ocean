@@ -27,45 +27,51 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static("index.html"));
 
-
 //---------------------------login------------------------------
 
-app.get('/login', (req, res) =>{
-  db.query('SELECT user_id FROM users WHERE username = $1 AND password = $2', [
+app.get("/login", (req, res) => {
+  db.query("SELECT user_id FROM users WHERE username = $1 AND password = $2", [
     req.query.username,
-    req.query.password
+    req.query.password,
   ]).then((data, err) => {
-    if(data.rows.length === 0) {
-      console.log('User does not exist')
-      res.send(JSON.stringify('NO USER'))
+    if (data.rows.length === 0) {
+      console.log("User does not exist");
+      res.send(JSON.stringify("NO USER"));
     } else {
       res.send(202);
     }
   });
 });
 
-app.post('/new-user', (req, res) => {
-  console.log(req.body)
-  let formattedDate = new Date(req.body.goal_date).toISOString().substr(0, 10).replace(/-/g, '');
-  console.log(req.body)
-  db.query('INSERT INTO users (username, password, age, height_feet, height_inches, weight, goal_weight, goal_date, calorie_goal) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [
-    req.body.username,
-    req.body.password,
-    req.body.age,
-    req.body.height_feet,
-    req.body.height_inches,
-    req.body.weight,
-    req.body.goal_weight,
-    req.body.goal_date,
-    req.body.calories
-  ]).then(() => {
-    console.log('Inserted new user Successfully')
-    res.send(202)
-  }).catch((err) => {
-    console.log(err)
-    res.send(JSON.stringify('USER EXISTS'))
-  })
-
+app.post("/new-user", (req, res) => {
+  console.log(req.body);
+  let formattedDate = new Date(req.body.goal_date)
+    .toISOString()
+    .substr(0, 10)
+    .replace(/-/g, "");
+  console.log(req.body);
+  db.query(
+    "INSERT INTO users (username, password, age, height_feet, height_inches, weight, goal_weight, goal_date, calorie_goal) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
+    [
+      req.body.username,
+      req.body.password,
+      req.body.age,
+      req.body.height_feet,
+      req.body.height_inches,
+      req.body.weight,
+      req.body.goal_weight,
+      req.body.goal_date,
+      req.body.calories,
+    ]
+  )
+    .then(() => {
+      console.log("Inserted new user Successfully");
+      res.send(202);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(JSON.stringify("USER EXISTS"));
+    });
 });
 //---------------------------dashboard------------------------------
 app.get("/profiles", (req, res) => {
@@ -102,6 +108,7 @@ app.post("/profiles", (req, res) => {
 //---------------------------workouts------------------------------
 
 app.get("/exercises", (req, res) => {
+  // done
   console.log(req.query);
   db.query("SELECT * FROM exercise_details WHERE muscle_group = $1", [
     req.query.muscle,
@@ -111,13 +118,18 @@ app.get("/exercises", (req, res) => {
 });
 
 app.get("/daily-workout", (req, res) => {
-  // console.log(req.query);
-  // db.query(`SELECT * FROM exercises  WHERE date = $1 AND user_id = $2`, [req.query.date, req.query.userId]) .then((workouts) => {
-  //   res.send(workouts.rows)
-  // })
+  // done
+  console.log(req.query);
+  db.query(`SELECT * FROM exercises  WHERE date = $1 AND user_id = $2`, [
+    req.query.date,
+    req.query.userId,
+  ]).then((workouts) => {
+    res.send(workouts.rows);
+  });
 });
 
 app.post("/new-exercise", (req, res) => {
+  //done
   db.query(
     "INSERT INTO exercises (exercise_detail_id, user_id, date, weight, sets, reps, duration, intensity, calories_burned) VALUES ($1, $2, $3,$4,$5,$6,$7,$8, $9)",
     [
@@ -138,6 +150,7 @@ app.post("/new-exercise", (req, res) => {
 });
 
 app.put("/edit-workout", (req, res) => {
+  // Here
   db.query(
     "UPDATE exercises SET weight = $1, sets = $2 , reps = $3, duration = $4, intensity = $5 WHERE exercise_id = $6",
     [
@@ -155,6 +168,8 @@ app.put("/edit-workout", (req, res) => {
 });
 
 app.delete("/delete", (req, res) => {
+  // Done
+  console.log(req.query);
   db.query("DELETE FROM exercises WHERE exercise_id = $1", [
     req.query.exerciseId,
   ]).then(() => {

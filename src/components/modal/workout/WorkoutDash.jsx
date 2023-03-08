@@ -46,24 +46,30 @@ function Workout() {
   const handleOpen = () => setOpen(true); // Handles when Add (+) is clicked
   const handleClose = () => setOpen(false); // Handles modal outside click (closes)
 
+  // console.log(exercises);
+
   // Should get a list of the current days exercises on initial render and anytime it updates
   useEffect(() => {
     // Make an axios call here to fetch the current day's workout
     // Finish the axios call with setting exercises using setExercises(data);
     //=== Need to give as a query object, date and userId ===//
-    // axios.get("http://localhost:3000/daily-workout", {
-    //   params: {
-    //     date: "",
-    //     userId: 1,
-    //   },
-    // });
+    axios
+      .get("http://localhost:3000/daily-workout", {
+        params: {
+          date: 20230307,
+          userId: 1,
+        },
+      })
+      .then(({ data }) => {
+        // console.log(data);
+        setExercises(data);
+      });
   }, []);
 
   // Should also grab notes from the database
   useEffect(() => {
     // Make an axios call here to fetch the current day's notes
     // Finish axios call with setCurrNotes(data);
-
     //=== Need to give as a body: userId, notes, date ===//
     // axios.post("http://localhost:3000/notes", {
     //   userId: 1,
@@ -120,7 +126,11 @@ function Workout() {
               <AddIcon />
             </Fab>
           </Grid>
-          <DayWorkoutList showButtons={showButtons} exercises={exercises} />
+          <DayWorkoutList
+            showButtons={showButtons}
+            exercises={exercises}
+            setExercises={setExercises}
+          />
           <Grid
             item
             xs={6}
