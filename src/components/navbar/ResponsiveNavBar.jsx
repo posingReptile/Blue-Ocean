@@ -34,8 +34,8 @@ function ResponsiveAppBar({ setComponent }) {
 
   const handleCloseUserMenu = (e, componentName) => {
     setAnchorElUser(null);
-    console.log(componentName);
-    // setComponent(componentName);
+    // console.log(componentName);
+    setComponent(componentName);
   };
 
   return (
