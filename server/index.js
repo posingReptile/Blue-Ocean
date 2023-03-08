@@ -118,12 +118,10 @@ app.get("/exercises", (req, res) => {
 });
 
 app.get("/daily-workout", (req, res) => {
-  // done
-  console.log(req.query);
-  db.query(`SELECT * FROM exercises  WHERE date = $1 AND user_id = $2`, [
-    req.query.date,
-    req.query.userId,
-  ]).then((workouts) => {
+  db.query(
+    "SELECT * FROM exercises FULL OUTER JOIN exercise_details ON exercises.exercise_detail_id = exercise_details.exercise_detail_id WHERE exercises.date = $1 AND user_id = $2",
+    [req.query.date, req.query.userId]
+  ).then((workouts) => {
     res.send(workouts.rows);
   });
 });
@@ -168,8 +166,6 @@ app.put("/edit-workout", (req, res) => {
 });
 
 app.delete("/delete", (req, res) => {
-  // Done
-  console.log(req.query);
   db.query("DELETE FROM exercises WHERE exercise_id = $1", [
     req.query.exerciseId,
   ]).then(() => {
@@ -179,20 +175,26 @@ app.delete("/delete", (req, res) => {
 });
 
 app.post("/notes", (req, res) => {
-  // console.log(req.body);
-  // db.query('INSERT INTO workouts (user_id, notes, date) VALUES ($1, $2, $3 )', [req.body.userId, req.body.notes, req.body.date]).then(() => {
-  //   console.log('Added Notes Successfully')
-  //   res.send(202)
-  // })
+  db.query("INSERT INTO workouts (user_id, notes, date) VALUES ($1, $2, $3 )", [
+    req.body.userId,
+    req.body.notes,
+    req.body.date,
+  ]).then(() => {
+    console.log("Added Notes Successfully");
+    res.send(202);
+  });
 });
 
 app.put("/edit-notes", (req, res) => {
-  // console.log(req.body);
-  // db.query('UPDATE workouts SET notes = $1 WHERE date = $2', [req.body.notes, req.body.date]).then(() => {
-  //   console.log('Edit notes Sucessfully')
-  //   res.send(202);
-  // })
+  db.query("UPDATE workouts SET notes = $1 WHERE date = $2", [
+    req.body.notes,
+    req.body.date,
+  ]).then(() => {
+    console.log("Edit notes Sucessfully");
+    res.send(202);
+  });
 });
+
 //---------------------------meals---------------------------------
 
 app.get("/nutrition", (req, res) => {
