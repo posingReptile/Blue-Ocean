@@ -62,6 +62,7 @@ function Profile(props) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [openAdminPage, setOpenAdminPage] = useState(false);
   const [pickerDate, setPickerDate] = useState(null);
+  const [prs, setPRs] = useState([]);
 
   function onAdminClick() {
     setOpenAdminPage(!openAdminPage);
@@ -83,6 +84,8 @@ function Profile(props) {
           setTargetDate(((userObj.goal_date.split('T')[0]).split('-')).join(''));
           setPickerDate(((userObj.goal_date.split('T')[0]).split('-')).join(''));
         })
+        .then(() => axios.get(`http://localhost:3000/profiles/${userID}/personal-records`))
+        .then(({ data }) => setPRs(data))
         .catch(() => console.log('failed to get profile info'))
     }
   }, [userID]);
@@ -244,7 +247,7 @@ function Profile(props) {
           </form>
         </Box>
       )}
-      {(!openAdminPage) && (<PersonalRecords />)}
+      {(!openAdminPage) && (<PersonalRecords prs={prs} />)}
     </Box>
   );
 }

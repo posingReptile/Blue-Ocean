@@ -9,26 +9,28 @@ const muscles = [
   'hamstrings', 'lats', 'lower back', 'quads', 'traps', 'triceps'
 ];
 
-const prs = [{
-  name: 'squat',
-  muscle: 'quads',
-  prval: 'idk'
-}, {
-  name: 'squat two',
-  muscle: 'quads',
-  prval: 'idk'
-}, {
-  name: 'bench',
-  muscle: 'chest',
-  prval: 'idk'
-}, {
-  name: 'deadlift',
-  muscle: 'hamstrings',
-  prval: 'idk'
-}];
+// const prs = [{
+//   name: 'squat',
+//   muscle: 'quads',
+//   prval: 'idk'
+// }, {
+//   name: 'squat two',
+//   muscle: 'quads',
+//   prval: 'idk'
+// }, {
+//   name: 'bench',
+//   muscle: 'chest',
+//   prval: 'idk'
+// }, {
+//   name: 'deadlift',
+//   muscle: 'hamstrings',
+//   prval: 'idk'
+// }];
 
 const tableFilter = createFilterOptions();
-function PersonalRecords() {
+function PersonalRecords(props) {
+  const { prs } = props;
+
   const [tableMuscleFilter, settableMuscleFilter] = useState('');
   const [tableExerciseFilter, setTableExerciseFilter] = useState('');
   function updateCategoryFilters(event, list) {
@@ -62,7 +64,7 @@ function PersonalRecords() {
           {filteredRows.map((pr) => (
             <TableRow key={pr.name}>
               <TableCell>{pr.name}</TableCell>
-              <TableCell align="right">{pr.prval}</TableCell>
+              <TableCell align="right">{pr.weight} lbs</TableCell>
             </TableRow>
           ))}
         </TableBody>
