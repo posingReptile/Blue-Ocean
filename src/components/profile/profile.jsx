@@ -171,19 +171,21 @@ function Profile(props) {
         </Button>
       )}
       {openAdminPage && (<AdminPage goBack={onAdminClick} />)}
+      {!openAdminPage && (
+        <Box>
+          <Badge
+            overlap="circular"
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            badgeContent={<EditIcon onClick={onEdit} />}
+          >
+            <Avatar sx={{ width: 77, height: 77, fontSize: 50, textAlign: 'center' }}>{(username.charAt(0)).toUpperCase()}</Avatar>
+            {/* <Avatar alt={username} src={profilePic} sx={{ width: 99, height: 99 }} /> */}
+          </Badge>
+          <Typography variant='h4'>{username}</Typography>
+        </Box>
+      )}
       {!(editFields) && (!openAdminPage) && (
         <Box>
-          <Box>
-            <Badge
-              overlap="circular"
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              badgeContent={<EditIcon onClick={onEdit} />}
-            >
-              <Avatar sx={{ width: 77, height: 77, fontSize: 50, textAlign: 'center' }}>{(username.charAt(0)).toUpperCase()}</Avatar>
-              {/* <Avatar alt={username} src={profilePic} sx={{ width: 99, height: 99 }} /> */}
-            </Badge>
-            <Typography variant='h4'>{username}</Typography>
-          </Box>
           <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
             <GridEntry gridValue={age + ' y.o.'} label="age" />
             <GridEntry gridValue={heightFt + '\'' + ' ' + heightIn + '"'} label="height"/>
@@ -199,18 +201,6 @@ function Profile(props) {
 
       {(editFields) && (!openAdminPage) && (
         <Box>
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-            <Avatar
-              alt={username}
-              src={profilePic}
-              sx={{
-                width: 99,
-                height: 99,
-                justifyContent: 'center'
-              }}
-            />
-            <Typography variant='h4'>{username}</Typography>
-          </Box>
           <form onSubmit={updateFields}>
             <FormControl onSubmit={updateFields}>
               <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
