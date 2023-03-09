@@ -150,8 +150,8 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
           <Paper elevation={5} sx={{ width: 450, height: 295, p: 1 }}>
             <CalendarWorkout userID={userID} currDateInt={currDateInt} />
           </Paper>
-          <Paper elevation={5} sx={{ width: 450, height: 295 }}>
-            <div>Placeholder</div>
+          <Paper elevation={5} sx={{ width: 450, height: 295, p: 1 }}>
+            <>Placeholder</>
           </Paper>
         </div>
       </div>
