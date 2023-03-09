@@ -387,7 +387,7 @@ app.get("/monthly-meals", (req, res) => {
 // get all the calories for the monthly, ideally by [date, calorie]
 app.get("/monthly-calories", (req, res) => {
   db.query(
-    "SELECT date, calories FROM food WHERE EXTRACT(MONTH FROM date) = $1 AND EXTRACT (YEAR FROM date) = $2 AND user_id = $3",
+    "SELECT date, calories, category FROM food WHERE EXTRACT(MONTH FROM date) = $1 AND EXTRACT (YEAR FROM date) = $2 AND user_id = $3",
     [req.query.month, req.query.year, req.query.userId]
   ).then((calories) => {
     res.send(calories.rows);
