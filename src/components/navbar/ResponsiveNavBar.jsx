@@ -128,13 +128,13 @@ function ResponsiveAppBar({ setComponent, setUserObject }) {
           >
             <Button
               onClick={(e) => handleCloseNavMenu(e, "calendar")}
-              sx={{ my: 2, color: "white", display: "block" }}
+              sx={{ my: 2, color: "white", display: "block", fontSize: 16 }}
             >
               Calendar
             </Button>
             <Button
               onClick={(e) => handleCloseNavMenu(e, "dashboard")}
-              sx={{ my: 2, color: "white", display: "block" }}
+              sx={{ my: 2, color: "white", display: "block", fontSize: 16 }}
             >
               Dashboard
             </Button>

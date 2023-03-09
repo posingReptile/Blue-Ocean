@@ -11,8 +11,9 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 
-import DayWorkoutList from "../modal/Workout/DayWorkoutList";
 import Quote from "../dashboard/Quote";
+import DayWorkoutList from "../modal/workout/DayWorkoutList";
+import CalendarWorkout from "./CalendarWorkout";
 
 const monthNames = [
   "January",
@@ -31,7 +32,7 @@ const monthNames = [
 
 // const caloriesCollection = {March2023: [['March 11, 2023', 100, ], ['March 12, 2023', 103], ['March 13, 2023', 104]]}
 
-function CalendarPage({ currentDay, setCurrentDay }) {
+function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
   const [calorieMonth, setCalorieMonth] = useState("March2023");
   const [daliyMealPlan, setDaliyMealPlan] = useState([
     "apple",
@@ -43,6 +44,8 @@ function CalendarPage({ currentDay, setCurrentDay }) {
     "Chest",
     "Glutes",
   ]);
+
+  console.log(currentDay);
 
   useEffect(() => {
     // if (caloriesCollection[calorieMonth]) {
@@ -144,9 +147,8 @@ function CalendarPage({ currentDay, setCurrentDay }) {
           // onClickDay={(e, value) => {console.log(e, value)}}
         />
         <div style={{ display: "flex", flexDirection: "column", gap: 25 }}>
-          <Paper elevation={5} sx={{ width: 450, height: 295 }}>
-            {/* <DayWorkoutList /> */}
-            <div>Placeholder</div>
+          <Paper elevation={5} sx={{ width: 450, height: 295, p: 1 }}>
+            <CalendarWorkout userID={userID} currDateInt={currDateInt} />
           </Paper>
           <Paper elevation={5} sx={{ width: 450, height: 295 }}>
             <div>Placeholder</div>

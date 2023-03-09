@@ -14,6 +14,7 @@ import Select from "@mui/material/Select";
 
 function EditExerciseModal({
   exerciseId,
+  exerciseName,
   type,
   handleClose,
   handleEditInfo,
@@ -65,8 +66,12 @@ function EditExerciseModal({
   };
   return (
     <Paper>
-      <Typography variant="h4" sx={{ pr: 4, pl: 4, pt: 4 }}>
-        Exercise Name
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{ pr: 4, pl: 4, pt: 4, maxWidth: 250, fontSize: 20 }}
+      >
+        {exerciseName}
       </Typography>
       <Box
         sx={{

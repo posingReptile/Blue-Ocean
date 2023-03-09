@@ -71,7 +71,12 @@ function App() {
       case "calendar":
         console.log(component);
         return (
-          <CalendarPage currentDay={currentDay} setCurrentDay={setCurrentDay} />
+          <CalendarPage
+            currentDay={currentDay}
+            setCurrentDay={setCurrentDay}
+            currDateInt={currDateInt}
+            userID={userObject.user_id}
+          />
         );
     }
   };
