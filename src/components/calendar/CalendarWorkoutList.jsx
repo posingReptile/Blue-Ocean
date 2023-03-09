@@ -79,7 +79,7 @@ function CalendarWorkoutList({
       <Grid xs={12} md={12} sx={{ ml: 1, pl: 1 }}>
         <List
           sx={{
-            height: 190,
+            height: "20vh",
             overflow: "auto",
           }}
         >

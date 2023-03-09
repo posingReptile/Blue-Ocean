@@ -3,7 +3,7 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import PersonalRecords from './personalRecords.jsx';
 import AdminPage from './adminPage.jsx';
-import defaultProfileImage from '../../assets/pfpic.png';
+// import defaultProfileImage from '../../assets/pfpic.png';
 import {
   Avatar, Badge, Box, Button, FormControl, Stack, TextField, Typography
 } from '@mui/material';
@@ -51,7 +51,7 @@ function Profile(props) {
 
   const [editFields, setEditFields] = useState(false);
   const [username, setUsername] = useState('');
-  const [profilePic, setProfilePic] = useState(defaultProfileImage);
+  // const [profilePic, setProfilePic] = useState(defaultProfileImage);
   const [heightFt, setHeightFt] = useState();
   const [heightIn, setHeightIn] = useState();
   const [weight, setWeight] = useState();
@@ -61,14 +61,14 @@ function Profile(props) {
   const [calorieGoal, setCalorieGoal] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const [openAdminPage, setOpenAdminPage] = useState(false);
-  const [validDate, setValidDate] = useState(true);
+  const [pickerDate, setPickerDate] = useState(null);
+  const [prs, setPRs] = useState([]);
 
   function onAdminClick() {
     setOpenAdminPage(!openAdminPage);
   }
 
   useEffect(() => {
-    // console.log(user);
     if (userID) {
       axios.get(`http://localhost:3000/profiles/${userID}/`)
         .then(({ data }) => {
@@ -82,7 +82,10 @@ function Profile(props) {
           setTargetWeight(userObj.goal_weight);
           setCalorieGoal(userObj.calorie_goal);
           setTargetDate(((userObj.goal_date.split('T')[0]).split('-')).join(''));
+          setPickerDate(((userObj.goal_date.split('T')[0]).split('-')).join(''));
         })
+        .then(() => axios.get(`http://localhost:3000/profiles/${userID}/personal-records`))
+        .then(({ data }) => setPRs(data))
         .catch(() => console.log('failed to get profile info'))
     }
   }, [userID]);
@@ -90,23 +93,50 @@ function Profile(props) {
   function onEdit() {
     setEditFields(!editFields);
   }
+
   function updateFields(event) {
     event.preventDefault();
 
-    if (validDate) {
-      setAge(event.target.elements.age.value);
-      setWeight(event.target.elements.weight.value);
-      setHeightFt(event.target.elements.heightFt.value);
-      setHeightIn(event.target.elements.heightIn.value);
-      setTargetWeight(event.target.elements.targetWeight.value);
+    if (pickerDate) {
+      const formWeight = Number(event.target.elements.weight.value);
+      const formHeightFt = Number(event.target.elements.heightFt.value);
+      const formHeightIn = Number(event.target.elements.heightIn.value);
+      const formAge = Number(event.target.elements.age.value);
+      const formTargetWeight = Number(event.target.targetWeight.value);
+
+      // Calculate your BMR:
+        // For men: BMR = 66 + (6.2 x weight in pounds) + (12.7 x height in inches) - (6.76 x age in years)
+        // For women: BMR = 655.1 + (4.35 x weight in pounds) + (4.7 x height in inches) - (4.7 x age in years)
+      // Determine your activity level factor:
+        // Sedentary (little or no exercise) = 1.2
+        // Lightly active (light exercise 1-3 days a week) = 1.375
+        // Moderately active (moderate exercise 3-5 days a week) = 1.55
+        // Very active (hard exercise 6-7 days a week) = 1.725
+        // Extra active (very hard exercise, physical job or training twice a day) = 1.9
+
+      const days = Math.ceil((dayjs(pickerDate) - dayjs()) / 86400000);
+      const height = (formHeightFt * 12) + formHeightIn;
+      const BMR = 66 + (6.2 * formWeight) + (12.7 * height) - (6.76 * formAge);
+      const TDEE = BMR * 1.2;
+      const weightDelta = formTargetWeight - formWeight;
+      const calorieDiff = weightDelta * 3500;
+      const goal = Math.floor((calorieDiff / days) + TDEE);
+
+      setAge(formAge);
+      setWeight(formWeight);
+      setTargetWeight(formTargetWeight);
+      setHeightFt(formHeightFt);
+      setHeightIn(formHeightIn);
+      setCalorieGoal(goal);
+      setTargetDate(pickerDate);
       const userInfo = {
-        age,
-        weight,
-        height_feet: heightFt,
-        height_inches: heightIn,
-        goal_weight: targetWeight,
-        goal_date: targetDate,
-        calories: calorieGoal,
+        age: formAge,
+        weight: formWeight,
+        height_feet: formHeightFt,
+        height_inches: formHeightIn,
+        goal_weight: formTargetWeight,
+        goal_date: pickerDate,
+        calorie_goal: goal,
       };
       axios.post(`http://localhost:3000/profiles/${userID}`, userInfo)
         .then(() => onEdit())
@@ -120,11 +150,9 @@ function Profile(props) {
     const year = event.$y;
 
     if (dayjs(event).isAfter(dayjs())){
-      setValidDate(true);
-      setTargetDate(year + month + day);
+      setPickerDate(year + month + day);
     } else {
-      setTargetDate((od) => od);
-      setValidDate(false);
+      setPickerDate(null);
     }
   }
 
@@ -138,30 +166,48 @@ function Profile(props) {
       textAlign: 'center',
     }}>
       {isAdmin && (!openAdminPage) && (
-        <Button onClick={onAdminClick} sx={{ display: 'flex', vertical: 'top', color: 'red' }}>
+        <Button
+          onClick={onAdminClick}
+          sx={{
+            backgroundColor: "white",
+            borderRadius: 4,
+            boxShadow: 2,
+            '&:hover': {
+              backgroundColor: 'primary.main',
+              color: 'white',
+          },
+            display: 'flex',
+            vertical: 'top',
+            color: 'primary.main'
+          }}
+        >
           <CastleIcon />
         </Button>
       )}
       {openAdminPage && (<AdminPage goBack={onAdminClick} />)}
+      {!openAdminPage && (
+        <Box>
+          <Badge
+            overlap="circular"
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            badgeContent={<EditIcon sx={{ color: 'action' }} onClick={onEdit} />}
+          >
+            <Avatar color="primary" variant="outlined" sx={{
+              width: 99,
+              height: 99,
+              fontSize: 50,
+              textAlign: 'center',
+              backgroundColor: "white",
+              color: "primary.main"
+            }}>
+              {(username.charAt(0)).toUpperCase()}
+            </Avatar>
+          </Badge>
+          <Typography variant='h4'>{username}</Typography>
+        </Box>
+      )}
       {!(editFields) && (!openAdminPage) && (
         <Box>
-          <Box>
-            <Badge
-              overlap="circular"
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              badgeContent={<EditIcon sx={{ color: 'action' }} onClick={onEdit} />}
-            >
-              <Avatar
-                alt={username}
-                src={profilePic}
-                sx={{
-                  width: 99,
-                  height: 99
-                }}
-              />
-            </Badge>
-            <Typography variant='h4'>{username}</Typography>
-          </Box>
           <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
             <GridEntry gridValue={age + ' y.o.'} label="age" />
             <GridEntry gridValue={heightFt + '\'' + ' ' + heightIn + '"'} label="height"/>
@@ -177,18 +223,6 @@ function Profile(props) {
 
       {(editFields) && (!openAdminPage) && (
         <Box>
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-            <Avatar
-              alt={username}
-              src={profilePic}
-              sx={{
-                width: 99,
-                height: 99,
-                justifyContent: 'center'
-              }}
-            />
-            <Typography variant='h4'>{username}</Typography>
-          </Box>
           <form onSubmit={updateFields}>
             <FormControl onSubmit={updateFields}>
               <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
@@ -204,8 +238,8 @@ function Profile(props) {
 
                 <Box>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker label="goal date" disablePast onChange={upDate} value={dayjs(formattedDate)} />
-                    {!validDate && <div className="errorText">Enter a valid date</div>}
+                    <DatePicker label="goal date" disablePast onChange={upDate} value={dayjs(pickerDate)} />
+                    {!pickerDate && <div className="errorText">Enter a valid date</div>}
                   </LocalizationProvider>
                 </Box>
                 <GridEntry />
@@ -225,7 +259,7 @@ function Profile(props) {
           </form>
         </Box>
       )}
-      {(!openAdminPage) && (<PersonalRecords />)}
+      {(!openAdminPage) && (<PersonalRecords prs={prs} />)}
     </Box>
   );
 }

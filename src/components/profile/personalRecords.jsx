@@ -4,31 +4,16 @@ import {
 } from '@mui/material';
 import { createFilterOptions } from '@mui/material/Autocomplete';
 
+// maybe replace with an api call to be sure
 const muscles = [
   'abdominals', 'biceps', 'calves', 'chest', 'glutes',
   'hamstrings', 'lats', 'lower back', 'quads', 'traps', 'triceps'
 ];
 
-const prs = [{
-  name: 'squat',
-  muscle: 'quads',
-  prval: 'idk'
-}, {
-  name: 'squat two',
-  muscle: 'quads',
-  prval: 'idk'
-}, {
-  name: 'bench',
-  muscle: 'chest',
-  prval: 'idk'
-}, {
-  name: 'deadlift',
-  muscle: 'hamstrings',
-  prval: 'idk'
-}];
-
 const tableFilter = createFilterOptions();
-function PersonalRecords() {
+function PersonalRecords(props) {
+  const { prs } = props;
+
   const [tableMuscleFilter, settableMuscleFilter] = useState('');
   const [tableExerciseFilter, setTableExerciseFilter] = useState('');
   function updateCategoryFilters(event, list) {
@@ -47,22 +32,30 @@ function PersonalRecords() {
   const filteredRows = (tableExerciseFilter.length > 0) ? rowsFilteredByMuscles.filter((pr) => filteredByExercise.includes(pr.name)) : rowsFilteredByMuscles;
 
   return (
-    <TableContainer sx={{ mt: 4}} component={Paper}>
-      <Typography variant="overline" sx={{ display: 'block', fontWeight: 'bold', fontSize: '16px' }}>
+    <TableContainer sx={{ mt: 4, boxShadow: 4}} component={Paper}>
+      <Typography variant="overline" sx={{ backgroundColor: "primary.main", color: "white", display: 'block', fontWeight: 'bold', fontSize: '16px' }}>
         Personal Records
       </Typography>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Exercises</TableCell>
-            <TableCell align="right">PR</TableCell>
+            <TableCell>
+              <Typography sx={{ fontWeight: 'bold'}}>
+                Exercise
+              </Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography sx={{ fontWeight: 'bold'}}>
+                PR
+              </Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {filteredRows.map((pr) => (
             <TableRow key={pr.name}>
               <TableCell>{pr.name}</TableCell>
-              <TableCell align="right">{pr.prval}</TableCell>
+              <TableCell align="right">{pr.weight} lbs</TableCell>
             </TableRow>
           ))}
         </TableBody>

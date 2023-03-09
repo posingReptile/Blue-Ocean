@@ -14,7 +14,8 @@ import Paper from "@mui/material/Paper";
 import Quote from "../dashboard/Quote";
 import DayWorkoutList from "../modal/workout/DayWorkoutList";
 import CalendarWorkout from "./CalendarWorkout";
-
+import CalendarFood from "./CalendarFood";
+import MealModalTest from "./ctest.jsx"
 const monthNames = [
   "January",
   "February",
@@ -45,7 +46,7 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
     "Glutes",
   ]);
 
-  console.log(currentDay);
+  // console.log(currentDay);
 
   useEffect(() => {
     // if (caloriesCollection[calorieMonth]) {
@@ -55,10 +56,10 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
     // }
     const currMonth = monthNames.indexOf(calorieMonth.slice(0, -4)) + 1;
     const year = calorieMonth.slice(-4);
-    // console.log(year, currMonth)
+    console.log(year, currMonth, userID)
     axios
       .get(
-        `http://localhost:3000/monthly-meals?year=${year}&month=${currMonth}`
+        `http://localhost:3000/monthly-calories?year=${year}&month=${currMonth}&userId=${userID}`
       )
       .then(({ data }) => {
         // console.log(data);
@@ -73,14 +74,7 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
       });
   }, [calorieMonth]);
 
-  // const mealPlan = ['apple', 'banana', 'orange']
-  // const workoutCollection = ['Biceps', 'Chest', 'Glutes']
 
-  // useEffect(() => {
-  //   console.log(currentDay);
-  //   //axios request for the meal and workout plan
-
-  // }, [currentDay])
 
   function addCalories(date, calories, category) {
     if (category === "strength") {
@@ -88,14 +82,14 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
     } else {
       category = "👟";
     }
-    // console.log('from addCalories', date, calories, category);
-    if (document.getElementsByClassName(currentDay.toDateString().trim)[0]) {
-      console.log(
-        "conflict",
-        document.getElementsByClassName(currentDay.toDateString())
-      );
-      return;
-    }
+    console.log('from addCalories', date, calories, category);
+    // if (document.getElementsByClassName(currentDay.toDateString().trim)[0]) {
+    //   console.log(
+    //     "conflict",
+    //     document.getElementsByClassName(currentDay.toDateString())
+    //   );
+    //   return;
+    // }
     // if (!document.querySelector(`[aria-label="${date}"]`)) return;
     const dateButton = document.querySelector(
       `[aria-label="${date}"]`
@@ -146,12 +140,12 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
           tileClassName="whatever"
           // onClickDay={(e, value) => {console.log(e, value)}}
         />
-        <div style={{ display: "flex", flexDirection: "column", gap: 25 }}>
-          <Paper elevation={5} sx={{ width: 450, height: 295, p: 1 }}>
+        <div className="workMealContainer">
+          <Paper elevation={5} sx={{ width: 450, height: "30vh", p: 1 }}>
             <CalendarWorkout userID={userID} currDateInt={currDateInt} />
           </Paper>
-          <Paper elevation={5} sx={{ width: 450, height: 295, p: 1 }}>
-            <>Placeholder</>
+          <Paper elevation={5}>
+            <MealModalTest userID={userID} currDateInt={currDateInt}/>
           </Paper>
         </div>
       </div>

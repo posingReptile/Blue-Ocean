@@ -44,7 +44,7 @@ const createLog = (req, res, next) => {
 dotenv.config();
 const app = express();
 app.use(cors());
-app.use(createLog);
+//app.use(createLog);
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname + "/../dist/")));
 app.use(
@@ -152,6 +152,24 @@ app.post("/profiles/:profile_id", (req, res) => {
     console.log("Update Sucessfully");
     res.send(202);
   });
+});
+
+app.get('/profiles/:profile_id/personal-records', (req, res) => {
+  db.query(`
+    SELECT j.name, j.muscle_group AS muscle, MAX(e.weight) AS weight
+    FROM exercises e
+    LEFT JOIN (
+      SELECT ed.name, ed.exercise_detail_id, ed.muscle_group
+      FROM exercise_details ed
+    ) j ON j.exercise_detail_id = e.exercise_detail_id
+    WHERE user_id = $1
+    GROUP BY j.name, j.muscle_group, e.exercise_detail_id
+  `, [req.params.profile_id])
+    .then(({ rows }) => {
+      res.status(200);
+      res.send(rows);
+    })
+    .catch(() => res.status(500));
 });
 
 // to get message if there is one from the admin
@@ -424,7 +442,7 @@ app.get("/monthly-meals", (req, res) => {
 // get all the calories for the monthly, ideally by [date, calorie]
 app.get("/monthly-calories", (req, res) => {
   db.query(
-    "SELECT date, calories FROM food WHERE EXTRACT(MONTH FROM date) = $1 AND EXTRACT (YEAR FROM date) = $2 AND user_id = $3",
+    "SELECT date, calories, category FROM food WHERE EXTRACT(MONTH FROM date) = $1 AND EXTRACT (YEAR FROM date) = $2 AND user_id = $3",
     [req.query.month, req.query.year, req.query.userId]
   ).then((calories) => {
     res.send(calories.rows);

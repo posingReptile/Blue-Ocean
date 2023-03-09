@@ -25,7 +25,7 @@ function App() {
   const [currentDay, setCurrentDay] = useState(new Date());
   // const [userID, setUserID] = useState(0);
   const [userObject, setUserObject] = useState({});
-
+  const [totalDailyCalories, setDailyCalories] = useState(0);
   useEffect(() => {
     axios.get("http://localhost:3000/session").then((res) => {
       console.log("res.data", res.data);
@@ -92,9 +92,10 @@ function App() {
             height: "100vh",
           }}
         >
-          {component !== "logsign" && component !== "usersetup" && (
+          {component !== 'logsign' && component !== 'usersetup' && (
             <ResponsiveNavBar
-              sx={{ width: "100%" }}
+              sx={{width: '100%'}}
+              userObject={userObject}
               setUserObject={setUserObject}
               setComponent={setComponent}
             />
