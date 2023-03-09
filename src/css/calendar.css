@@ -80,7 +80,11 @@ cde6ff
 .react-calendar {
   /* background-color: var(--weekdayColor); */
   border: none;
+<<<<<<< HEAD
+  margin: 0 auto;
+=======
   /* margin: 0 auto; */
+>>>>>>> main
   width: 65vmin;
   height: fit-content;
 }
