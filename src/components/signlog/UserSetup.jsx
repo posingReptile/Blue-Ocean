@@ -124,8 +124,8 @@ function UserSetup({ setUserObject, setComponent, setLoginComponent, username, p
       }).then((response) => {
         console.log(response.data)
         if(response.data.user_id) {
-          setUserObject({username: username, user_id: response.data.user_id, isadmin: response.data.isadmin});
-          setComponent('profile');
+          setUserObject(response.data);
+          setComponent('dashboard');
         } else if (response.data === 'USER EXISTS') {
           alert('Username Taken');
           setLoginComponent('logsign')
