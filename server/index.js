@@ -28,7 +28,7 @@ import pgSession from 'connect-pg-simple';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const createLog = (req, res, next) => {
+const createLog = (req, res, next) => { //Logger middleware func.
   res.on("finish", function() {
     console.log(req.method, req.session, decodeURI(req.url), res.statusCode, res.statusMessage);
   });
@@ -38,7 +38,7 @@ const createLog = (req, res, next) => {
 dotenv.config();
 const app = express();
 app.use(cors());
-app.use(createLog);
+//app.use(createLog);
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname + "/../dist/")));
 app.use(
@@ -56,7 +56,6 @@ app.use(
 
 //---------------------------Session----------------------------
 app.get('/session', (req, res) => {
-  console.log(req)
   res.send(req.session)
 })
 
@@ -106,9 +105,6 @@ app.post("/new-user", (req, res) => {
   )
     .then((data) => {
       console.log("Inserted new user Successfully", data.rows[0]);
-      for(key in data.rows[0]){
-        req.session(key) = data.rows[0](key)
-      }
       req.session.username = req.body.username;
       req.session.user_id = data.rows[0].user_id;
       req.session.isadmin = data.rows[0].isadmin;
