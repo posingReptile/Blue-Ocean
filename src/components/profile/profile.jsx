@@ -138,7 +138,21 @@ function Profile(props) {
       textAlign: 'center',
     }}>
       {isAdmin && (!openAdminPage) && (
-        <Button onClick={onAdminClick} sx={{ display: 'flex', vertical: 'top', color: 'red' }}>
+        <Button
+          onClick={onAdminClick}
+          sx={{
+            backgroundColor: "white",
+            borderRadius: 4,
+            boxShadow: 2,
+            '&:hover': {
+              backgroundColor: 'primary.main',
+              color: 'white',
+          },
+            display: 'flex',
+            vertical: 'top',
+            color: 'primary.main'
+          }}
+        >
           <CastleIcon />
         </Button>
       )}
@@ -184,7 +198,8 @@ function Profile(props) {
               sx={{
                 width: 99,
                 height: 99,
-                justifyContent: 'center'
+                justifyContent: 'center',
+
               }}
             />
             <Typography variant='h4'>{username}</Typography>

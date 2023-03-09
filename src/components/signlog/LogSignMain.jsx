@@ -20,7 +20,9 @@ function LogSignMain({ setComponent, setUserObject }) {
 
   return (
     <div className="wholeLoginWrapper">
-      {currComponent(loginComponent)}
+      <div className="heightWrapper">
+        {currComponent(loginComponent)}
+      </div>
     </div>
   );
 }

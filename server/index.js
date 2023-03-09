@@ -44,7 +44,7 @@ const createLog = (req, res, next) => {
 dotenv.config();
 const app = express();
 app.use(cors());
-app.use(createLog);
+//app.use(createLog);
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname + "/../dist/")));
 app.use(
