@@ -12,7 +12,7 @@ function Breakfast({ open, handleClose, meal, meals, breakfast, setBreakfast, da
   // {food: 'banana', quantity: '100g', calories: '110', protein: '2'},
   // {food: 'orange', quantity: '100g', calories: '80', protein: '1'}])
 // console.log('USERID: ', userId)
-  const [allFood, setAllFood] = useState([]);
+  // const [allFood, setAllFood] = useState([]);
 
   const [inputList, setInputList] = useState([
     {
@@ -74,11 +74,11 @@ function Breakfast({ open, handleClose, meal, meals, breakfast, setBreakfast, da
     setBreakfast(newList)
   }
 
-  const handleRemoveInput = (index) => {
-    const newList = [...inputList]
-    newList.splice(index, 1)
-    setInputList(newList)
-  }
+  // const handleRemoveInput = (index) => {
+  //   const newList = [...inputList]
+  //   newList.splice(index, 1)
+  //   setInputList(newList)
+  // }
 
 
   const saveFood = (food, quantity, meal, index, event) => {

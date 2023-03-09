@@ -6,7 +6,7 @@ import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 
 
-function Snacks({ open, handleClose, meal, meals, snacks, setSnacks, date, userId, foodId }) {
+function Snacks({ open, handleClose, meal, meals, snacks, setSnacks, date, userId, foodId, foodS, setFoodS, onlySnacks }) {
   // const [snacks, setSnacks] = useState([]);
 
   const [inputList, setInputList] = useState([
@@ -35,9 +35,17 @@ function Snacks({ open, handleClose, meal, meals, snacks, setSnacks, date, userI
         ? setIsDisabled(true)
         : setIsDisabled(false)
     }
-  })
+  }, [foodS, onlySnacks])
+
+  const getFoods = () => {
+    axios.get(`http://localhost:3000/daily-meals?date=${date}&userId=${userId}`)
+      .then((res) => {
+        setFoodS(res.data)
+      })
+  }
 
   useEffect(() => {
+    getFoods()
   }, [snacks])
 
   const handleInputChange = (event, index) => {
@@ -77,12 +85,6 @@ function Snacks({ open, handleClose, meal, meals, snacks, setSnacks, date, userI
       })
   }
   // console.log('SNACKS', snacks)
-  const getFoods = () => {
-    axios.get(`http://localhost:3000/daily-meals?date=${date}&userId=${userId}`)
-      .then((res) => {
-        console.log('Get: ', res)
-      })
-  }
 
   const deleteFood = () => {
     const food_Id = { food_id: foodId }

@@ -27,6 +27,7 @@ const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
           justifyContent: "center",
         }}
       >
+        <Meals userId={userID} date={currDateInt}/>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Typography
             sx={{ textAlign: "center", fontStyle: "italic", fontSize: 20 }}

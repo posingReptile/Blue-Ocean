@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Form from './Form.jsx'
 import MealModal from './MealModal.jsx'
 
-function Meals({userId}) {
+function Meals({userId, date}) {
 
     const [openMM, setOpenMM] = useState(false);
 
@@ -21,7 +21,7 @@ function Meals({userId}) {
     return (
         <div>
             <Button variant='contained' color='primary' onClick={setOpenMM}>Add meal</Button>
-            <MealModal open={openMM} handleClose={handleClose} userId={userId}/>
+            <MealModal open={openMM} handleClose={handleClose} userId={userId} date={date}/>
         </div>
     )
 }

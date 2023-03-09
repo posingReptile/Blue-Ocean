@@ -13,23 +13,25 @@ import Snacks from './Snacks.jsx'
 import MealTable from './MealModal.jsx'
 
 
-function Form({ open, handleClose, userId }) {
+function Form({ open, handleClose, userId, date }) {
   // const meals = ['Breakfast', 'Lunch', 'Dinner', 'Snacks']
   const [breakfast, setBreakfast] = useState('');
   const [lunch, setLunch] = useState('');
   const [dinner, setDinner] = useState('');
   const [snacks, setSnacks] = useState('');
   const [foodB, setFoodB] = useState([])
+  const [foodL, setFoodL] = useState([])
+  const [foodD, setFoodD] = useState([])
+  const [foodS, setFoodS] = useState([])
 
-  const date = (new Date()).toISOString().split('T')[0].split('-').join('')
+console.log(breakfast)
+ // const date = (new Date()).toISOString().split('T')[0].split('-').join('')
   // const userId = 2
   const foodId = 16
 
   const handleSubmit = (event) => {
     event.preventDefault();
     handleClose()
-    // const data = {}
-    // axios.post(``, data)
   }
 
   // console.log("ALLL FOOODSSS", foodB)
@@ -67,11 +69,11 @@ function Form({ open, handleClose, userId }) {
       }
     })
   }
-  const onlyBreakfast = breakfastMap(foodB);
 
-  const onlyLunch = lunchMap(foodB);
-  const onlyDinner = dinnerMap(foodB);
-  const onlySnacks = snackMap(foodB);
+  const onlyBreakfast = breakfastMap(foodB);
+  const onlyLunch = lunchMap(foodL);
+  const onlyDinner = dinnerMap(foodD);
+  const onlySnacks = snackMap(foodS);
 
   // useEffect(() => {
   //   // getFoods()
@@ -83,10 +85,25 @@ function Form({ open, handleClose, userId }) {
   // console.log("onlySnack ======>", onlySnack)
   // console.log(foodB)
 
-  const handleRemoveItem = (index) => {
+  const handleRemoveB = (index) => {
     const newList = [...breakfast]
     newList.splice(index, 1)
     setBreakfast(newList)
+  }
+  const handleRemoveL = (index) => {
+    const newList = [...lunch]
+    newList.splice(index, 1)
+    setLunch(newList)
+  }
+  const handleRemoveD = (index) => {
+    const newList = [...dinner]
+    newList.splice(index, 1)
+    setDinner(newList)
+  }
+  const handleRemoveS = (index) => {
+    const newList = [...snacks]
+    newList.splice(index, 1)
+    setSnacks(newList)
   }
 
   const deleteFood = (id) => {
@@ -115,7 +132,7 @@ function Form({ open, handleClose, userId }) {
               <Button variant="outlined" onClick={(e) => {
                 // console.log(onlyBreakfast[index].food_id)
                 deleteFood(onlyBreakfast[index].food_id);
-                handleRemoveItem(index)
+                handleRemoveB(index)
               }}>Delete</Button>
             </div>
           )
@@ -123,7 +140,7 @@ function Form({ open, handleClose, userId }) {
       </div>
       <div>
         <div>Lunch</div>
-        <Lunch meal='Lunch' lunch={lunch} setLunch={setLunch} date={date} userId={userId} foodId={foodId} foodB={foodB} setFoodB={setFoodB}/>
+        <Lunch meal='Lunch' lunch={lunch} setLunch={setLunch} date={date} userId={userId} foodId={foodId} foodL={foodL} setFoodL={setFoodL} onlyLunch={onlyLunch}/>
         {onlyLunch.map((lunchFood, index) => {
           return (
             <div>
@@ -131,7 +148,7 @@ function Form({ open, handleClose, userId }) {
               <Button variant="outlined" onClick={(e) => {
                 // console.log(onlyLunch[index].food_id)
                 deleteFood(onlyLunch[index].food_id);
-                handleRemoveItem(index)
+                handleRemoveL(index)
               }}>Delete</Button>
             </div>
           )
@@ -139,7 +156,7 @@ function Form({ open, handleClose, userId }) {
       </div>
       <div>
         <div>Dinner</div>
-        <Dinner meal='Dinner' dinner={dinner} setDinner={setDinner} date={date} userId={userId} foodId={foodId} />
+        <Dinner meal='Dinner' dinner={dinner} setDinner={setDinner} date={date} userId={userId} foodId={foodId} foodD={foodD} setFoodD={setFoodD} onlyDinner={onlyDinner}/>
         {onlyDinner.map((dinnerFood, index) => {
           return (
             <div>
@@ -147,7 +164,7 @@ function Form({ open, handleClose, userId }) {
               <Button variant="outlined" onClick={(e) => {
                 // console.log(onlyDinner[index].food_id)
                 deleteFood(onlyDinner[index].food_id);
-                handleRemoveItem(index)
+                handleRemoveD(index)
               }}>Delete</Button>
             </div>
           )
@@ -155,7 +172,7 @@ function Form({ open, handleClose, userId }) {
       </div>
       <div>
         <div>Snacks</div>
-        <Snacks meal='Snacks' snacks={snacks} setSnacks={setSnacks} date={date} userId={userId} foodId={foodId} />
+        <Snacks meal='Snacks' snacks={snacks} setSnacks={setSnacks} date={date} userId={userId} foodId={foodId} foodS={foodS} setFoodS={setFoodS} onlySnacks={onlySnacks}/>
         {onlySnacks.map((snacksFood, index) => {
           return (
             <div>
@@ -163,7 +180,7 @@ function Form({ open, handleClose, userId }) {
               <Button variant="outlined" onClick={(e) => {
                 // console.log(onlySnacks[index].food_id)
                 deleteFood(onlySnacks[index].food_id);
-                handleRemoveItem(index)
+                handleRemoveS(index)
               }}>Delete</Button>
             </div>
           )
