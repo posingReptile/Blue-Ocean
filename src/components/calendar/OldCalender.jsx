@@ -8,13 +8,6 @@ import "../../css/calendar.css";
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-
-import Quote from "../dashboard/Quote";
-import DayWorkoutList from "../modal/workout/DayWorkoutList";
-import CalendarWorkout from "./CalendarWorkout";
-
 const monthNames = [
   "January",
   "February",
@@ -32,7 +25,7 @@ const monthNames = [
 
 // const caloriesCollection = {March2023: [['March 11, 2023', 100, ], ['March 12, 2023', 103], ['March 13, 2023', 104]]}
 
-function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
+function CalendarPage({ currentDay, setCurrentDay }) {
   const [calorieMonth, setCalorieMonth] = useState("March2023");
   const [daliyMealPlan, setDaliyMealPlan] = useState([
     "apple",
@@ -44,8 +37,6 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
     "Chest",
     "Glutes",
   ]);
-
-  console.log(currentDay);
 
   useEffect(() => {
     // if (caloriesCollection[calorieMonth]) {
@@ -126,36 +117,75 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
     setPlan(newList);
   }
 
-  //  exercises,
-  // setExercises,
-  // showButtons,
-  // currDateInt,
-  // userID,
-
   return (
-    <>
-      <Quote />
-      <div className="container">
-        <Calendar
-          onChange={setCurrentDay}
-          value={currentDay}
-          className="wrapper"
-          onActiveStartDateChange={(e) => {
-            monthChecker(e);
-          }}
-          tileClassName="whatever"
-          // onClickDay={(e, value) => {console.log(e, value)}}
-        />
-        <div style={{ display: "flex", flexDirection: "column", gap: 25 }}>
-          <Paper elevation={5} sx={{ width: 450, height: 295, p: 1 }}>
-            <CalendarWorkout userID={userID} currDateInt={currDateInt} />
-          </Paper>
-          <Paper elevation={5} sx={{ width: 450, height: 295, p: 1 }}>
-            <>Placeholder</>
-          </Paper>
+    <div className="container">
+      <Calendar
+        onChange={setCurrentDay}
+        value={currentDay}
+        className="wrapper"
+        onActiveStartDateChange={(e) => {
+          monthChecker(e);
+        }}
+        tileClassName="whatever"
+        // onClickDay={(e, value) => {console.log(e, value)}}
+      />
+
+      {/* <div>
+        <h1>{currentDay.toDateString()}</h1>
+        <div id="summary">
+          <div id="selectedWorkOutPlan">
+            <div className='planTitle'>
+              <h2>Workout Plan</h2>
+            </div>
+            <TextField placeholder="food..." variant="filled" required sx={{
+              width: "50%"
+            }} onChange={(event) => handleInputChange(event, index)} />
+             <TextField placeholder="qty..." variant="filled" required sx={{
+              width: "50px"
+            }} />
+            {daliyWorkoutPlan.length !== 0 ?
+             daliyWorkoutPlan.map((item, i) => {
+                return (
+                  <div className="listContainer" key={i} >
+                    <div>{item}</div>
+                    <AiFillDelete onClick={() => deleteEntry(daliyWorkoutPlan, setDaliyWorkoutPlan, item)}/>
+                    <BiPencil />
+                  </div>
+                )
+              }):
+               <div>
+                No plans yet try adding one
+              </div>
+            }
+          </div>
+          <div id="selectedMealPlan">
+            <div className='planTitle'>
+              <h2>Meal Plan</h2>
+            </div>
+            <TextField placeholder="food..." variant="filled" required sx={{
+              width: "50%"
+            }} />
+             <TextField placeholder="qty..." variant="filled" required sx={{
+              width: "50px"
+            }}/>
+              {daliyMealPlan.length !== 0 ?
+                daliyMealPlan.map((item, i) => {
+                    return (
+                      <div className="listContainer" key={i} >
+                        <div>{item}</div>
+                        <AiFillDelete onClick={() => deleteEntry(daliyMealPlan, setDaliyMealPlan, item)}/>
+                        <BiPencil />
+                      </div>
+                    )
+                  }):
+                <div>
+                    No plans yet try adding one
+                </div>
+              }
+            </div>
         </div>
-      </div>
-    </>
+      </div> */}
+    </div>
   );
 }
 

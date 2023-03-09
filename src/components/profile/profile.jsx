@@ -3,7 +3,7 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import PersonalRecords from './personalRecords.jsx';
 import AdminPage from './adminPage.jsx';
-import defaultProfileImage from '../../assets/pfpic.png';
+// import defaultProfileImage from '../../assets/pfpic.png';
 import {
   Avatar, Badge, Box, Button, FormControl, Stack, TextField, Typography
 } from '@mui/material';
@@ -51,7 +51,7 @@ function Profile(props) {
 
   const [editFields, setEditFields] = useState(false);
   const [username, setUsername] = useState('');
-  const [profilePic, setProfilePic] = useState(defaultProfileImage);
+  // const [profilePic, setProfilePic] = useState(defaultProfileImage);
   const [heightFt, setHeightFt] = useState();
   const [heightIn, setHeightIn] = useState();
   const [weight, setWeight] = useState();
@@ -166,7 +166,21 @@ function Profile(props) {
       textAlign: 'center',
     }}>
       {isAdmin && (!openAdminPage) && (
-        <Button onClick={onAdminClick} sx={{ display: 'flex', vertical: 'top', color: 'red' }}>
+        <Button
+          onClick={onAdminClick}
+          sx={{
+            backgroundColor: "white",
+            borderRadius: 4,
+            boxShadow: 2,
+            '&:hover': {
+              backgroundColor: 'primary.main',
+              color: 'white',
+          },
+            display: 'flex',
+            vertical: 'top',
+            color: 'primary.main'
+          }}
+        >
           <CastleIcon />
         </Button>
       )}
@@ -176,10 +190,9 @@ function Profile(props) {
           <Badge
             overlap="circular"
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            badgeContent={<EditIcon onClick={onEdit} />}
+            badgeContent={<EditIcon sx={{ color: 'action' }} onClick={onEdit} />}
           >
-            <Avatar sx={{ width: 77, height: 77, fontSize: 50, textAlign: 'center' }}>{(username.charAt(0)).toUpperCase()}</Avatar>
-            {/* <Avatar alt={username} src={profilePic} sx={{ width: 99, height: 99 }} /> */}
+            <Avatar sx={{ width: 99, height: 99, fontSize: 50, textAlign: 'center' }}>{(username.charAt(0)).toUpperCase()}</Avatar>
           </Badge>
           <Typography variant='h4'>{username}</Typography>
         </Box>

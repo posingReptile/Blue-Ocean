@@ -19,10 +19,10 @@ import ClearIcon from "@mui/icons-material/Clear";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
-import "../../../css/workout.css";
-import EditExerciseModal from "./EditExerciseModal";
+import EditExerciseModal from "../modal/workout/EditExerciseModal";
+// import "../../../css/workout.css";
 
-function DayWorkoutListItem({
+function CalendarWorkoutListItem({
   handleEditInfo,
   handleDelete,
   showButtons,
@@ -83,7 +83,7 @@ function DayWorkoutListItem({
         disableGutters
         sx={{ mr: 1 }}
       >
-        <ListItemAvatar>
+        <ListItemAvatar sx={{ minWidth: 40 }}>
           <Avatar sx={{ backgroundColor: "white" }}>
             {type === "cardio" ? (
               <DirectionsRunIcon
@@ -101,7 +101,7 @@ function DayWorkoutListItem({
         <ListItemText
           primary={showMore ? exerciseName : truncateText(exerciseName, 28)}
           secondary={
-            <>
+            <div style={{ fontSize: 12 }}>
               {type === "cardio" ? (
                 <span className="workout-details">
                   <span>{`Intensity: ${intensityName}`}</span> |
@@ -114,7 +114,7 @@ function DayWorkoutListItem({
                 </span>
               )}
               {showMore && <div>Instructions: {instructions}</div>}
-            </>
+            </div>
           }
         />
         {showButtons && (
@@ -124,7 +124,7 @@ function DayWorkoutListItem({
                 <Fab
                   color="secondary"
                   aria-label="edit"
-                  size="medium"
+                  size="small"
                   onClick={handleEditClick}
                 >
                   <EditIcon />
@@ -160,7 +160,7 @@ function DayWorkoutListItem({
                 <Fab
                   color="error"
                   aria-label="edit"
-                  size="medium"
+                  size="small"
                   sx={{ ml: 1 }}
                   onClick={(e) => handleDeleteClick(e, exerciseId)}
                 >
@@ -176,4 +176,4 @@ function DayWorkoutListItem({
   );
 }
 
-export default DayWorkoutListItem;
+export default CalendarWorkoutListItem;

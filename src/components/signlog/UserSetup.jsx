@@ -7,6 +7,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -124,8 +125,8 @@ function UserSetup({ setUserObject, setComponent, setLoginComponent, username, p
       }).then((response) => {
         console.log(response.data)
         if(response.data.user_id) {
-          setUserObject({username: username, user_id: response.data.user_id, isadmin: response.data.isadmin});
-          setComponent('profile');
+          setUserObject(response.data);
+          setComponent('dashboard');
         } else if (response.data === 'USER EXISTS') {
           alert('Username Taken');
           setLoginComponent('logsign')
@@ -160,9 +161,9 @@ function UserSetup({ setUserObject, setComponent, setLoginComponent, username, p
         <img src={imgUrl} style={{width:500, height:120}}/>
         <br/>
         <div className="loginFieldWrapper">
-          <span className="heightText">{username}, please provide the following details</span><br/><br/>
+          <Typography sx={{color: "primary.main"}}>{username}, please provide the following details<br/><br/></Typography>
           <div className="heightBox">
-            <span className="heightText">HEIGHT</span>
+          <Typography sx={{mb: 1, color: "primary.main"}}>HEIGHT</Typography>
             <FormControl sx={{width: '45%', mr: 1, ml: 1, mb: 1}} size="small">
               <InputLabel>Feet</InputLabel>
                 <Select
@@ -224,7 +225,7 @@ function UserSetup({ setUserObject, setComponent, setLoginComponent, username, p
             {...goalWeightError ? {error: true, helperText: 'Enter a valid goal weight'} : null}
           />
         <div className="dateBox">
-          <span className="heightText">DATE OF BIRTH</span>
+          <Typography sx={{color: "primary.main"}}>DATE OF BIRTH</Typography>
           <DatePicker
         size="small"
         onChange={handleAgeChange}
@@ -233,7 +234,7 @@ function UserSetup({ setUserObject, setComponent, setLoginComponent, username, p
         </div>
         {ageError && <span className="errorText">Enter a valid date of birth</span>}
         <div className="goalBox">
-          <span className="heightText">GOAL DATE</span>
+          <Typography sx={{color: "primary.main"}}>GOAL DATE</Typography>
         <DatePicker
         size="small"
         onChange={handleGoalDateChange}
@@ -243,9 +244,20 @@ function UserSetup({ setUserObject, setComponent, setLoginComponent, username, p
         </div>
         </div>
         {goalDateError && <span className="errorText">Enter a valid goal date</span>}
-        {calorieGoal > 0 && goalWeight < weight && <span className="heightText">Your goal will be {Math.floor(calorieGoal)} calories daily.</span>}
-        <br/><br/>
-        <Button sx={{mr: 2}} onClick={() => handleSubmit()}>
+        {calorieGoal > 0 && goalWeight < weight && <Typography sx={{color : "primary.main"}}>Your goal will be {Math.floor(calorieGoal)} calories daily.</Typography>}
+        <br/>
+        <Button
+        variant="outlined"
+        sx={{
+          mb: 1,
+          backgroundColor: "primary.main",
+          color: "white",
+          '&:hover': {
+            backgroundColor: '#fff',
+            color: '#3c52b2',
+        },
+        }}
+        onClick={() => handleSubmit()}>
           Submit
         </Button><br/>
       </div>

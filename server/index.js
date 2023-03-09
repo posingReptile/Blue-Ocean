@@ -23,25 +23,55 @@ import dotenv from "dotenv";
 import axios from "axios";
 import cors from "cors";
 import session from "express-session";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
+import pgSession from "connect-pg-simple";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const createLog = (req, res, next) => {
+  res.on("finish", function () {
+    console.log(
+      req.method,
+      req.session,
+      decodeURI(req.url),
+      res.statusCode,
+      res.statusMessage
+    );
+  });
+  next();
+};
 
 dotenv.config();
 const app = express();
 app.use(cors());
+//app.use(createLog);
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname + "/../dist/")));
 app.use(
   session({
+    store: new (pgSession(session))({
+      createTableIfMissing: true,
+      pool: db,
+    }),
     secret: "secret",
     resave: true,
+    unset: "destroy",
     saveUninitialized: true,
   })
 );
 
+//---------------------------Session----------------------------
+app.get("/session", (req, res) => {
+  console.log(req);
+  res.send(req.session);
+});
+
 //---------------------------login------------------------------
+app.get("/logout", (req, res) => {
+  console.log("logging out");
+  req.session = null;
+  res.send("logged out");
+});
 
 app.get("/login", (req, res) => {
   db.query("SELECT * FROM users WHERE username = $1 AND password = $2", [
@@ -54,7 +84,7 @@ app.get("/login", (req, res) => {
     } else {
       req.session.username = req.query.username;
       req.session.user_id = data.rows[0].user_id;
-      console.log(req.session);
+      req.session.isadmin = data.rows[0].isadmin;
       res.send(data.rows[0]);
     }
   });
@@ -84,6 +114,7 @@ app.post("/new-user", (req, res) => {
       console.log("Inserted new user Successfully", data.rows[0]);
       req.session.username = req.body.username;
       req.session.user_id = data.rows[0].user_id;
+      req.session.isadmin = data.rows[0].isadmin;
       console.log(req.session);
       res.send(data.rows[0]);
     })
@@ -92,6 +123,7 @@ app.post("/new-user", (req, res) => {
       res.send(JSON.stringify("USER EXISTS"));
     });
 });
+
 //---------------------------dashboard------------------------------
 app.get("/profiles/:profile_id", (req, res) => {
   db.query(
@@ -149,6 +181,13 @@ app.get("/message", (req, res) => {
     res.send(message.rows);
   });
 });
+
+app.get("/quotes", (req, res) => {
+  db.query("SELECT quote_text FROM quotes").then((quotes) => {
+    res.send(quotes.rows);
+  });
+});
+
 //---------------------------workouts------------------------------
 
 app.get("/exercises", (req, res) => {
@@ -168,6 +207,8 @@ app.get("/daily-workout", (req, res) => {
     [req.query.date, req.query.userId]
   ).then((workouts) => {
     res.send(workouts.rows);
+  }).catch((err) => {
+    res.send(JSON.stringify('ERROR BAD INPUT - sonia'))
   });
 });
 
@@ -208,6 +249,8 @@ app.put("/edit-workout", (req, res) => {
   ).then(() => {
     console.log("Update Workout Success");
     res.send(202);
+  }).catch((err) => {
+    res.send(JSON.stringify('SOMETHING WENT WRONG - sonia'))
   });
 });
 
@@ -246,8 +289,8 @@ app.get("/notes", (req, res) => {
     } else {
       res.send(notes.rows);
     }
-  })
-})
+  });
+});
 // app.put("/edit-notes", (req, res) => {
 //   db.query("UPDATE workouts SET notes = $1 WHERE date = $2 RETURNING *", [
 //     req.body.notes,
@@ -259,26 +302,24 @@ app.get("/notes", (req, res) => {
 // });
 
 app.put("/notes", (req, res) => {
-  if(req.body.type === 'workout') {
-  db.query("UPDATE workouts SET notes = $1 WHERE date = $2 AND user_id = $3 RETURNING *", [
-    req.body.notes,
-    req.body.date,
-    req.body.userId
-  ]).then((updatedNotes) => {
-    console.log("Added Notes Successfully");
-    res.send(updatedNotes.rows);
-  });
-}
-if(req.body.type === 'meal') {
-  db.query('UPDATE workouts SET meal_notes = $1 WHERE date = $2 AND user_id = $3 RETURNING *', [
-    req.body.notes,
-    req.body.date,
-    req.body.userId
-  ]).then((updatedNotes) => {
-    console.log('Edit notes Sucessfully')
-    res.send(updatedNotes.rows);
-  });
-}
+  if (req.body.type === "workout") {
+    db.query(
+      "UPDATE workouts SET notes = $1 WHERE date = $2 AND user_id = $3 RETURNING *",
+      [req.body.notes, req.body.date, req.body.userId]
+    ).then((updatedNotes) => {
+      console.log("Added Notes Successfully");
+      res.send(updatedNotes.rows);
+    });
+  }
+  if (req.body.type === "meal") {
+    db.query(
+      "UPDATE workouts SET meal_notes = $1 WHERE date = $2 AND user_id = $3 RETURNING *",
+      [req.body.notes, req.body.date, req.body.userId]
+    ).then((updatedNotes) => {
+      console.log("Edit notes Sucessfully");
+      res.send(updatedNotes.rows);
+    });
+  }
 });
 
 //---------------------------meals---------------------------------
@@ -311,7 +352,10 @@ app.get("/nutrition", (req, res) => {
           req.query.description,
           foody.serving_size_g,
         ]
-      ).then(() => {
+      ).catch((err) =>{
+        res.send(JSON.stringify('Try a different food Item'))
+      })
+      .then(() => {
         console.log("Added to database");
         res.send(foody);
       });
@@ -319,18 +363,21 @@ app.get("/nutrition", (req, res) => {
 });
 
 app.get("/daily-meals", (req, res) => {
+  console.log('daily meal')
   console.log(req.query);
   db.query(
     "SELECT * FROM food WHERE date = $1 AND user_id =  $2 ORDER BY category DESC",
     [req.query.date, req.query.userId]
   ).then((allMeals) => {
     res.send(allMeals.rows);
+  }).catch((err) => {
+    res.send(JSON.stringify('ERROR'))
   });
 });
 
-app.put("/edit-meal", (req, res) => {
+app.put("/edit-meal/:foodId", (req, res) => {
   db.query("UPDATE food SET quantity = $2 WHERE id= $1", [
-    req.body.foodId,
+    req.params.foodId,
     req.body.quantity,
   ]).then(() => {
     console.log("Edited food successfully");
@@ -338,8 +385,9 @@ app.put("/edit-meal", (req, res) => {
   });
 });
 
-app.delete("/delete-meal", (req, res) => {
-  db.query("DELETE FROM food WHERE foodId = $1", [req.body.foodId]).then(() => {
+app.delete("/delete-meal/:foodId", (req, res) => {
+  console.log(req)
+  db.query("DELETE FROM food WHERE food_id = $1", [req.params.foodId]).then(() => {
     console.log("Deleted meal successfully");
     res.send(202);
   });
@@ -368,7 +416,7 @@ app.get("/monthly-meals", (req, res) => {
 // get all the calories for the monthly, ideally by [date, calorie]
 app.get("/monthly-calories", (req, res) => {
   db.query(
-    "SELECT date, calories FROM food WHERE EXTRACT(MONTH FROM date) = $1 AND EXTRACT (YEAR FROM date) = $2 AND user_id = $3",
+    "SELECT date, calories, category FROM food WHERE EXTRACT(MONTH FROM date) = $1 AND EXTRACT (YEAR FROM date) = $2 AND user_id = $3",
     [req.query.month, req.query.year, req.query.userId]
   ).then((calories) => {
     res.send(calories.rows);
