@@ -14,7 +14,8 @@ import Paper from "@mui/material/Paper";
 import Quote from "../dashboard/Quote";
 import DayWorkoutList from "../modal/workout/DayWorkoutList";
 import CalendarWorkout from "./CalendarWorkout";
-
+import CalendarFood from "./CalendarFood";
+import MealModalTest from "./ctest.jsx"
 const monthNames = [
   "January",
   "February",
@@ -143,8 +144,8 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
           <Paper elevation={5} sx={{ width: 450, height: "30vh", p: 1 }}>
             <CalendarWorkout userID={userID} currDateInt={currDateInt} />
           </Paper>
-          <Paper elevation={5} sx={{ width: 450, height: "30vh", p: 1 }}>
-            <CalendarWorkout userID={userID} currDateInt={currDateInt} />
+          <Paper elevation={5}>
+            <MealModalTest userID={userID} currDateInt={currDateInt}/>
           </Paper>
         </div>
       </div>

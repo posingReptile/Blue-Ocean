@@ -31,6 +31,21 @@ cde6ff
 } */
 /* #3fbeff */
 
+
+
+/* tr {
+  height: 10px;
+}
+
+tr td {
+   height: auto !important;
+} */
+.css-15wwp11-MuiTableHead-root {
+  /* display: table-header-group; */
+  display: flex !important;
+  justify-content: center;
+}
+
 .container {
   margin-top: 5%;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
