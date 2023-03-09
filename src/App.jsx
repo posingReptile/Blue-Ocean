@@ -92,9 +92,10 @@ function App() {
             height: "100vh",
           }}
         >
-          {component !== "logsign" && component !== "usersetup" && (
+          {component !== 'logsign' && component !== 'usersetup' && (
             <ResponsiveNavBar
-              sx={{ width: "100%" }}
+              sx={{width: '100%'}}
+              userObject={userObject}
               setUserObject={setUserObject}
               setComponent={setComponent}
             />

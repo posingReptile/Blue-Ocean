@@ -47,15 +47,23 @@ function PersonalRecords() {
   const filteredRows = (tableExerciseFilter.length > 0) ? rowsFilteredByMuscles.filter((pr) => filteredByExercise.includes(pr.name)) : rowsFilteredByMuscles;
 
   return (
-    <TableContainer sx={{ mt: 4}} component={Paper}>
-      <Typography variant="overline" sx={{ display: 'block', fontWeight: 'bold', fontSize: '16px' }}>
+    <TableContainer sx={{ mt: 4, boxShadow: 4}} component={Paper}>
+      <Typography variant="overline" sx={{ backgroundColor: "primary.main", color: "white", display: 'block', fontWeight: 'bold', fontSize: '16px' }}>
         Personal Records
       </Typography>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Exercises</TableCell>
-            <TableCell align="right">PR</TableCell>
+            <TableCell>
+              <Typography sx={{ fontWeight: 'bold'}}>
+                Exercise
+              </Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography sx={{ fontWeight: 'bold'}}>
+                PR
+              </Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
