@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Typography, IconButton, Badge, Paper } from '@mui/material';
-import { ArrowBack, ArrowForward } from '@mui/icons-material';
+import React, { useState } from "react";
+import { Typography, IconButton, Badge, Paper } from "@mui/material";
+import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
 const DatePickerComponent = ({ currentDay, setCurrentDay }) => {
   const handleDateChange = (newDate) => {
@@ -22,43 +22,33 @@ const DatePickerComponent = ({ currentDay, setCurrentDay }) => {
   return (
     <Paper
       sx={{
-        width: '250px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-around',
+        width: "200px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-around",
         padding: 1,
+        backgroundColor: "#006edc",
+        color: "white",
       }}
     >
       <IconButton
         onClick={handlePrevDay}
-        // sx={{
-        //   borderRadius: '50%',
-        //   width: 40,
-        //   height: 40,
-        //   backgroundColor: 'primary.main',
-        //   '&:hover': {
-        //     backgroundColor: 'secondary.main',
-        //   },
-        // }}
+        sx={{
+          color: "white",
+        }}
       >
-        <ArrowBack />
+        <ArrowBack sx={{ "&:hover": { color: "lightBlue" } }} />
       </IconButton>
-      <Typography variant='h4' sx={{ padding: '0 1rem', textAlign: 'center' }}>
+      <Typography variant="h6" sx={{ padding: "0 1rem", textAlign: "center" }}>
         {currentDay.toLocaleDateString()}
       </Typography>
       <IconButton
         onClick={handleNextDay}
-        // sx={{
-        //   borderRadius: '50%',
-        //   width: 40,
-        //   height: 40,
-        //   backgroundColor: 'primary.main',
-        //   '&:hover': {
-        //     backgroundColor: 'secondary.main',
-        //   },
-        // }
+        sx={{
+          color: "white",
+        }}
       >
-        <ArrowForward />
+        <ArrowForward sx={{ "&:hover": { color: "lightBlue" } }} />
       </IconButton>
     </Paper>
   );

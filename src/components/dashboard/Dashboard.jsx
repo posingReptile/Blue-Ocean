@@ -7,34 +7,47 @@ import WorkoutDash from '../modal/workout/WorkoutDash';
 import DatePickerComponent from './DatePickerComponent';
 import Meals from '../modal/meals/Meals.jsx'
 import FoodDash from "../modal/meals/FoodDash.jsx"
+import React, { useState, useEffect } from "react";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import WorkoutDash from "../modal/workout/WorkoutDash";
+import DatePickerComponent from "./DatePickerComponent";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
+  const [quote, setQuote] = useState("");
   // console.log(currDateInt);
 
+  useEffect(() => {
+    // Grab quote, setquote, display
+  }, []);
   return (
-    <Paper elevation={10} sx={{ width: "1400px" }}>
+    <Box elevation={10}>
       <Box
         sx={{
-          paddingTop: 5,
-          marginBottom: 5,
+          paddingTop: 3,
+          marginBottom: 3,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
         }}
       >
-        <Meals userId={userID}/>
-        <Typography variant='h5' sx={{ textAlign: 'center' }}>
-          Daily Wisdom
-        </Typography>
-        <Typography sx={{ textAlign: "center", fontStyle: "italic" }}>
-          "The only way to stop me from lifting is if I'm on my death bed, and
-          even then I'll probably ask for a spotter."
-        </Typography>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Typography
+            sx={{ textAlign: "center", fontStyle: "italic", fontSize: 20 }}
+          >
+            "The only way to stop me from lifting is if I'm on my death bed, and
+            even then I'll probably ask for a spotter."
+          </Typography>
+          <span style={{ marginLeft: 14 }}>{<RefreshIcon />}</span>
+        </div>
       </Box>
       <Box
         sx={{
-          marginTop: 5,
-          marginBottom: 5,
+          marginTop: 1,
+          marginBottom: 2.5,
           display: "flex",
           justifyContent: "center",
         }}
@@ -64,7 +77,7 @@ const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
           />
         </Grid>
       </Grid>
-    </Paper>
+    </Box>
   );
 };
 
