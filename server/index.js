@@ -107,9 +107,6 @@ app.post("/new-user", (req, res) => {
   )
     .then((data) => {
       console.log("Inserted new user Successfully", data.rows[0]);
-      for(key in data.rows[0]){
-        req.session(key) = data.rows[0](key)
-      }
       req.session.username = req.body.username;
       req.session.user_id = data.rows[0].user_id;
       req.session.isadmin = data.rows[0].isadmin;
@@ -161,6 +158,15 @@ app.get("/message", (req, res) => {
     res.send(message.rows);
   });
 });
+
+
+
+app.get("/quotes", (req, res) => {
+  db.query('SELECT quote_text FROM quotes').then((quotes) => {
+    res.send(quotes.rows)
+  })
+})
+
 //---------------------------workouts------------------------------
 
 app.get("/exercises", (req, res) => {
