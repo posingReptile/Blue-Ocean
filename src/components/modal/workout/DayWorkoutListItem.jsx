@@ -50,6 +50,17 @@ function DayWorkoutListItem({
     intensityName = "High";
   }
 
+  function truncateText(exerciseName, maxLength) {
+    if (exerciseName.length <= maxLength) {
+      return exerciseName;
+    }
+    return (
+      <Typography noWrap component="span">
+        {exerciseName.substr(0, maxLength)}&hellip;
+      </Typography>
+    );
+  }
+
   // Toggles popover
   const handleEditClick = (e) => {
     e.stopPropagation();
@@ -67,24 +78,36 @@ function DayWorkoutListItem({
 
   return (
     <>
-      <ListItemButton onMouseDown={() => setShowMore(!showMore)}>
+      <ListItemButton
+        onMouseDown={() => setShowMore(!showMore)}
+        // sx={{ border: "1px solid yellow" }}
+        // disablePadding
+        disableGutters
+        sx={{ mr: 1 }}
+      >
         <ListItemAvatar>
-          <Avatar sx={{ backgroundColor: "" }}>
+          <Avatar sx={{ backgroundColor: "white" }}>
             {type === "cardio" ? (
-              <DirectionsRunIcon color="secondary" />
+              <DirectionsRunIcon
+                color="primary"
+                sx={{ "&:hover": { color: "#006edc" } }}
+              />
             ) : (
-              <FitnessCenterIcon color="secondary" />
+              <FitnessCenterIcon
+                color="primary"
+                sx={{ "&:hover": { color: "#006edc" } }}
+              />
             )}
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={exerciseName}
+          primary={showMore ? exerciseName : truncateText(exerciseName, 28)}
           secondary={
             <>
               {type === "cardio" ? (
                 <span className="workout-details">
                   <span>{`Intensity: ${intensityName}`}</span> |
-                  <span>{`Duration: ${duration} minute(s)`}</span>
+                  <span>{`Duration: ${duration} min(s)`}</span>
                 </span>
               ) : (
                 <span className="workout-details">
@@ -98,50 +121,54 @@ function DayWorkoutListItem({
         />
         {showButtons && (
           <ListItemSecondaryAction onMouseDown={(e) => e.stopPropagation()}>
-            <Fab
-              color="secondary"
-              aria-label="edit"
-              size="medium"
-              onClick={handleEditClick}
-            >
-              <EditIcon />
-            </Fab>
-            <Popover
-              id={id}
-              open={open}
-              anchorEl={anchorEl}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: "center",
-                horizontal: "center",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              style={{ marginRight: 4 }}
-            >
-              <EditExerciseModal
-                exerciseId={exerciseId}
-                type={type}
-                handleClose={handleClose}
-                handleEditInfo={handleEditInfo}
-                intensity={intensity}
-                duration={duration}
-                weight={weight}
-                sets={sets}
-                reps={reps}
-              />
-            </Popover>
-            <Fab
-              color="error"
-              aria-label="edit"
-              size="medium"
-              sx={{ ml: 1 }}
-              onClick={(e) => handleDeleteClick(e, exerciseId)}
-            >
-              <ClearIcon />
-            </Fab>
+            {showMore ? null : (
+              <>
+                <Fab
+                  color="secondary"
+                  aria-label="edit"
+                  size="medium"
+                  onClick={handleEditClick}
+                >
+                  <EditIcon />
+                </Fab>
+                <Popover
+                  id={id}
+                  open={open}
+                  anchorEl={anchorEl}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: "center",
+                    horizontal: "center",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  style={{ marginRight: 4 }}
+                >
+                  <EditExerciseModal
+                    exerciseId={exerciseId}
+                    type={type}
+                    handleClose={handleClose}
+                    handleEditInfo={handleEditInfo}
+                    intensity={intensity}
+                    duration={duration}
+                    weight={weight}
+                    sets={sets}
+                    reps={reps}
+                  />
+                </Popover>
+                <Fab
+                  color="error"
+                  aria-label="edit"
+                  size="medium"
+                  sx={{ ml: 1 }}
+                  onClick={(e) => handleDeleteClick(e, exerciseId)}
+                >
+                  <ClearIcon />
+                </Fab>
+              </>
+            )}
           </ListItemSecondaryAction>
         )}
       </ListItemButton>
