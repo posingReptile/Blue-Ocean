@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { format } from "date-fns";
-import Profile from './components/profile/profile.jsx';
-import LogSignMain from './components/signlog/LogSignMain.jsx';
-import UserSetup from './components/signlog/UserSetup.jsx';
-import CalendarPage from './components/calendar/Calendar.jsx';
-import Dashboard from './components/dashboard/Dashboard.jsx';
-import NavBar from './components/navbar/NavBar.jsx';
-import Meals from './components/modal/meals/Meals.jsx';
-import ResponsiveNavBar from './components/navbar/ResponsiveNavBar.jsx';
-import axios from 'axios';
+import Profile from "./components/profile/profile.jsx";
+import LogSignMain from "./components/signlog/LogSignMain.jsx";
+import UserSetup from "./components/signlog/UserSetup.jsx";
+import CalendarPage from "./components/calendar/Calendar.jsx";
+import Dashboard from "./components/dashboard/Dashboard.jsx";
+import NavBar from "./components/navbar/NavBar.jsx";
+import Meals from "./components/modal/meals/Meals.jsx";
+import ResponsiveNavBar from "./components/navbar/ResponsiveNavBar.jsx";
+import axios from "axios";
 
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -26,13 +26,12 @@ function App() {
   // const [userID, setUserID] = useState(0);
   const [userObject, setUserObject] = useState({});
 
-
   useEffect(() => {
-    axios.get('http://localhost:3000/session').then((res) => {
-      console.log('res.data', res.data);
+    axios.get("http://localhost:3000/session").then((res) => {
+      console.log("res.data", res.data);
       if (res.data.user_id) {
         //setUserID(res.data.user_id);
-        setComponent('dashboard');
+        setComponent("dashboard");
         setUserObject({
           username: res.data.username,
           user_id: res.data.user_id,
@@ -41,7 +40,6 @@ function App() {
       }
     });
   }, []);
-
 
   const currDateInt = Number(format(new Date(currentDay), "yyyyMMdd"));
   // console.log(currDateInt);
@@ -89,8 +87,12 @@ function App() {
             height: "100vh",
           }}
         >
-          {component !== 'logsign' && component !== 'usersetup' && (
-            <ResponsiveNavBar sx={{width: '100%'}} setUserObject={setUserObject} setComponent={setComponent} />
+          {component !== "logsign" && component !== "usersetup" && (
+            <ResponsiveNavBar
+              sx={{ width: "100%" }}
+              setUserObject={setUserObject}
+              setComponent={setComponent}
+            />
           )}
           {currComponent(component)}
         </Box>
