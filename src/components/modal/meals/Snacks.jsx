@@ -6,95 +6,139 @@ import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 
 
-function Snacks({ open, handleClose, meal, meals, snacks, setSnacks }) {
-  // const [snacks, setSnacks] = useState([]);
+function Snacks({ open, handleClose, meal, meals, snacks, setSnacks, date, userId, foodId, foodS, setFoodS, onlySnacks }) {
+  const [input, setInput] = useState('');
+  const [quantity, setQuantity] = useState('100g');
 
-  const [inputList, setInputList] = useState([
-        {
-          input: "",
-          quantity: '100g',
-          input_rank: null
-        }
-      ])
-      const [isDisabled, setIsDisabled] = useState(false)
-
-      const handleListAdd = () => {
-        setInputList([
-          ...inputList,
-          {
-            input: "",
-            quantity: '100g',
-            input_rank: null
-          }
-        ])
-      }
-
-      useEffect(() => {
-        if (inputList.length > 0) {
-          inputList[inputList.length - 1].input === ""
-            ? setIsDisabled(true)
-            : setIsDisabled(false)
-        }
-      })
-
-      useEffect(() => {
-      }, [snacks])
-
-      const handleInputChange = (event, index) => {
-        const { value } = event.target
-        const newInputList = [...inputList]
-        newInputList[index].input = value
-        newInputList[index].input_rank = index + 1
-        setInputList(newInputList)
-      }
-
-      const handleQuantityChange = (event, index) => {
-        const { value } = event.target
-        const newInputList = [...inputList]
-        newInputList[index].quantity = value
-        setInputList(newInputList)
-      }
-
-      const handleRemoveItem = (index) => {
-        const newList = [...inputList]
-        newList.splice(index, 1)
-        setInputList(newList)
-      }
-
-      const saveFood = (food, quantity, meal, index, event) => {
-        if (meal === 'Snacks') {
-          setSnacks(prevState => [...prevState, {'food': food, 'quantity': quantity, 'calories': '', 'protein': ''}])
-      }
+  const saveFood = (food, quantity, meal, index, event) => {
+    if (meal === 'Snacks') {
+      setSnacks(prevState => [...prevState, { 'food': food, 'quantity': quantity, 'calories': '', 'protein': '' }])
     }
-// console.log('SNACKS', snacks)
+    const query = `${quantity} ${food}`
+
+    axios.get(`http://localhost:3000/nutrition?food=${query}&date=${date}&userId=${userId}&category=${meal}`)
+      .then((res) => {
+        console.log('RES: ', res)
+        let cal = res.data.calories
+        let pro = res.data.protein_g
+        setSnacks(prevState => [...prevState, { 'food': food, 'quantity': quantity, 'calories': cal, 'protein': pro }])
+        setInput('');
+        setQuantity('100g');
+        alert('Successful input snacks');
+      }).catch(() => {
+        alert('Error occured when entering snacks');
+      })
+  }
 
   return (
     <div>
-      {inputList.length > 0
-        ? inputList.map((input, index) => (
-          <div key={index}>
-            <TextField placeholder="food..." variant="filled" required sx={{
-              margin: "1rem",
-              width: "250px"
-            }} onChange={(event) => handleInputChange(event, index)} />
-            <TextField placeholder="quantity..." variant="filled" required sx={{
-              margin: "1rem",
-              width: "50px"
-            }} onChange={(event) => handleQuantityChange(event, index)} />
-            <Button variant="outlined" onClick={() => {
-              // handleAddFood(inputList[index].input, inputList[index].quantity, meal, index);
-              saveFood(inputList[index].input, inputList[index].quantity, meal, index)
-              // handleRemoveItem(index);
-              }}>Add </Button>
-            <Button variant="outlined" onClick={() => handleRemoveItem(index)}>Delete</Button>
-            <br />
-          </div>
-        )) : "No item in the list"
-      }
-
-      <Button variant="outlined" onClick={handleListAdd}>+</Button>
+      <TextField
+        placeholder="food..."
+        ariant="filled"
+        required
+        sx={{
+          margin: "1rem",
+          width: "300px"
+        }}
+        value={input}
+        onChange={(event) => setInput(event.target.value)}
+      />
+      <TextField
+        placeholder="grams..."
+        variant="filled"
+        required
+        sx={{
+          margin: "1rem",
+          width: "100px"
+        }}
+        value={quantity}
+        onChange={(event) => setQuantity(event.target.value)}
+      />
+      <Button variant="outlined" onClick={() => {
+        saveFood(input, quantity, meal);
+      }}>Add </Button>
+      <br />
     </div>
   )
 }
 
 export default Snacks;
+
+
+// const [snacks, setSnacks] = useState([]);
+  // const [inputList, setInputList] = useState([
+  //   {
+  //     input: "",
+  //     quantity: '100g',
+  //     input_rank: null
+  //   }
+  // ])
+  // const [isDisabled, setIsDisabled] = useState(false)
+
+  // const handleListAdd = () => {
+  //   setInputList([
+  //     ...inputList,
+  //     {
+  //       input: "",
+  //       quantity: '100g',
+  //       input_rank: null
+  //     }
+  //   ])
+  // }
+
+  // useEffect(() => {
+  //   if (inputList.length > 0) {
+  //     inputList[inputList.length - 1].input === ""
+  //       ? setIsDisabled(true)
+  //       : setIsDisabled(false)
+  //   }
+  // }, [foodS, onlySnacks])
+
+  // const getFoods = () => {
+  //   axios.get(`http://localhost:3000/daily-meals?date=${date}&userId=${userId}`)
+  //     .then((res) => {
+  //       setFoodS(res.data)
+  //     })
+  // }
+
+  // useEffect(() => {
+  //   getFoods()
+  // }, [snacks])
+
+  // const handleInputChange = (event, index) => {
+  //   const { value } = event.target
+  //   const newInputList = [...inputList]
+  //   newInputList[index].input = value
+  //   newInputList[index].input_rank = index + 1
+  //   setInputList(newInputList)
+  // }
+
+  // const handleQuantityChange = (event, index) => {
+  //   const { value } = event.target
+  //   const newInputList = [...inputList]
+  //   newInputList[index].quantity = value
+  //   setInputList(newInputList)
+  // }
+
+  // const handleRemoveItem = (index) => {
+  //   const newList = [...snacks]
+  //   newList.splice(index, 1)
+  //   setSnacks(newList)
+  // }
+
+    // console.log('SNACKS', snacks)
+
+  // const deleteFood = () => {
+  //   const food_Id = { food_id: foodId }
+  //   axios.delete(`http://localhost:3000/delete-meal/${foodId}`)
+  //     .then((res) => {
+  //       console.log('Delete: ', res)
+  //     })
+  // }
+
+  // const editFood = () => {
+  //   axios.put(`http://localhost:3000/edit-meal/${foodId}`, )
+  //   .then((res) => {
+  //     console.log('Edit: ', res)
+  //   })
+  // }

@@ -189,6 +189,8 @@ app.get("/daily-workout", (req, res) => {
     [req.query.date, req.query.userId]
   ).then((workouts) => {
     res.send(workouts.rows);
+  }).catch((err) => {
+    res.send(JSON.stringify('ERROR BAD INPUT - sonia'))
   });
 });
 
@@ -229,6 +231,8 @@ app.put("/edit-workout", (req, res) => {
   ).then(() => {
     console.log("Update Workout Success");
     res.send(202);
+  }).catch((err) => {
+    res.send(JSON.stringify('SOMETHING WENT WRONG - sonia'))
   });
 });
 
@@ -330,7 +334,10 @@ app.get("/nutrition", (req, res) => {
           req.query.description,
           foody.serving_size_g,
         ]
-      ).then(() => {
+      ).catch((err) =>{
+        res.send(JSON.stringify('Try a different food Item'))
+      })
+      .then(() => {
         console.log("Added to database");
         res.send(foody);
       });
@@ -338,18 +345,21 @@ app.get("/nutrition", (req, res) => {
 });
 
 app.get("/daily-meals", (req, res) => {
+  console.log('daily meal')
   console.log(req.query);
   db.query(
     "SELECT * FROM food WHERE date = $1 AND user_id =  $2 ORDER BY category DESC",
     [req.query.date, req.query.userId]
   ).then((allMeals) => {
     res.send(allMeals.rows);
+  }).catch((err) => {
+    res.send(JSON.stringify('ERROR'))
   });
 });
 
-app.put("/edit-meal", (req, res) => {
+app.put("/edit-meal/:foodId", (req, res) => {
   db.query("UPDATE food SET quantity = $2 WHERE id= $1", [
-    req.body.foodId,
+    req.params.foodId,
     req.body.quantity,
   ]).then(() => {
     console.log("Edited food successfully");
@@ -357,8 +367,9 @@ app.put("/edit-meal", (req, res) => {
   });
 });
 
-app.delete("/delete-meal", (req, res) => {
-  db.query("DELETE FROM food WHERE foodId = $1", [req.body.foodId]).then(() => {
+app.delete("/delete-meal/:foodId", (req, res) => {
+  console.log(req)
+  db.query("DELETE FROM food WHERE food_id = $1", [req.params.foodId]).then(() => {
     console.log("Deleted meal successfully");
     res.send(202);
   });
@@ -387,7 +398,7 @@ app.get("/monthly-meals", (req, res) => {
 // get all the calories for the monthly, ideally by [date, calorie]
 app.get("/monthly-calories", (req, res) => {
   db.query(
-    "SELECT date, calories FROM food WHERE EXTRACT(MONTH FROM date) = $1 AND EXTRACT (YEAR FROM date) = $2 AND user_id = $3",
+    "SELECT date, calories, category FROM food WHERE EXTRACT(MONTH FROM date) = $1 AND EXTRACT (YEAR FROM date) = $2 AND user_id = $3",
     [req.query.month, req.query.year, req.query.userId]
   ).then((calories) => {
     res.send(calories.rows);
