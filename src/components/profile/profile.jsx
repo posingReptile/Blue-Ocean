@@ -61,7 +61,7 @@ function Profile(props) {
   const [calorieGoal, setCalorieGoal] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const [openAdminPage, setOpenAdminPage] = useState(false);
-  const [validDate, setValidDate] = useState(true);
+  const [pickerDate, setPickerDate] = useState(null);
 
   function onAdminClick() {
     setOpenAdminPage(!openAdminPage);
@@ -81,6 +81,7 @@ function Profile(props) {
           setTargetWeight(userObj.goal_weight);
           setCalorieGoal(userObj.calorie_goal);
           setTargetDate(((userObj.goal_date.split('T')[0]).split('-')).join(''));
+          setPickerDate(((userObj.goal_date.split('T')[0]).split('-')).join(''));
         })
         .catch(() => console.log('failed to get profile info'))
     }
@@ -93,7 +94,7 @@ function Profile(props) {
   function updateFields(event) {
     event.preventDefault();
 
-    if (validDate) {
+    if (pickerDate) {
       const formWeight = Number(event.target.elements.weight.value);
       const formHeightFt = Number(event.target.elements.heightFt.value);
       const formHeightIn = Number(event.target.elements.heightIn.value);
@@ -123,13 +124,14 @@ function Profile(props) {
       setHeightFt(formHeightFt);
       setHeightIn(formHeightIn);
       setCalorieGoal(goal);
+      setTargetDate(pickerDate);
       const userInfo = {
         age: formAge,
         weight: formWeight,
         height_feet: formHeightFt,
         height_inches: formHeightIn,
         goal_weight: formTargetWeight,
-        goal_date: targetDate,
+        goal_date: pickerDate,
         calorie_goal: goal,
       };
       axios.post(`http://localhost:3000/profiles/${userID}`, userInfo)
@@ -144,11 +146,9 @@ function Profile(props) {
     const year = event.$y;
 
     if (dayjs(event).isAfter(dayjs())){
-      setValidDate(true);
-      setTargetDate(year + month + day);
+      setPickerDate(year + month + day);
     } else {
-      setTargetDate((od) => od);
-      setValidDate(false);
+      setPickerDate(null);
     }
   }
 
@@ -222,8 +222,8 @@ function Profile(props) {
 
                 <Box>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker label="goal date" disablePast onChange={upDate} value={dayjs(formattedDate)} />
-                    {!validDate && <div className="errorText">Enter a valid date</div>}
+                    <DatePicker label="goal date" disablePast onChange={upDate} value={dayjs(pickerDate)} />
+                    {!pickerDate && <div className="errorText">Enter a valid date</div>}
                   </LocalizationProvider>
                 </Box>
                 <GridEntry />
