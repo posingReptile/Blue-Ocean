@@ -43,7 +43,7 @@ function Login({ setLoginComponent, setUserObject, setComponent, setPassword, se
           setUsernameError(false);
           setPasswordError(false);
           setComponent('dashboard');
-          setUserObject({username: res.data.username, user_id: res.data.user_id, isadmin: res.data.isadmin});
+          setUserObject(res.data);
         }
       })
       .catch((err) => {
@@ -77,7 +77,6 @@ function Login({ setLoginComponent, setUserObject, setComponent, setPassword, se
       <img src={imgUrl} style={{width:500, height:120}}/>
       <br/>
       <TextField
-      sx={{mb: 1}}
       id="outlined-basic"
       size="small"
       label="Username"
@@ -85,7 +84,6 @@ function Login({ setLoginComponent, setUserObject, setComponent, setPassword, se
       onChange={handleUsernameChange} />
       <br/>
       <TextField
-      sx={{mb: 1}}
       id="outlined-basic"
       size="small"
       label="Password"
@@ -93,7 +91,7 @@ function Login({ setLoginComponent, setUserObject, setComponent, setPassword, se
       {...passwordError ? {error: true, helperText: 'Enter a valid passsword'} : null}
       onChange={handlePasswordChange} />
       <br/>
-      <Button sx={{mb: 2}} onClick={() => handleLogin()}>
+      <Button sx={{mb: 1}} onClick={() => handleLogin()}>
         Login
       </Button>
       <Button onClick={() => handleSignup()}>
