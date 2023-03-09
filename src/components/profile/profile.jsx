@@ -87,6 +87,57 @@ function Profile(props) {
     }
   }, [userID]);
 
+  // useEffect(() => {
+  //   /*
+  //     Calculate your BMR:
+
+  //     For men: BMR = 66 + (6.2 x weight in pounds) + (12.7 x height in inches) - (6.76 x age in years)
+  //     For women: BMR = 655.1 + (4.35 x weight in pounds) + (4.7 x height in inches) - (4.7 x age in years)
+
+  //     Determine your activity level factor:
+
+  //     Sedentary (little or no exercise) = 1.2
+  //     Lightly active (light exercise 1-3 days a week) = 1.375
+  //     Moderately active (moderate exercise 3-5 days a week) = 1.55
+  //     Very active (hard exercise 6-7 days a week) = 1.725
+  //     Extra active (very hard exercise, physical job or training twice a day) = 1.9
+  //   */
+
+  //   console.log(heightFt);
+  //   console.log(heightIn);
+  //   console.log(weight);
+  //   console.log(age);
+  //   console.log(3500 * weightDelta);
+  //   console.log('days: ', days);
+  //   console.log('BMR: ', BMR );
+  //   console.log('TDEE: ', TDEE);
+  //   console.log('delta: ', weightDelta);
+  //   console.log(weightDelta/days);
+  //   console.log(TDEE * (weightDelta/days));
+  //   console.log(Math.floor(TDEE * (weightDelta/days) + TDEE));
+
+  // }, [targetDate, heightFt, heightIn, weight, targetWeight]);
+
+  /**
+    const calculateCalorieGoal = () => {
+    console.log(Date.now())
+    let tempCalorieGoal = 0;
+    const height = (feet * 12 + inches) * 2.54;
+    const ageInYears = Math.floor(age / 31536000000);
+    const metricWeight = weight * 0.453592;
+    const metricGoalWeight = goalWeight * 0.453592;
+    const weightDifference = metricWeight - metricGoalWeight;
+    const weightDifferenceInDays = (goalWeightDate - Date.now()) / 86400000;
+    const weightDifferencePerDay = weightDifference / weightDifferenceInDays;
+    const caloriesPerDay = weightDifferencePerDay * 7700;
+    console.log(caloriesPerDay)
+    if (weightDifferencePerDay > 0) {
+      tempCalorieGoal = 10 * metricWeight + 6.25 * height - 5 * ageInYears + 5 - caloriesPerDay;
+    }
+    setCalorieGoal(tempCalorieGoal)
+  };
+   */
+
   function onEdit() {
     setEditFields(!editFields);
   }
@@ -94,11 +145,16 @@ function Profile(props) {
     event.preventDefault();
 
     if (validDate) {
+      const days = Math.ceil((dayjs(targetDate) - dayjs()) / 86400000);
+      // const BMR = 66 + (6.2 * weight) + (12.7 * ((heightFt * 12) + heightIn)) - (6.76 * age);
+      // const TDEE = BMR * 1.2;
+      // const weightDelta = targetWeight - weight;
       setAge(event.target.elements.age.value);
       setWeight(event.target.elements.weight.value);
       setHeightFt(event.target.elements.heightFt.value);
       setHeightIn(event.target.elements.heightIn.value);
       setTargetWeight(event.target.elements.targetWeight.value);
+      setCalorieGoal(Math.floor(((66 + (6.2 * weight) + (12.7 * ((heightFt * 12) + heightIn)) - (6.76 * age) * 1.2) * ((targetWeight - weight) / days)) + (66 + (6.2 * weight) + (12.7 * ((heightFt * 12) + heightIn)) - (6.76 * age) * 1.2)))
       const userInfo = {
         age,
         weight,
@@ -106,7 +162,7 @@ function Profile(props) {
         height_inches: heightIn,
         goal_weight: targetWeight,
         goal_date: targetDate,
-        calories: calorieGoal,
+        calorie_goal: calorieGoal,
       };
       axios.post(`http://localhost:3000/profiles/${userID}`, userInfo)
         .then(() => onEdit())
@@ -129,6 +185,8 @@ function Profile(props) {
   }
 
   const formattedDate = targetDate ? targetDate.substring(4, 6) + '/' + targetDate.substring(6) + '/' + targetDate.substring(0, 4) : '';
+
+
 
   return (
     <Box sx={{
