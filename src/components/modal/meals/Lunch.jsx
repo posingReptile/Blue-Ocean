@@ -6,7 +6,7 @@ import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 
 
-function Lunch({ open, handleClose, meal, meals, lunch, setLunch, date, userId, foodId }) {
+function Lunch({ open, handleClose, meal, meals, lunch, setLunch, date, userId, foodId, setFoodB, foodB, onlyLunch }) {
   // const [lunch, setLunch] = useState([]);
 
   const [inputList, setInputList] = useState([
@@ -35,9 +35,10 @@ function Lunch({ open, handleClose, meal, meals, lunch, setLunch, date, userId, 
         ? setIsDisabled(true)
         : setIsDisabled(false)
     }
-  })
+  }, [foodB, onlyLunch])
 
   useEffect(() => {
+    getFoods()
   }, [lunch])
 
   const handleInputChange = (event, index) => {
@@ -81,7 +82,7 @@ function Lunch({ open, handleClose, meal, meals, lunch, setLunch, date, userId, 
   const getFoods = () => {
     axios.get(`http://localhost:3000/daily-meals?date=${date}&userId=${userId}`)
       .then((res) => {
-        console.log('Get: ', res)
+          console.log('Get: ', res)
       })
   }
 
@@ -109,7 +110,7 @@ function Lunch({ open, handleClose, meal, meals, lunch, setLunch, date, userId, 
               margin: "1rem",
               width: "300px"
             }} onChange={(event) => handleInputChange(event, index)} />
-            <TextField placeholder="quantity..." variant="filled" required sx={{
+            <TextField placeholder="grams..." variant="filled" required sx={{
               margin: "1rem",
               width: "100px"
             }} onChange={(event) => handleQuantityChange(event, index)} />

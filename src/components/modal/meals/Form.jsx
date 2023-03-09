@@ -10,9 +10,10 @@ import Lunch from './Lunch.jsx'
 import Dinner from './Dinner.jsx'
 import Snacks from './Snacks.jsx'
 
+import MealTable from './MealModal.jsx'
 
 
-function Form({ open, handleClose }) {
+function Form({ open, handleClose, userId }) {
   // const meals = ['Breakfast', 'Lunch', 'Dinner', 'Snacks']
   const [breakfast, setBreakfast] = useState('');
   const [lunch, setLunch] = useState('');
@@ -21,7 +22,7 @@ function Form({ open, handleClose }) {
   const [foodB, setFoodB] = useState([])
 
   const date = (new Date()).toISOString().split('T')[0].split('-').join('')
-  const userId = 2
+  // const userId = 2
   const foodId = 16
 
   const handleSubmit = (event) => {
@@ -76,7 +77,7 @@ function Form({ open, handleClose }) {
   //   // getFoods()
   // },[])
 
-  // console.log("onlyBreakfast= ======>", onlyBreakfast)
+  console.log("onlyBreakfast= ======>", onlyBreakfast)
   // console.log("onlyLunch ======>", onlyLunch)
   // console.log("onlyDinner ======>", onlyDinner)
   // console.log("onlySnack ======>", onlySnack)
@@ -122,7 +123,7 @@ function Form({ open, handleClose }) {
       </div>
       <div>
         <div>Lunch</div>
-        <Lunch meal='Lunch' lunch={lunch} setLunch={setLunch} date={date} userId={userId} foodId={foodId} />
+        <Lunch meal='Lunch' lunch={lunch} setLunch={setLunch} date={date} userId={userId} foodId={foodId} foodB={foodB} setFoodB={setFoodB}/>
         {onlyLunch.map((lunchFood, index) => {
           return (
             <div>
@@ -168,10 +169,10 @@ function Form({ open, handleClose }) {
           )
         })}
       </div>
-      <div>
+      {/* <div>
         <Button variant="outlined" color="primary" sx={{ margin: "2rem" }}>Cancel</Button>
         <Button variant="outlined" color="primary" sx={{ margin: "2rem" }}>Submit</Button>
-      </div>
+      </div> */}
     </form>
   )
 }

@@ -108,7 +108,7 @@ function Snacks({ open, handleClose, meal, meals, snacks, setSnacks, date, userI
               margin: "1rem",
               width: "300px"
             }} onChange={(event) => handleInputChange(event, index)} />
-            <TextField placeholder="quantity..." variant="filled" required sx={{
+            <TextField placeholder="grams..." variant="filled" required sx={{
               margin: "1rem",
               width: "100px"
             }} onChange={(event) => handleQuantityChange(event, index)} />

@@ -6,10 +6,11 @@ import Grid from '@mui/material/Grid';
 import WorkoutDash from '../modal/workout/WorkoutDash';
 import DatePickerComponent from './DatePickerComponent';
 import Meals from '../modal/meals/Meals.jsx'
-
+import FoodDash from "../modal/meals/FoodDash.jsx"
 
 const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
   // console.log(currDateInt);
+
   return (
     <Paper elevation={10} sx={{ width: "1400px" }}>
       <Box
@@ -21,7 +22,7 @@ const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
           justifyContent: "center",
         }}
       >
-        <Meals/>
+        <Meals userId={userID}/>
         <Typography variant='h5' sx={{ textAlign: 'center' }}>
           Daily Wisdom
         </Typography>
@@ -49,7 +50,7 @@ const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
       {/* Planned Workout and Meals */}
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <WorkoutDash
+          <FoodDash
             currentDay={currentDay}
             currDateInt={currDateInt}
             userID={userID}
