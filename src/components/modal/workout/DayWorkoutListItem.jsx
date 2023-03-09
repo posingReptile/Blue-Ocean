@@ -124,7 +124,7 @@ function DayWorkoutListItem({
                 <Fab
                   color="secondary"
                   aria-label="edit"
-                  size="medium"
+                  size="small"
                   onClick={handleEditClick}
                 >
                   <EditIcon />
@@ -160,7 +160,7 @@ function DayWorkoutListItem({
                 <Fab
                   color="error"
                   aria-label="edit"
-                  size="medium"
+                  size="small"
                   sx={{ ml: 1 }}
                   onClick={(e) => handleDeleteClick(e, exerciseId)}
                 >
