@@ -58,7 +58,7 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
     // console.log(year, currMonth)
     axios
       .get(
-        `http://localhost:3000/monthly-meals?year=${year}&month=${currMonth}`
+        `http://localhost:3000/monthly-calories?year=${year}&month=${currMonth}&userId=${1}`
       )
       .then(({ data }) => {
         // console.log(data);

@@ -1,7 +1,7 @@
 :root {
-  --weekdayColor: #cde6ff;
+  --weekdayColor: white;
   --selectDayColor: #006edc;
-  --sideMonthColor: rgb(58, 77, 148);
+  --sideMonthColor: lightgrey;
   --weekendColor: #a2b3ea;
   --titleColor: #0077d6;
   --wordColor: white;
@@ -18,6 +18,15 @@ cde6ff
     --weekendColor: rgb(207, 15, 15);
     --titleColor: #1a1a1a;
     --wordColor: white;
+      --weekdayColor: #cde6ff;
+      --weekendColor: #a2b3ea;
+
+        --weekdayColor: white;
+  --selectDayColor: #006edc;
+  --sideMonthColor: rgb(58, 77, 148);
+  --weekendColor: #a2b3ea;
+  --titleColor: #0077d6;
+  --wordColor: white;
   }
 } */
 /* #3fbeff */
@@ -78,7 +87,7 @@ cde6ff
 }
 
 .react-calendar {
-  /* background-color: var(--weekdayColor); */
+  background-color: #cde6ff;
   border: none;
   /* margin: 0 auto; */
   width: 65vmin;
@@ -110,7 +119,6 @@ svg:hover {
   font-size: large;
   width: 100%;
   color: darkblue;
-
 }
 
 .trainIcon {
@@ -231,9 +239,8 @@ button.react-calendar__tile.react-calendar__month-view__days__day > abbr{
   background-color: #1a1a1a;
 }
 
-.react-calendar__navigation button:enabled:hover,
-.react-calendar__navigation button:enabled:focus {
-  background-color: #1a1a1a;
+.react-calendar__navigation button:enabled:hover {
+  border: 1px solid blue;
 }
 
 .react-calendar__navigation__arrow {
