@@ -40,11 +40,11 @@ cde6ff
 tr td {
    height: auto !important;
 } */
-.css-15wwp11-MuiTableHead-root {
-  /* display: table-header-group; */
+
+/* .css-15wwp11-MuiTableHead-root {
   display: flex !important;
   justify-content: center;
-}
+} */
 
 .container {
   margin-top: 5%;
@@ -78,7 +78,7 @@ tr td {
 }
 
 .workMealContainer {
-  display: flex; 
+  display: flex;
   flex-direction: column;
   gap: 1.5vh;
 }
