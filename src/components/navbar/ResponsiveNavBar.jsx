@@ -25,7 +25,7 @@ function ResponsiveAppBar({ setComponent, setUserObject }) {
   const handleCloseNavMenu = (event, componentName) => {
     setAnchorElNav(null);
     console.log(componentName);
-    setComponent('calendar')
+    setComponent("calendar");
     // setComponent(componentName);
   };
 
@@ -35,12 +35,17 @@ function ResponsiveAppBar({ setComponent, setUserObject }) {
 
   const handleCloseUserMenu = (event, componentName) => {
     setAnchorElUser(null);
+
+    // console.log(componentName);
+    if (!componentName) return;
+
     if(componentName === 'logsign') {
       axios.get('http://localhost:3000/logout').then((res) => {
         console.log('res.data', res.data);
         setUserObject({});
       });
     }
+
     setComponent(componentName);
   };
 

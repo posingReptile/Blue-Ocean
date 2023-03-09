@@ -26,6 +26,7 @@ import session from "express-session";
 import { fileURLToPath } from 'url';
 import pgSession from 'connect-pg-simple';
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const createLog = (req, res, next) => { //Logger middleware func.
