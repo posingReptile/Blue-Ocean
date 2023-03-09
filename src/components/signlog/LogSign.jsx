@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import '../../css/LogSign.css'
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import imgUrl from './biceplogo.png'
 import axios from 'axios';
@@ -91,11 +92,34 @@ function Login({ setLoginComponent, setUserObject, setComponent, setPassword, se
       {...passwordError ? {error: true, helperText: 'Enter a valid passsword'} : null}
       onChange={handlePasswordChange} />
       <br/>
-      <Button sx={{mb: 1}} onClick={() => handleLogin()}>
-        Login
+      <Button
+      variant="outlined"
+      sx={{
+        mb: 1,
+        backgroundColor: "primary.main",
+        color: "white",
+        '&:hover': {
+          backgroundColor: '#fff',
+          color: '#3c52b2',
+      },
+      }}
+      onClick={() => handleLogin()}
+      >
+        <Typography sx={{}}>Login</Typography>
       </Button>
-      <Button onClick={() => handleSignup()}>
-        Signup
+      <Button
+      variant="outlined"
+      sx={{
+        mb: 1,
+        backgroundColor: "primary.main",
+        color: "white",
+        '&:hover': {
+          backgroundColor: '#fff',
+          color: '#3c52b2',
+      },
+      }}
+      onClick={() => handleSignup()}>
+        <Typography>Signup</Typography>
       </Button>
     </div>
   )

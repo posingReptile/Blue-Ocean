@@ -10,11 +10,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import Pressable from "@mui/material/Button";
 import axios from "axios";
 
 import "../../css/responsivenavbar.css";
 
-function ResponsiveAppBar({ setComponent, setUserObject }) {
+function ResponsiveAppBar({ userObject, setComponent, setUserObject }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -25,7 +26,7 @@ function ResponsiveAppBar({ setComponent, setUserObject }) {
   const handleCloseNavMenu = (event, componentName) => {
     setAnchorElNav(null);
     console.log(componentName);
-    setComponent("calendar");
+    setComponent(componentName);
     // setComponent(componentName);
   };
 
@@ -54,16 +55,18 @@ function ResponsiveAppBar({ setComponent, setUserObject }) {
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ pt: 1, pb: 1 }}>
           {/* large view typography*/}
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{
-              display: { xs: "none", md: "flex" },
-            }}
-          >
-            <img src="./icons/shredded.png" height={50} />
-          </Typography>
+          <Pressable onClick={() => setComponent("dashboard")}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{
+                display: { xs: "none", md: "flex" },
+              }}
+            >
+              <img src="./icons/shredded.png" height={50} />
+            </Typography>
+          </Pressable>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -94,8 +97,8 @@ function ResponsiveAppBar({ setComponent, setUserObject }) {
                 display: { xs: "block", md: "none" },
               }}
             >
-              <MenuItem onClick={(e) => handleCloseNavMenu(e, "calender")}>
-                <Typography textAlign="center">Calender</Typography>
+              <MenuItem onClick={(e) => handleCloseNavMenu(e, "calendar")}>
+                <Typography textAlign="center">Calendar</Typography>
               </MenuItem>
               <MenuItem onClick={(e) => handleCloseNavMenu(e, "dashboard")}>
                 <Typography textAlign="center">Dashboard</Typography>
@@ -127,14 +130,33 @@ function ResponsiveAppBar({ setComponent, setUserObject }) {
             }}
           >
             <Button
-              onClick={(e) => handleCloseNavMenu(e, "calender")}
-              sx={{ my: 2, color: "white", display: "block" }}
+              onClick={(e) => handleCloseNavMenu(e, "calendar")}
+              sx={{
+                my: 2,
+                color: "white",
+                fontSize: 18,
+                display: "block",
+                '&:hover': {
+                  backgroundColor: '#fff',
+                  color: '#3c52b2',
+              },
+              }}
             >
-              Calender
+              Calendar
             </Button>
             <Button
               onClick={(e) => handleCloseNavMenu(e, "dashboard")}
-              sx={{ my: 2, color: "white", display: "block" }}
+              sx={{
+                my: 2,
+                mr: 2,
+                fontSize: 18,
+                color: "white",
+                display: "block",
+                '&:hover': {
+                  backgroundColor: '#fff',
+                  color: '#3c52b2',
+              },
+              }}
             >
               Dashboard
             </Button>
@@ -143,8 +165,20 @@ function ResponsiveAppBar({ setComponent, setUserObject }) {
           {/* Profile Icon */}
           <>
             <Box sx={{ flexGrow: 0 }}>
-              <IconButton onClick={handleOpenUserMenu} sx={{ pt: 2, pb: 2 }}>
-                <Avatar />
+              <IconButton
+              onClick={handleOpenUserMenu}
+              sx={{
+                pt: 2,
+                pb: 2,
+                '&:hover': {
+                  backgroundColor: 'transparent',
+                  color: '#3c52b2',
+              },
+              }}
+              >
+                <Avatar color="primary" variant="outlined" sx={{backgroundColor: "white", color: "primary.main"}}>
+                  {userObject.username[0].toUpperCase()}
+                </Avatar>
               </IconButton>
               <Menu
                 sx={{ mt: "55px" }}

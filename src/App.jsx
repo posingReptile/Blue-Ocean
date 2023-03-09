@@ -90,7 +90,7 @@ function App() {
           }}
         >
           {component !== 'logsign' && component !== 'usersetup' && (
-            <ResponsiveNavBar sx={{width: '100%'}} setUserObject={setUserObject} setComponent={setComponent} />
+            <ResponsiveNavBar sx={{width: '100%'}} userObject={userObject} setUserObject={setUserObject} setComponent={setComponent} />
           )}
           {currComponent(component)}
         </Box>
