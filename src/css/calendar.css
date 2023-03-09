@@ -39,6 +39,7 @@ cde6ff
   color: rgba(255, 255, 255, 0.87);
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
   /* background-color: #242424;
   margin-bottom: 100px; */
 }
@@ -61,6 +62,11 @@ cde6ff
   line-height: 1.1;
 }
 
+.workMealContainer {
+  display: flex; 
+  flex-direction: column;
+  gap: 1.5vh;
+}
 .wrapper {
   min-width: 396px;
   background-color: white;
@@ -89,11 +95,6 @@ cde6ff
 .react-calendar {
   background-color: #cde6ff;
   border: none;
-<<<<<<< HEAD
-  margin: 0 auto;
-=======
-  /* margin: 0 auto; */
->>>>>>> main
   width: 65vmin;
   height: fit-content;
 }
