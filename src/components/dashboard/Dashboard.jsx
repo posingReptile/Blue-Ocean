@@ -1,10 +1,3 @@
-import React from 'react';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import WorkoutDash from '../modal/workout/WorkoutDash';
-import DatePickerComponent from './DatePickerComponent';
 import Meals from '../modal/meals/Meals.jsx'
 import FoodDash from "../modal/meals/FoodDash.jsx"
 import React, { useState, useEffect } from "react";
