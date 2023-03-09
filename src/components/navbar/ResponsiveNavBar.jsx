@@ -25,8 +25,8 @@ function ResponsiveAppBar({ setComponent, setUserObject }) {
   const handleCloseNavMenu = (event, componentName) => {
     setAnchorElNav(null);
     console.log(componentName);
-    setComponent("calendar");
-    // setComponent(componentName);
+    // setComponent("calendar");
+    setComponent(componentName);
   };
 
   const handleOpenUserMenu = (event) => {
@@ -39,9 +39,9 @@ function ResponsiveAppBar({ setComponent, setUserObject }) {
     // console.log(componentName);
     if (!componentName) return;
 
-    if(componentName === 'logsign') {
-      axios.get('http://localhost:3000/logout').then((res) => {
-        console.log('res.data', res.data);
+    if (componentName === "logsign") {
+      axios.get("http://localhost:3000/logout").then((res) => {
+        console.log("res.data", res.data);
         setUserObject({});
       });
     }
@@ -94,8 +94,8 @@ function ResponsiveAppBar({ setComponent, setUserObject }) {
                 display: { xs: "block", md: "none" },
               }}
             >
-              <MenuItem onClick={(e) => handleCloseNavMenu(e, "calender")}>
-                <Typography textAlign="center">Calender</Typography>
+              <MenuItem onClick={(e) => handleCloseNavMenu(e, "calendar")}>
+                <Typography textAlign="center">Calendar</Typography>
               </MenuItem>
               <MenuItem onClick={(e) => handleCloseNavMenu(e, "dashboard")}>
                 <Typography textAlign="center">Dashboard</Typography>
@@ -127,14 +127,14 @@ function ResponsiveAppBar({ setComponent, setUserObject }) {
             }}
           >
             <Button
-              onClick={(e) => handleCloseNavMenu(e, "calender")}
-              sx={{ my: 2, color: "white", display: "block" }}
+              onClick={(e) => handleCloseNavMenu(e, "calendar")}
+              sx={{ my: 2, color: "white", display: "block", fontSize: 16 }}
             >
-              Calender
+              Calendar
             </Button>
             <Button
               onClick={(e) => handleCloseNavMenu(e, "dashboard")}
-              sx={{ my: 2, color: "white", display: "block" }}
+              sx={{ my: 2, color: "white", display: "block", fontSize: 16 }}
             >
               Dashboard
             </Button>

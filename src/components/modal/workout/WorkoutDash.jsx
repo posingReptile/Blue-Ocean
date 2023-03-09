@@ -114,7 +114,6 @@ function Workout({ currDateInt, userID }) {
       <Box
         sx={{
           minHeight: 600,
-          // height: 600,
           width: 500,
           backgroundColor: "primary.light",
           borderRadius: 4,

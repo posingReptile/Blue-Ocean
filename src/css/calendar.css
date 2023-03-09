@@ -28,6 +28,8 @@ cde6ff
   line-height: 1.5;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.87);
+  display: flex;
+  justify-content: space-around;
   /* background-color: #242424;
   margin-bottom: 100px; */
 }
@@ -78,7 +80,11 @@ cde6ff
 .react-calendar {
   /* background-color: var(--weekdayColor); */
   border: none;
+<<<<<<< HEAD
   margin: 0 auto;
+=======
+  /* margin: 0 auto; */
+>>>>>>> main
   width: 65vmin;
   height: fit-content;
 }
@@ -207,7 +213,7 @@ button.react-calendar__tile.react-calendar__month-view__days__day > abbr{
 .react-calendar button {
   margin: 0;
   outline: none;
-  position: relative;
+  /* position: relative; */
   border-radius: 0;
 }
 
@@ -233,6 +239,15 @@ button.react-calendar__tile.react-calendar__month-view__days__day > abbr{
 .react-calendar__navigation button:enabled:focus {
   background-color: #1a1a1a;
 }
+
+.react-calendar__navigation__arrow {
+  border-radius: 100px;
+}
+
+.react-calendar__navigation__arrow .react-calendar__navigation__next-button {
+  border: 1px solid red;
+}
+
 
 .react-calendar__month-view__weekdays {
   text-align: center;
