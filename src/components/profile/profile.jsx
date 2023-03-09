@@ -149,16 +149,10 @@ function Profile(props) {
             <Badge
               overlap="circular"
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              badgeContent={<EditIcon sx={{ color: 'action' }} onClick={onEdit} />}
+              badgeContent={<EditIcon onClick={onEdit} />}
             >
-              <Avatar
-                alt={username}
-                src={profilePic}
-                sx={{
-                  width: 99,
-                  height: 99
-                }}
-              />
+              <Avatar sx={{ width: 77, height: 77, fontSize: 50, textAlign: 'center' }}>{(username.charAt(0)).toUpperCase()}</Avatar>
+              {/* <Avatar alt={username} src={profilePic} sx={{ width: 99, height: 99 }} /> */}
             </Badge>
             <Typography variant='h4'>{username}</Typography>
           </Box>
