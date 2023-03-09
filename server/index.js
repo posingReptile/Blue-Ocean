@@ -189,6 +189,8 @@ app.get("/daily-workout", (req, res) => {
     [req.query.date, req.query.userId]
   ).then((workouts) => {
     res.send(workouts.rows);
+  }).catch((err) => {
+    res.send(JSON.stringify('ERROR BAD INPUT - sonia'))
   });
 });
 
@@ -229,6 +231,8 @@ app.put("/edit-workout", (req, res) => {
   ).then(() => {
     console.log("Update Workout Success");
     res.send(202);
+  }).catch((err) => {
+    res.send(JSON.stringify('SOMETHING WENT WRONG - sonia'))
   });
 });
 
@@ -330,7 +334,9 @@ app.get("/nutrition", (req, res) => {
           req.query.description,
           foody.serving_size_g,
         ]
-      )
+      ).catch((err) =>{
+        res.send(JSON.stringify('Try a different food Item'))
+      })
       .then(() => {
         console.log("Added to database");
         res.send(foody);
@@ -346,6 +352,8 @@ app.get("/daily-meals", (req, res) => {
     [req.query.date, req.query.userId]
   ).then((allMeals) => {
     res.send(allMeals.rows);
+  }).catch((err) => {
+    res.send(JSON.stringify('ERROR'))
   });
 });
 
