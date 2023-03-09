@@ -16,27 +16,72 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
-function ExpandedMeal({ handleShowList, expandedType, currDateInt, userID }) {
+import Fab from "@mui/material/Fab";
+
+import ClearIcon from "@mui/icons-material/Clear";
+
+import FoodItem from "./FoodItem";
+
+function ExpandedMeal({
+  handleShowList,
+  expandedType,
+  currDateInt,
+  userID,
+  showButtons,
+  // setRerender,
+  // rerender,
+}) {
   const [foods, setFoods] = useState([]);
   console.log(foods);
-  // name
-  // take calories
-  // protein
-  {
-    /* <div style={{ display: "flex", gap: 10 }}>
-          <span>{food.name}</span>
-          <span>{food.calories} calories</span>
-          <span>{food.protein}g protein</span>
-        </div> */
-  }
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/daily-meals`, {
+        params: {
+          date: currDateInt,
+          userId: userID,
+          mealType: mealType,
+        },
+      })
+      .then(({ data }) => {
+        // console.log(data);
+        setFoods(data);
+        // setRerender(!rerender);
+      });
+  }, []);
+
+  const handleDeleteFood = (foodId) => {
+    axios
+      .delete(`http://localhost:3000/delete-meal/${foodId}`)
+      .then(() => {
+        axios
+          .get(`http://localhost:3000/daily-meals`, {
+            params: {
+              date: currDateInt,
+              userId: userID,
+              mealType: mealType,
+            },
+          })
+          .then(({ data }) => {
+            setFoods(data);
+            // setRerender(!rerender);
+          });
+      })
+      .catch(() => {
+        console.log("Error in deleting food");
+      });
+  };
+
   const foodItems = foods.map((food) => {
     const name = food.name.charAt(0).toUpperCase() + food.name.slice(1);
     return (
-      <TableRow>
-        <TableCell align="center">{name}</TableCell>
-        <TableCell align="center">{food.calories} cals</TableCell>
-        <TableCell align="center">{food.protein}g</TableCell>
-      </TableRow>
+      <FoodItem
+        key={food.food_id}
+        food={food}
+        name={name}
+        showButtons={showButtons}
+        handleDeleteFood={handleDeleteFood}
+      />
     );
   });
 
@@ -52,21 +97,6 @@ function ExpandedMeal({ handleShowList, expandedType, currDateInt, userID }) {
   } else if (expandedType === "Snacks") {
     mealType = "Snacks";
   }
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3000/daily-meals`, {
-        params: {
-          date: currDateInt,
-          userId: userID,
-          mealType: mealType,
-        },
-      })
-      .then(({ data }) => {
-        // console.log(data);
-        setFoods(data);
-      });
-  }, []);
 
   return (
     <>
@@ -105,6 +135,12 @@ function ExpandedMeal({ handleShowList, expandedType, currDateInt, userID }) {
                 <TableCell align="center" sx={{ fontWeight: 700 }}>
                   Protein
                 </TableCell>
+                {showButtons && (
+                  <TableCell
+                    align="center"
+                    sx={{ fontWeight: 700 }}
+                  ></TableCell>
+                )}
               </TableRow>
             </TableHead>
             <TableBody>{foodItems}</TableBody>

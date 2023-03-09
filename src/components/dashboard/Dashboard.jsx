@@ -13,6 +13,7 @@ import Quote from "./Quote";
 const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
   const [quote, setQuote] = useState("");
   const [openMM, setOpenMM] = useState(false);
+  // const [dashRender, setDashRender] = useState(false);
 
   const handleMealOpen = () => {
     setOpenMM(true);
@@ -33,6 +34,8 @@ const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
         date={currDateInt}
         openMM={openMM}
         handleMealClose={handleMealClose}
+        // setDashRender={setDashRender}
+        // dashRender={dashRender}
       />
       <Quote />
       <Box

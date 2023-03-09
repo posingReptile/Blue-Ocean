@@ -288,7 +288,9 @@ app.get("/notes", (req, res) => {
 // });
 
 app.put("/notes", (req, res) => {
+  console.log(req.body);
   if (req.body.type === "workout") {
+    console.log("in notes in index");
     db.query(
       "UPDATE workouts SET notes = $1 WHERE date = $2 AND user_id = $3 RETURNING *",
       [req.body.notes, req.body.date, req.body.userId]

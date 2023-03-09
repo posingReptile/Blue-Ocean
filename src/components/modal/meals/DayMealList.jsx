@@ -51,6 +51,9 @@ function DayMealList({
   lunchCals,
   dinnerCals,
   snacksCals,
+  showButtons,
+  // setRerender,
+  // rerender,
 }) {
   const [showList, setShowList] = useState(true);
   const [showExpanded, setShowExpanded] = useState(false);
@@ -103,6 +106,9 @@ function DayMealList({
             expandedType={expandedType}
             currDateInt={currDateInt}
             userID={userID}
+            showButtons={showButtons}
+            // setRerender={setRerender}
+            // rerender={rerender}
           />
         ) : null}
         {/* <button onClick={() => handleChangeDisplay("list")}>Test</button> */}

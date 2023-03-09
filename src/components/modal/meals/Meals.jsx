@@ -6,7 +6,14 @@ import Box from "@mui/material/Box";
 import Form from "./Form.jsx";
 import MealModal from "./MealModal.jsx";
 
-function Meals({ userId, date, openMM, handleMealClose }) {
+function Meals({
+  userId,
+  date,
+  openMM,
+  handleMealClose,
+  // dashRender,
+  // setDashRender,
+}) {
   // const [openMM, setOpenMM] = useState(false);
 
   // const handleOpen = () => {
@@ -25,6 +32,8 @@ function Meals({ userId, date, openMM, handleMealClose }) {
         handleClose={handleMealClose}
         userId={userId}
         date={date}
+        // dashRender={dashRender}
+        // setDashRender={setDashRender}
       />
     </div>
   );

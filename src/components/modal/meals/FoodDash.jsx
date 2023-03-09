@@ -26,6 +26,8 @@ function FoodDash({ currDateInt, userID, handleMealOpen }) {
 
   const [currNotes, setCurrNotes] = useState(""); // Today's notes
   const [showButtons, setShowButtons] = useState(false); // Shows edit and clear button
+  // const [rerender, setRerender] = useState(false);
+  // console.log(showButtons);
 
   useEffect(() => {
     axios
@@ -57,7 +59,7 @@ function FoodDash({ currDateInt, userID, handleMealOpen }) {
 
         setTotalCals(breakfast + lunch + dinner + snacks);
       });
-  }, []);
+  }, [currDateInt]);
 
   // Grab the current day's workout notes
   useEffect(() => {
@@ -69,10 +71,11 @@ function FoodDash({ currDateInt, userID, handleMealOpen }) {
         },
       })
       .then(({ data }) => {
-        if (!data[0].notes) {
+        console.log(data);
+        if (!data[0].meal_notes) {
           setCurrNotes("");
         } else {
-          setCurrNotes(data[0].notes);
+          setCurrNotes(data[0].meal_notes);
         }
       })
       .catch(() => {
@@ -83,13 +86,15 @@ function FoodDash({ currDateInt, userID, handleMealOpen }) {
   // Send a put request when clicking save notes
   const handleNoteSave = () => {
     axios
-      .put("http://localhost:3000/edit-notes", {
+      .put("http://localhost:3000/notes", {
         notes: currNotes,
         date: currDateInt,
+        userId: userID,
         type: "meal",
       })
       .then(({ data }) => {
-        setCurrNotes(data[0].notes);
+        console.log(data);
+        setCurrNotes(data[0].meal_notes);
       })
       .catch(() => {
         console.log("Error updating meal-notes");
@@ -186,6 +191,9 @@ function FoodDash({ currDateInt, userID, handleMealOpen }) {
             lunchCals={lunchCals}
             dinnerCals={dinnerCals}
             snacksCals={snacksCals}
+            showButtons={showButtons}
+            // setRerender={setRerender}
+            // rerender={rerender}
           />
 
           <Grid
@@ -213,9 +221,7 @@ function FoodDash({ currDateInt, userID, handleMealOpen }) {
             <Button
               variant="contained"
               sx={{ mt: 2, width: 150 }}
-              onClick={() => {
-                console.log("from button");
-              }}
+              onClick={handleNoteSave}
             >
               Save Notes
             </Button>

@@ -12,7 +12,13 @@ import Snacks from "./Snacks.jsx";
 
 import MealTable from "./MealModal.jsx";
 
-function Form({ open, handleClose, userId, date }) {
+function Form({
+  open,
+  handleClose,
+  userId,
+  date,
+  // dashRender, setDashRender
+}) {
   // const meals = ['Breakfast', 'Lunch', 'Dinner', 'Snacks']
   const [breakfast, setBreakfast] = useState("");
   const [lunch, setLunch] = useState("");
@@ -127,6 +133,8 @@ function Form({ open, handleClose, userId, date }) {
           foodB={foodB}
           setFoodB={setFoodB}
           onlyBreakfast={onlyBreakfast}
+          // dashRender={dashRender}
+          // setDashRender={setDashRender}
         />
       </div>
       <div>
@@ -141,6 +149,8 @@ function Form({ open, handleClose, userId, date }) {
           foodL={foodL}
           setFoodL={setFoodL}
           onlyLunch={onlyLunch}
+          // dashRender={dashRender}
+          // setDashRender={setDashRender}
         />
       </div>
       <div>
@@ -155,6 +165,8 @@ function Form({ open, handleClose, userId, date }) {
           foodD={foodD}
           setFoodD={setFoodD}
           onlyDinner={onlyDinner}
+          // dashRender={dashRender}
+          // setDashRender={setDashRender}
         />
       </div>
       <div>
@@ -169,6 +181,8 @@ function Form({ open, handleClose, userId, date }) {
           foodS={foodS}
           setFoodS={setFoodS}
           onlySnacks={onlySnacks}
+          // dashRender={dashRender}
+          // setDashRender={setDashRender}
         />
       </div>
       <Button
