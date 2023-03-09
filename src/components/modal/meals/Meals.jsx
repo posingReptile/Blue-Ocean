@@ -11,6 +11,8 @@ function Meals({
   date,
   openMM,
   handleMealClose,
+  rerender,
+  setRerender,
   // dashRender,
   // setDashRender,
 }) {
@@ -32,6 +34,8 @@ function Meals({
         handleClose={handleMealClose}
         userId={userId}
         date={date}
+        rerender={rerender}
+        setRerender={setRerender}
         // dashRender={dashRender}
         // setDashRender={setDashRender}
       />

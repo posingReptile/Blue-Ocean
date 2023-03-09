@@ -12,16 +12,16 @@ import Quote from "./Quote";
 
 const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
   const [quote, setQuote] = useState("");
-  const [openMM, setOpenMM] = useState(false);
-  // const [dashRender, setDashRender] = useState(false);
+  // const [openMM, setOpenMM] = useState(false);
+  // // const [dashRender, setDashRender] = useState(false);
 
-  const handleMealOpen = () => {
-    setOpenMM(true);
-  };
+  // const handleMealOpen = () => {
+  //   setOpenMM(true);
+  // };
 
-  const handleMealClose = () => {
-    setOpenMM(false);
-  };
+  // const handleMealClose = () => {
+  //   setOpenMM(false);
+  // };
   // console.log(currDateInt);
 
   useEffect(() => {
@@ -29,14 +29,14 @@ const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
   }, []);
   return (
     <Box elevation={10}>
-      <Meals
+      {/* <Meals
         userId={userID}
         date={currDateInt}
         openMM={openMM}
         handleMealClose={handleMealClose}
         // setDashRender={setDashRender}
         // dashRender={dashRender}
-      />
+      /> */}
       <Quote />
       <Box
         sx={{
@@ -61,7 +61,6 @@ const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
             currentDay={currentDay}
             currDateInt={currDateInt}
             userID={userID}
-            handleMealOpen={handleMealOpen}
           />
         </Grid>
         <Grid item xs={6}>

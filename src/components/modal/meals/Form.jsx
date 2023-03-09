@@ -17,6 +17,8 @@ function Form({
   handleClose,
   userId,
   date,
+  rerender,
+  setRerender,
   // dashRender, setDashRender
 }) {
   // const meals = ['Breakfast', 'Lunch', 'Dinner', 'Snacks']
@@ -133,6 +135,8 @@ function Form({
           foodB={foodB}
           setFoodB={setFoodB}
           onlyBreakfast={onlyBreakfast}
+          rerender={rerender}
+          setRerender={setRerender}
           // dashRender={dashRender}
           // setDashRender={setDashRender}
         />
@@ -149,6 +153,8 @@ function Form({
           foodL={foodL}
           setFoodL={setFoodL}
           onlyLunch={onlyLunch}
+          rerender={rerender}
+          setRerender={setRerender}
           // dashRender={dashRender}
           // setDashRender={setDashRender}
         />
@@ -165,6 +171,8 @@ function Form({
           foodD={foodD}
           setFoodD={setFoodD}
           onlyDinner={onlyDinner}
+          rerender={rerender}
+          setRerender={setRerender}
           // dashRender={dashRender}
           // setDashRender={setDashRender}
         />
@@ -181,6 +189,8 @@ function Form({
           foodS={foodS}
           setFoodS={setFoodS}
           onlySnacks={onlySnacks}
+          rerender={rerender}
+          setRerender={setRerender}
           // dashRender={dashRender}
           // setDashRender={setDashRender}
         />

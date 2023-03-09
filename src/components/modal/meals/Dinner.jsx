@@ -18,6 +18,8 @@ function Dinner({
   foodD,
   setFoodD,
   onlyDinner,
+  rerender,
+  setRerender,
   // dashRender,
   // setDashRender,
 }) {
@@ -49,6 +51,7 @@ function Dinner({
         setQuantity("100g");
         alert("Successful input dinner");
         // setDashRender(!dashRender);
+        setRerender(!rerender);
       })
       .catch(() => {
         alert("Error occured when entering dinner");

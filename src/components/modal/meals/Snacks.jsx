@@ -18,6 +18,8 @@ function Snacks({
   foodS,
   setFoodS,
   onlySnacks,
+  rerender,
+  setRerender,
   // dashRender,
   // setDashRender,
 }) {
@@ -49,6 +51,7 @@ function Snacks({
         setQuantity("100g");
         alert("Successful input snacks");
         // setDashRender(!dashRender);
+        setRerender(!rerender);
       })
       .catch(() => {
         alert("Error occured when entering snacks");

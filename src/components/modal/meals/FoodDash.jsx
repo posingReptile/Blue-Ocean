@@ -16,8 +16,9 @@ import EditIcon from "@mui/icons-material/Edit";
 //react
 import DayMealList from "./DayMealList";
 import MealTable from "./MealTable.jsx";
+import Meals from "./Meals.jsx";
 
-function FoodDash({ currDateInt, userID, handleMealOpen }) {
+function FoodDash({ currDateInt, userID }) {
   const [breakfastCals, setBreakfastCals] = useState(0);
   const [lunchCals, setLunchCals] = useState(0);
   const [dinnerCals, setDinnerCals] = useState(0);
@@ -26,8 +27,18 @@ function FoodDash({ currDateInt, userID, handleMealOpen }) {
 
   const [currNotes, setCurrNotes] = useState(""); // Today's notes
   const [showButtons, setShowButtons] = useState(false); // Shows edit and clear button
-  // const [rerender, setRerender] = useState(false);
   // console.log(showButtons);
+  const [openMM, setOpenMM] = useState(false);
+  const [rerender, setRerender] = useState(false);
+  // const [dashRender, setDashRender] = useState(false);
+
+  const handleMealOpen = () => {
+    setOpenMM(true);
+  };
+
+  const handleMealClose = () => {
+    setOpenMM(false);
+  };
 
   useEffect(() => {
     axios
@@ -59,7 +70,7 @@ function FoodDash({ currDateInt, userID, handleMealOpen }) {
 
         setTotalCals(breakfast + lunch + dinner + snacks);
       });
-  }, [currDateInt]);
+  }, [currDateInt, rerender]);
 
   // Grab the current day's workout notes
   useEffect(() => {
@@ -102,6 +113,14 @@ function FoodDash({ currDateInt, userID, handleMealOpen }) {
   };
   return (
     <>
+      <Meals
+        userId={userID}
+        date={currDateInt}
+        openMM={openMM}
+        handleMealClose={handleMealClose}
+        rerender={rerender}
+        setRerender={setRerender}
+      />
       <Box
         sx={{
           minHeight: 600,

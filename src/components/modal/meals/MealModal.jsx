@@ -8,6 +8,8 @@ function MealModal({
   handleClose,
   userId,
   date,
+  rerender,
+  setRerender,
   // dashRender,
   // setDashRender,
 }) {
@@ -18,6 +20,8 @@ function MealModal({
         handleClose={handleClose}
         userId={userId}
         date={date}
+        rerender={rerender}
+        setRerender={setRerender}
         // dashRender={dashRender}
         // setDashRender={setDashRender}
       />
