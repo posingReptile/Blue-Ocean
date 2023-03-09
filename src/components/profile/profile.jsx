@@ -192,7 +192,16 @@ function Profile(props) {
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             badgeContent={<EditIcon sx={{ color: 'action' }} onClick={onEdit} />}
           >
-            <Avatar sx={{ width: 99, height: 99, fontSize: 50, textAlign: 'center' }}>{(username.charAt(0)).toUpperCase()}</Avatar>
+            <Avatar color="primary" variant="outlined" sx={{
+              width: 99,
+              height: 99,
+              fontSize: 50,
+              textAlign: 'center',
+              backgroundColor: "white",
+              color: "primary.main"
+            }}>
+              {(username.charAt(0)).toUpperCase()}
+            </Avatar>
           </Badge>
           <Typography variant='h4'>{username}</Typography>
         </Box>
