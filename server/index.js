@@ -187,11 +187,13 @@ app.get("/daily-workout", (req, res) => {
   db.query(
     "SELECT * FROM exercises FULL OUTER JOIN exercise_details ON exercises.exercise_detail_id = exercise_details.exercise_detail_id WHERE exercises.date = $1 AND user_id = $2 ORDER BY exercises.exercise_id ASC",
     [req.query.date, req.query.userId]
-  ).then((workouts) => {
-    res.send(workouts.rows);
-  }).catch((err) => {
-    res.send(JSON.stringify('ERROR BAD INPUT - sonia'))
-  });
+  )
+    .then((workouts) => {
+      res.send(workouts.rows);
+    })
+    .catch((err) => {
+      res.send(JSON.stringify("ERROR BAD INPUT - sonia"));
+    });
 });
 
 app.post("/new-exercise", (req, res) => {
@@ -228,12 +230,14 @@ app.put("/edit-workout", (req, res) => {
       req.body.caloriesBurned,
       req.body.exerciseId,
     ]
-  ).then(() => {
-    console.log("Update Workout Success");
-    res.send(202);
-  }).catch((err) => {
-    res.send(JSON.stringify('SOMETHING WENT WRONG - sonia'))
-  });
+  )
+    .then(() => {
+      console.log("Update Workout Success");
+      res.send(202);
+    })
+    .catch((err) => {
+      res.send(JSON.stringify("SOMETHING WENT WRONG - sonia"));
+    });
 });
 
 app.delete("/delete", (req, res) => {
@@ -334,27 +338,45 @@ app.get("/nutrition", (req, res) => {
           req.query.description,
           foody.serving_size_g,
         ]
-      ).catch((err) =>{
-        res.send(JSON.stringify('Try a different food Item'))
-      })
-      .then(() => {
-        console.log("Added to database");
-        res.send(foody);
-      });
+      )
+        .catch((err) => {
+          res.send(JSON.stringify("Try a different food Item"));
+        })
+        .then(() => {
+          console.log("Added to database");
+          res.send(foody);
+        });
     });
 });
 
 app.get("/daily-meals", (req, res) => {
-  console.log('daily meal')
+  console.log("daily meal");
   console.log(req.query);
   db.query(
-    "SELECT * FROM food WHERE date = $1 AND user_id =  $2 ORDER BY category DESC",
+    "SELECT * FROM food WHERE date = $1 AND user_id =  $2 AND category = $3",
+    [req.query.date, req.query.userId, req.query.mealType]
+  )
+    .then((allMeals) => {
+      res.send(allMeals.rows);
+    })
+    .catch((err) => {
+      res.send(JSON.stringify("ERROR"));
+    });
+});
+
+app.get("/all-meals", (req, res) => {
+  console.log("daily meal");
+  console.log(req.query);
+  db.query(
+    "SELECT category, calories FROM food WHERE date = $1 AND user_id =  $2 ORDER BY category DESC",
     [req.query.date, req.query.userId]
-  ).then((allMeals) => {
-    res.send(allMeals.rows);
-  }).catch((err) => {
-    res.send(JSON.stringify('ERROR'))
-  });
+  )
+    .then((allMeals) => {
+      res.send(allMeals.rows);
+    })
+    .catch((err) => {
+      res.send(JSON.stringify("ERROR"));
+    });
 });
 
 app.put("/edit-meal/:foodId", (req, res) => {
@@ -368,11 +390,13 @@ app.put("/edit-meal/:foodId", (req, res) => {
 });
 
 app.delete("/delete-meal/:foodId", (req, res) => {
-  console.log(req)
-  db.query("DELETE FROM food WHERE food_id = $1", [req.params.foodId]).then(() => {
-    console.log("Deleted meal successfully");
-    res.send(202);
-  });
+  console.log(req);
+  db.query("DELETE FROM food WHERE food_id = $1", [req.params.foodId]).then(
+    () => {
+      console.log("Deleted meal successfully");
+      res.send(202);
+    }
+  );
 });
 
 //---------------------------calendar------------------------------

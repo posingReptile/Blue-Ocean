@@ -1,20 +1,20 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { TextField } from '@mui/material';
-import Button from '@mui/material/Button';
+import * as React from "react";
+import PropTypes from "prop-types";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { TextField } from "@mui/material";
+import Button from "@mui/material/Button";
 
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
@@ -24,13 +24,13 @@ import List from "@mui/material/List";
 import Avatar from "@mui/material/Avatar";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 
-import EmojiFoodBeverageIcon from '@mui/icons-material/EmojiFoodBeverage';
-import BakeryDiningIcon from '@mui/icons-material/BakeryDining';
-import DinnerDiningIcon from '@mui/icons-material/DinnerDining';
-import EggIcon from '@mui/icons-material/Egg';
+import EmojiFoodBeverageIcon from "@mui/icons-material/EmojiFoodBeverage";
+import BakeryDiningIcon from "@mui/icons-material/BakeryDining";
+import DinnerDiningIcon from "@mui/icons-material/DinnerDining";
+import EggIcon from "@mui/icons-material/Egg";
 
 function createData(name, calories, food, carbs, protein) {
-  console.log(name, calories, food, carbs, protein);
+  // console.log(name, calories, food, carbs, protein);
   return {
     name,
     calories,
@@ -46,28 +46,20 @@ function Row(props) {
 
   const mealTimeIcon = (component) => {
     switch (component) {
-      case 'Breakfast':
-        return  (
-          <EmojiFoodBeverageIcon color="secondary" />
-        )
+      case "Breakfast":
+        return <EmojiFoodBeverageIcon color="secondary" />;
       case "Lunch":
-        return (
-          <BakeryDiningIcon color="secondary" />
-        );
-      case 'Dinner':
-        return (
-          <DinnerDiningIcon color="secondary" />
-        );
-      case 'Snack':
-        return (
-          <EggIcon color="secondary" />
-        );
+        return <BakeryDiningIcon color="secondary" />;
+      case "Dinner":
+        return <DinnerDiningIcon color="secondary" />;
+      case "Snack":
+        return <EggIcon color="secondary" />;
     }
   };
 
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -102,22 +94,34 @@ function Row(props) {
                 <TableBody>
                   {row.foodList.map((foodItem, index) => (
                     <TableRow key={foodItem.food + index}>
-                      <TableCell component="th" scope="row">{foodItem.food}</TableCell>
+                      <TableCell component="th" scope="row">
+                        {foodItem.food}
+                      </TableCell>
                       <TableCell>{foodItem.calories}</TableCell>
                       <TableCell align="right">{foodItem.protein}</TableCell>
                     </TableRow>
                   ))}
-                  <TextField placeholder="food..." variant="filled" required sx={{
-              margin: "1rem",
-              width: "250px"
-            }} />
-            <TextField placeholder="quantity..." variant="filled" required sx={{
-              margin: "1rem",
-              width: "50px"
-            }} />
-            <Fab color="primary" onClick={() => console.log('hi')}>
-              <AddIcon />
-            </Fab>
+                  <TextField
+                    placeholder="food..."
+                    variant="filled"
+                    required
+                    sx={{
+                      margin: "1rem",
+                      width: "250px",
+                    }}
+                  />
+                  <TextField
+                    placeholder="quantity..."
+                    variant="filled"
+                    required
+                    sx={{
+                      margin: "1rem",
+                      width: "50px",
+                    }}
+                  />
+                  <Fab color="primary" onClick={() => console.log("hi")}>
+                    <AddIcon />
+                  </Fab>
                 </TableBody>
               </Table>
             </Box>
@@ -130,52 +134,56 @@ function Row(props) {
 
 const testfood = [
   {
-    food: 'apples',
-    calories: '19',
+    food: "apples",
+    calories: "19",
     protein: 3,
   },
   {
-    food: 'orange',
-    calories: '11',
+    food: "orange",
+    calories: "11",
     protein: 1,
   },
-]
+];
 
 const rows = [
-  createData('Breakfast', 159, testfood),
-  createData('Lunch', 237, testfood),
-  createData('Dinner', 262, testfood),
-  createData('Snack', 305, testfood),
+  createData("Breakfast", 159, testfood),
+  createData("Lunch", 237, testfood),
+  createData("Dinner", 262, testfood),
+  createData("Snack", 305, testfood),
 ];
 
 export default function MealTable() {
   return (
     <Grid item xs={12} md={12}>
       <List sx={{ ml: 4, mr: 4, height: 300, overflow: "auto" }}>
-      <TableContainer component={Paper} sx={{
-    backgroundColor: "inherit",
-    margin: 0,
-    fontFamily: "Roboto,Helvetica,Arial,sans-serif",
-    fontWeight: 400,
-    fontSize: '1rem',
-    lineHeight: '1.5',
-    letterSpacing: '0.00938em'}}>
-        <Table aria-label="collapsible table">
-          <TableHead>
-            <TableRow>
-              <TableCell />
-              <TableCell>Meals</TableCell>
-              <TableCell align="right">Total Calories</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <Row key={row.name} row={row} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-     </List>
+        <TableContainer
+          component={Paper}
+          sx={{
+            backgroundColor: "inherit",
+            margin: 0,
+            fontFamily: "Roboto,Helvetica,Arial,sans-serif",
+            fontWeight: 400,
+            fontSize: "1rem",
+            lineHeight: "1.5",
+            letterSpacing: "0.00938em",
+          }}
+        >
+          <Table aria-label="collapsible table">
+            <TableHead>
+              <TableRow>
+                <TableCell />
+                <TableCell>Meals</TableCell>
+                <TableCell align="right">Total Calories</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <Row key={row.name} row={row} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </List>
     </Grid>
   );
 }

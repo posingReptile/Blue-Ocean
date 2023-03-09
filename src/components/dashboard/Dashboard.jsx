@@ -1,5 +1,5 @@
-import Meals from '../modal/meals/Meals.jsx'
-import FoodDash from "../modal/meals/FoodDash.jsx"
+import Meals from "../modal/meals/Meals.jsx";
+import FoodDash from "../modal/meals/FoodDash.jsx";
 import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -12,6 +12,15 @@ import Quote from "./Quote";
 
 const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
   const [quote, setQuote] = useState("");
+  const [openMM, setOpenMM] = useState(false);
+
+  const handleMealOpen = () => {
+    setOpenMM(true);
+  };
+
+  const handleMealClose = () => {
+    setOpenMM(false);
+  };
   // console.log(currDateInt);
 
   useEffect(() => {
@@ -19,7 +28,12 @@ const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
   }, []);
   return (
     <Box elevation={10}>
-      <Meals userId={userID} date={currDateInt}/>
+      <Meals
+        userId={userID}
+        date={currDateInt}
+        openMM={openMM}
+        handleMealClose={handleMealClose}
+      />
       <Quote />
       <Box
         sx={{
@@ -44,6 +58,7 @@ const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
             currentDay={currentDay}
             currDateInt={currDateInt}
             userID={userID}
+            handleMealOpen={handleMealOpen}
           />
         </Grid>
         <Grid item xs={6}>

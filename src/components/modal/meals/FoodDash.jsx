@@ -14,30 +14,87 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 
 //react
-import MealTable from "./MealTable.jsx"
+import DayMealList from "./DayMealList";
+import MealTable from "./MealTable.jsx";
 
+function FoodDash({ currDateInt, userID, handleMealOpen }) {
+  const [breakfastCals, setBreakfastCals] = useState(0);
+  const [lunchCals, setLunchCals] = useState(0);
+  const [dinnerCals, setDinnerCals] = useState(0);
+  const [snacksCals, setSnacksCals] = useState(0);
+  const [totalCals, setTotalCals] = useState(0);
 
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  // width: "50%",
-  // height: "50%",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  gap: 2,
-  width: "60%",
-  minWidth: 400,
-};
+  const [currNotes, setCurrNotes] = useState(""); // Today's notes
+  const [showButtons, setShowButtons] = useState(false); // Shows edit and clear button
 
-function FoodDash() {
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/all-meals", {
+        params: {
+          date: currDateInt,
+          userId: userID,
+        },
+      })
+      .then(({ data }) => {
+        // console.log(data);
+        // Calculate calories
+        let breakfast = 0;
+        let lunch = 0;
+        let dinner = 0;
+        let snacks = 0;
 
+        data.forEach((food) => {
+          if (food.category === "Breakfast") breakfast += food.calories;
+          if (food.category === "Lunch") lunch += food.calories;
+          if (food.category === "Dinner") dinner += food.calories;
+          if (food.category === "Snacks") snacks += food.calories;
+        });
+
+        setBreakfastCals(breakfast);
+        setLunchCals(lunch);
+        setDinnerCals(dinner);
+        setSnacksCals(snacks);
+
+        setTotalCals(breakfast + lunch + dinner + snacks);
+      });
+  }, []);
+
+  // Grab the current day's workout notes
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/notes", {
+        params: {
+          date: currDateInt,
+          userId: userID,
+        },
+      })
+      .then(({ data }) => {
+        if (!data[0].notes) {
+          setCurrNotes("");
+        } else {
+          setCurrNotes(data[0].notes);
+        }
+      })
+      .catch(() => {
+        console.log("Error gathering notes for the day");
+      });
+  }, [currDateInt]);
+
+  // Send a put request when clicking save notes
+  const handleNoteSave = () => {
+    axios
+      .put("http://localhost:3000/edit-notes", {
+        notes: currNotes,
+        date: currDateInt,
+        type: "meal",
+      })
+      .then(({ data }) => {
+        setCurrNotes(data[0].notes);
+      })
+      .catch(() => {
+        console.log("Error updating meal-notes");
+      });
+  };
   return (
     <>
       <Box
@@ -49,66 +106,122 @@ function FoodDash() {
         }}
       >
         <Grid container spacing={2}>
-          <Grid item xs={8}>
-            <Typography variant="h4" component="div" align="center">
-              Today's Meal Plan
-            </Typography>
-          </Grid>
-
-        <MealTable />
-        <Grid
+          <Grid
             item
-            xs={6}
+            xs={12}
             sx={{
               display: "flex",
               flexDirection: "column",
-              justifyContent: "flex-end",
+              backgroundColor: "lightblue",
+              marginLeft: 2,
+              borderTopLeftRadius: 15,
+              borderTopRightRadius: 15,
             }}
           >
-            <Typography sx={{ mt: 2, mb: 20, ml: 4 }} variant="h6" component="div">
-              Total Calories Consumed Today: 2 dollars
-            </Typography>
-            {/* <Typography
-              sx={{ mt: 2, mb: 3, ml: 4 }}
-              variant="h6"
-              component="div"
+            <Grid item xs={12} sx={{ display: "flex", marginBottom: 2 }}>
+              <Grid item xs={8}>
+                <Typography
+                  variant="h4"
+                  component="div"
+                  sx={{
+                    display: "flex",
+                    paddingTop: 1,
+                    paddingLeft: 2,
+                  }}
+                >
+                  Today's Meal
+                </Typography>
+              </Grid>
+              <Grid item xs={4} align="end" sx={{ pr: 4 }}>
+                <Fab
+                  color="primary"
+                  onClick={() => {
+                    setShowButtons(!showButtons);
+                  }}
+                  sx={{ mr: 2 }}
+                >
+                  <EditIcon />
+                </Fab>
+                <Fab color="primary" onClick={handleMealOpen}>
+                  <AddIcon />
+                </Fab>
+              </Grid>
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-end",
+              }}
             >
-              Today's Workout Duration: 1 Light year (Should be dynamic)
-            </Typography> */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  paddingBottom: 10,
+                }}
+              >
+                <Typography
+                  sx={{ ml: 2, fontSize: 18 }}
+                  variant="h6"
+                  component="div"
+                >
+                  <span style={{ fontWeight: 700 }}>
+                    Total Calories Consumed:
+                  </span>{" "}
+                  ~{totalCals} cals
+                </Typography>
+              </div>
+            </Grid>
           </Grid>
-        <Grid
+
+          {/* USE THIS <MealTable /> */}
+          <DayMealList
+            currDateInt={currDateInt}
+            userID={userID}
+            breakfastCals={breakfastCals}
+            lunchCals={lunchCals}
+            dinnerCals={dinnerCals}
+            snacksCals={snacksCals}
+          />
+
+          <Grid
             item
-            xs={6}
+            xs={12}
             sx={{
               display: "flex",
               flexDirection: "column",
               alignItems: "flex-end",
               justifyContent: "center",
               paddingRight: 4,
+              marginLeft: 4,
               paddingBottom: 3,
             }}
           >
             <TextField
-              id="outlined-basic"
               label="Notes"
               variant="outlined"
-              value={''}
+              value={currNotes}
               onChange={(e) => setCurrNotes(e.target.value)}
               multiline
-              sx={{ width: 300 }}
-              rows={8}
+              sx={{ width: "100%" }}
+              rows={3}
             />
             <Button
               variant="contained"
               sx={{ mt: 2, width: 150 }}
-              onClick={() => {console.log('from button')}}
+              onClick={() => {
+                console.log("from button");
+              }}
             >
               Save Notes
             </Button>
           </Grid>
-          </Grid>
+        </Grid>
       </Box>
-
     </>
   );
 }
