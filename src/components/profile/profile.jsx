@@ -111,12 +111,13 @@ function Profile(props) {
         // Very active (hard exercise 6-7 days a week) = 1.725
         // Extra active (very hard exercise, physical job or training twice a day) = 1.9
 
-      const days = Math.ceil((dayjs(targetDate) - dayjs()) / 86400000);
+      const days = Math.ceil((dayjs(pickerDate) - dayjs()) / 86400000);
       const height = (formHeightFt * 12) + formHeightIn;
       const BMR = 66 + (6.2 * formWeight) + (12.7 * height) - (6.76 * formAge);
       const TDEE = BMR * 1.2;
       const weightDelta = formTargetWeight - formWeight;
-      const goal = Math.floor((TDEE * (weightDelta / days)) + TDEE);
+      const calorieDiff = weightDelta * 3500;
+      const goal = Math.floor((calorieDiff / days) + TDEE);
 
       setAge(formAge);
       setWeight(formWeight);
