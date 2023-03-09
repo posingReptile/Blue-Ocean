@@ -4,28 +4,11 @@ import {
 } from '@mui/material';
 import { createFilterOptions } from '@mui/material/Autocomplete';
 
+// maybe replace with an api call to be sure
 const muscles = [
   'abdominals', 'biceps', 'calves', 'chest', 'glutes',
   'hamstrings', 'lats', 'lower back', 'quads', 'traps', 'triceps'
 ];
-
-// const prs = [{
-//   name: 'squat',
-//   muscle: 'quads',
-//   prval: 'idk'
-// }, {
-//   name: 'squat two',
-//   muscle: 'quads',
-//   prval: 'idk'
-// }, {
-//   name: 'bench',
-//   muscle: 'chest',
-//   prval: 'idk'
-// }, {
-//   name: 'deadlift',
-//   muscle: 'hamstrings',
-//   prval: 'idk'
-// }];
 
 const tableFilter = createFilterOptions();
 function PersonalRecords(props) {
