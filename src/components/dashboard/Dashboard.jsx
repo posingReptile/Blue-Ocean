@@ -1,3 +1,5 @@
+import Meals from '../modal/meals/Meals.jsx'
+import FoodDash from "../modal/meals/FoodDash.jsx"
 import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -5,7 +7,8 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import WorkoutDash from "../modal/workout/WorkoutDash";
 import DatePickerComponent from "./DatePickerComponent";
-import RefreshIcon from "@mui/icons-material/Refresh";
+
+import Quote from "./Quote";
 
 const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
   const [quote, setQuote] = useState("");
@@ -16,25 +19,8 @@ const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
   }, []);
   return (
     <Box elevation={10}>
-      <Box
-        sx={{
-          paddingTop: 3,
-          marginBottom: 3,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Typography
-            sx={{ textAlign: "center", fontStyle: "italic", fontSize: 20 }}
-          >
-            "The only way to stop me from lifting is if I'm on my death bed, and
-            even then I'll probably ask for a spotter."
-          </Typography>
-          <span style={{ marginLeft: 14 }}>{<RefreshIcon />}</span>
-        </div>
-      </Box>
+      <Meals userId={userID} date={currDateInt}/>
+      <Quote />
       <Box
         sx={{
           marginTop: 1,
@@ -54,7 +40,7 @@ const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
       {/* Planned Workout and Meals */}
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <WorkoutDash
+          <FoodDash
             currentDay={currentDay}
             currDateInt={currDateInt}
             userID={userID}

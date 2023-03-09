@@ -26,8 +26,13 @@ function ResponsiveAppBar({ userObject, setComponent, setUserObject }) {
   const handleCloseNavMenu = (event, componentName) => {
     setAnchorElNav(null);
     console.log(componentName);
+<<<<<<< HEAD
     setComponent(componentName);
     // setComponent(componentName);
+=======
+    // setComponent("calendar");
+    setComponent(componentName);
+>>>>>>> main
   };
 
   const handleOpenUserMenu = (event) => {
@@ -40,9 +45,9 @@ function ResponsiveAppBar({ userObject, setComponent, setUserObject }) {
     // console.log(componentName);
     if (!componentName) return;
 
-    if(componentName === 'logsign') {
-      axios.get('http://localhost:3000/logout').then((res) => {
-        console.log('res.data', res.data);
+    if (componentName === "logsign") {
+      axios.get("http://localhost:3000/logout").then((res) => {
+        console.log("res.data", res.data);
         setUserObject({});
       });
     }
@@ -131,6 +136,7 @@ function ResponsiveAppBar({ userObject, setComponent, setUserObject }) {
           >
             <Button
               onClick={(e) => handleCloseNavMenu(e, "calendar")}
+<<<<<<< HEAD
               sx={{
                 my: 2,
                 color: "white",
@@ -141,11 +147,15 @@ function ResponsiveAppBar({ userObject, setComponent, setUserObject }) {
                   color: '#3c52b2',
               },
               }}
+=======
+              sx={{ my: 2, color: "white", display: "block", fontSize: 16 }}
+>>>>>>> main
             >
               Calendar
             </Button>
             <Button
               onClick={(e) => handleCloseNavMenu(e, "dashboard")}
+<<<<<<< HEAD
               sx={{
                 my: 2,
                 mr: 2,
@@ -157,6 +167,9 @@ function ResponsiveAppBar({ userObject, setComponent, setUserObject }) {
                   color: '#3c52b2',
               },
               }}
+=======
+              sx={{ my: 2, color: "white", display: "block", fontSize: 16 }}
+>>>>>>> main
             >
               Dashboard
             </Button>
