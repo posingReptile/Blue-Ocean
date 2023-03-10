@@ -512,7 +512,7 @@ app.get('/monthly-calories', (req, res) => {
   db.query('SELECT SUM(calories) FROM food WHERE user_id = $1 AND date = $2', [req.query.userId, req.query.date]).then((calories) => {
     console.log(calories.rows[0])
     res.send(calories.rows)
-  })
+  }).catch((err) => console.log(err));
 })
 
 
