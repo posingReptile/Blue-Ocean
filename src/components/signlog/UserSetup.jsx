@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import imgUrl from './biceplogo.png'
+import imgUrl from '../../../public/icons/shreddedlogoblue.png'
 import axios from 'axios';
 
 function UserSetup({ setUserObject, setComponent, setLoginComponent, username, password }) {
