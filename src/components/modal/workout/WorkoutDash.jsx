@@ -161,11 +161,7 @@ function Workout({ currDateInt, userID }) {
                 >
                   <EditIcon sx={{ "&:hover": { color: "white" } }} />
                 </Fab>
-                <Fab
-                  color="primary"
-                  onClick={handleOpen}
-
-                >
+                <Fab color="primary" onClick={handleOpen}>
                   <AddIcon sx={{ "&:hover": { color: "white" } }} />
                 </Fab>
               </Grid>
