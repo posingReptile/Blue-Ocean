@@ -30,7 +30,7 @@ function DayMealListItem({ mealName, handleChangeDisplay, calorieDisplay }) {
       <ListItemButton
         onMouseDown={() => handleChangeDisplay(mealName)}
         disableGutters
-        sx={{ mr: 2, height: 72 }}
+        sx={{ pr: 2, height: 72 }}
       >
         <ListItemAvatar>
           <Avatar sx={{ backgroundColor: "white" }}>
