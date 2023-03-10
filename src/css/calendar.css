@@ -5,11 +5,12 @@
   --weekendColor: #a2b3ea;
   --titleColor: #0077d6;
   --wordColor: white;
+  --lineColor: #b9c8f9;
+  --buttonBackground: #0077d6;
+  --calorieCountColor: darkblue;
 }
-/* 0077d6
-#006edc
-cde6ff
-*/
+
+  /* enable dark mode for calendar*/
 /* @media (prefers-color-scheme: dark) {
   :root {
     --weekdayColor: rgb(141, 138, 138);
@@ -18,33 +19,13 @@ cde6ff
     --weekendColor: rgb(207, 15, 15);
     --titleColor: #1a1a1a;
     --wordColor: white;
-      --weekdayColor: #cde6ff;
-      --weekendColor: #a2b3ea;
-
-        --weekdayColor: white;
-  --selectDayColor: #006edc;
-  --sideMonthColor: rgb(58, 77, 148);
-  --weekendColor: #a2b3ea;
-  --titleColor: #0077d6;
-  --wordColor: white;
+    --lineColor: gray;
+    --buttonBackground: #2d4f6b;
+    --calorieCountColor: white;
   }
 } */
-/* #3fbeff */
 
 
-
-/* tr {
-  height: 10px;
-}
-
-tr td {
-   height: auto !important;
-} */
-
-/* .css-15wwp11-MuiTableHead-root {
-  display: flex !important;
-  justify-content: center;
-} */
 .container .css-10dfkli-MuiTableCell-root {
   padding-right: 150px;
 }
@@ -62,7 +43,7 @@ tr td {
   margin-bottom: 100px; */
   /* margin: auto; */
   top: 50%;
-  transform: translate(0px, 15%);
+  transform: translate(0px, 5%);
 }
 
 .container button{
@@ -118,6 +99,8 @@ tr td {
   border: none;
   width: 65vmin;
   height: fit-content;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .planTitle {
@@ -144,7 +127,7 @@ svg:hover {
   transform: translate(-50%, -50%);
   font-size: large;
   width: 100%;
-  color: darkblue;
+  color: var(--calorieCountColor);
 }
 
 .trainIcon {
@@ -172,10 +155,10 @@ svg:hover {
 
 button.react-calendar__tile {
   height: 100%;
-  border: 1px solid #b9c8f9;
+  border: 1px solid var(--lineColor);
 }
-button.react-calendar__tile > abbr{
-  background-color: #0077d6;
+.react-calendar__month-view__days > button > abbr {
+  background-color: var(--buttonBackground);
   padding: 1%;
   border-radius: 5%;
 }
@@ -264,7 +247,7 @@ button.react-calendar__tile.react-calendar__month-view__days__day > abbr{
 }
 
 .react-calendar__navigation button:disabled {
-  background-color: #1a1a1a;
+  background-color:var(--sideMonthColor);
 }
 
 .react-calendar__navigation button:enabled:hover {
@@ -391,4 +374,9 @@ button.react-calendar__tile.react-calendar__month-view__days__day > abbr{
 }
 .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #e6e6e6;
+}
+
+.react-calendar__year-view__months > button > abbr {
+  color: black;
+  font-size: x-large;
 }
