@@ -17,6 +17,7 @@ import CalendarWorkout from "./CalendarWorkout";
 import CalendarFood from "./CalendarFood";
 import MealModalTest from "./ctest.jsx";
 import Form from "../modal/meals/Form";
+import DatePickerComponent from "../dashboard/DatePickerComponent.jsx";
 const monthNames = [
   "January",
   "February",
@@ -50,10 +51,11 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
   function renderCalender () {
 
     async function getCalories (parsedDate, userID) {
+      // console.log(parsedDate);
       await axios.get(`http://localhost:3000/monthly-calories?date=${Number(parsedDate)}&userId=${userID}`)
      .then(({data}) => {
        const sum = data[0].sum;
-       // console.log(sum, parsedDate);
+       console.log(sum, parsedDate);
        if (sum) {
          const parsedWordDate = `${monthNames[Number(parsedDate.slice(4,6)) - 1]} ${Number(parsedDate.slice(-2))}, ${parsedDate.slice(0,4)}`;
         //  console.log(sum, parsedDate);
@@ -62,24 +64,25 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
      })
      .then(() => {
        if (parsedDate.slice(-2) === "31") {
-        //  console.log('from ffinished', monthlyArray);
+         console.log('from ffinished', monthlyArray);
          if (monthlyArray.length === 0) {
          } else {
          setCalorieDates(monthlyArray);
          }
        }  
+     }).catch((err) => {
+      console.log(err);
      })
    }
    const currMonth = monthNames.indexOf(calorieMonth.slice(0, -4)) + 1;
    const year = calorieMonth.slice(-4);
    let monthlyArray = [];
+  //  console.log('from inputs', calorieMonth, currMonth)
    for (let i = 1; i < 32; i++) {
      let month = currMonth;
      let day;
      if (month < 10) {
        month = `0${month}`;
-     } else {
-       month = `${i}`;
      }
      if (i < 10) {
        day = `0${i}`;
@@ -151,11 +154,25 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
 
   return (
     <>
+      {/* <Box
+        sx={{
+          marginTop: 1,
+          marginBottom: 2.5,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <DatePickerComponent
+          currentDay={currentDay}
+          setCurrentDay={setCurrentDay}
+        />
+      </Box> */}
       <div className="container">
         <Calendar
           onChange={setCurrentDay}
           value={currentDay}
           className="wrapper"
+          minDetail='year'
           onActiveStartDateChange={(e) => {
             monthChecker(e);
           }}
