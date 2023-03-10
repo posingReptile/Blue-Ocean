@@ -1,3 +1,4 @@
+
 # Blue Ocean: Shredded
 ==============================
 
@@ -68,4 +69,9 @@
 ---------- Gifs/pictures to be moved around --------
 ![login](https://user-images.githubusercontent.com/24445744/224448055-73784c3b-a3e9-4b69-9cf1-fea9efa23246.gif)
 ![navigate](https://user-images.githubusercontent.com/24445744/224448472-a35a1dce-40ca-4a91-889c-9f44d3a45766.gif)
+![quotesmessages](https://user-images.githubusercontent.com/24445744/224448649-e72ea72b-d450-4cd4-9bc9-005f51a5a1c6.gif)
+![adminpanel](https://user-images.githubusercontent.com/24445744/224449303-bd1ae075-f9af-4100-9931-c3b91d6890a6.gif)
+![pr](https://user-images.githubusercontent.com/24445744/224449311-10f3a45d-9550-40ed-b2bd-b3e7f2ed066e.gif)
+![profileedit](https://user-images.githubusercontent.com/24445744/224449313-e546c28c-bae8-4554-9e62-ad358230dc80.gif)
+
 
