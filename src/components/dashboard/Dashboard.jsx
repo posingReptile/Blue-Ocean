@@ -19,7 +19,6 @@ const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
   const [curQuote, setCurQuote] = useState("");
 
   useEffect(() => {
-    console.log("currentDay", currentDay)
     let messageCurrentDay = format(currentDay, "yyyy-MM-dd");
     axios.get(`http://localhost:3000/message?date=${messageCurrentDay}`).then((res) => {
       if (res.data.length > 0) {

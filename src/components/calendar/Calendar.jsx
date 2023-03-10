@@ -128,7 +128,6 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
 
   return (
     <>
-      <Quote />
       <div className="container">
         <Calendar
           onChange={setCurrentDay}

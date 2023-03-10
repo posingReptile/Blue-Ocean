@@ -16,7 +16,9 @@ function Quote({ curQuote, setCurQuote, quotes, setQuotes }) {
     axios.get("http://localhost:3000/quotes").then((res) => {
       console.log("res.data", res.data);
       setQuotes(res.data);
-      setCurQuote(randomQuote(res.data));
+      if(curQuote.length === 0) {
+        setCurQuote(randomQuote(res.data));
+      }
     });
   }, []);
 
@@ -24,8 +26,7 @@ function Quote({ curQuote, setCurQuote, quotes, setQuotes }) {
   return (
     <Box
       sx={{
-        marginTop: 1.8,
-        marginBottom: 3,
+        marginBottom: 4.8,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
