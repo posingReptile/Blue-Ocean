@@ -6,19 +6,33 @@ import Pressable from "@mui/material/Button";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-
-function AdminMessage( {adminMessage} ) {
-
+function AdminMessage({ adminMessage }) {
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-      <Typography sx={{ color: "red", textAlign: "center", fontStyle: "italic", fontSize: 20 }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Typography
+        sx={{
+          color: "black",
+          textAlign: "center",
+          fontSize: 20,
+          fontWeight: 700,
+        }}
+      >
         MESSAGE FROM SHREDDED ADMINS
       </Typography>
-      <Typography sx={{ textAlign: "center", fontStyle: "italic", fontSize: 20 }}>
+      <Typography
+        sx={{ textAlign: "center", fontStyle: "italic", fontSize: 20 }}
+      >
         {adminMessage}
       </Typography>
     </Box>
-  )
+  );
 }
 
 export default AdminMessage;

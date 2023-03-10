@@ -197,7 +197,8 @@ function FoodDash({ currDateInt, userID }) {
                   variant="h6"
                   component="div"
                 >
-                  <span style={{ fontWeight: 700 }}>Total Calories 🍽️:</span> ~
+                  <span style={{ fontWeight: 700 }}>Total Calories 🍽️:</span>{" "}
+                  {`~ `}
                   {totalCals} cals
                 </Typography>
               </div>

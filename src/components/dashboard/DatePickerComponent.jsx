@@ -27,7 +27,7 @@ const DatePickerComponent = ({ currentDay, setCurrentDay }) => {
         alignItems: "center",
         justifyContent: "space-around",
         padding: 1,
-        backgroundColor: "#006edc",
+        backgroundColor: "#0077d6",
         color: "white",
       }}
     >

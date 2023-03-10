@@ -118,7 +118,7 @@ function Workout({ currDateInt, userID }) {
       <Box
         sx={{
           minHeight: 600,
-          width: 500,
+          width: 536,
           backgroundColor: "primary.light",
           borderRadius: 4,
           margin: 4,
@@ -188,7 +188,7 @@ function Workout({ currDateInt, userID }) {
                   variant="h6"
                   component="div"
                 >
-                  <span style={{ fontWeight: 700 }}>Calories 🔥:</span> ~
+                  <span style={{ fontWeight: 700 }}>Calories 🔥:</span> {`~ `}
                   {totalCalsBurned} cals
                 </Typography>
                 <Typography
@@ -196,7 +196,7 @@ function Workout({ currDateInt, userID }) {
                   variant="h6"
                   component="div"
                 >
-                  <span style={{ fontWeight: 700 }}>Workout 🕛:</span> ~
+                  <span style={{ fontWeight: 700 }}>Workout 🕛:</span> {`~ `}
                   {totalWorkoutDuration} min(s)
                 </Typography>
               </div>
