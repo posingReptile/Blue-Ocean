@@ -2,13 +2,31 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import Pressable from "@mui/material/Button";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
-function Quote() {
+const randomQuote = (quoteArray) => {
+  return quoteArray[Math.floor(Math.random() * quoteArray.length)].quote_text;
+};
+
+function Quote({ curQuote, setCurQuote, quotes, setQuotes }) {
+
+  useEffect(() => {
+    axios.get("http://localhost:3000/quotes").then((res) => {
+      console.log("res.data", res.data);
+      setQuotes(res.data);
+      if(curQuote.length === 0) {
+        setCurQuote(randomQuote(res.data));
+      }
+    });
+  }, []);
+
+
   return (
     <Box
       sx={{
-        marginTop: 5,
-        marginBottom: 3,
+        marginBottom: 4.8,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -18,10 +36,21 @@ function Quote() {
         <Typography
           sx={{ textAlign: "center", fontStyle: "italic", fontSize: 20 }}
         >
-          "The only way to stop me from lifting is if I'm on my death bed, and
-          even then I'll probably ask for a spotter."
+          {curQuote}
         </Typography>
-        <span style={{ marginLeft: 14 }}>{<RefreshIcon />}</span>
+            <RefreshIcon
+              onClick={() => setCurQuote(randomQuote(quotes))}
+              sx={{
+                borderRadius: 10,
+                ml: 2,
+                backgroundColor: "primary.main",
+                color: "white",
+                "&:hover": {
+                  color: "primary.main",
+                  backgroundColor: "transparent"
+                  }
+                }}
+            />
       </div>
     </Box>
   );

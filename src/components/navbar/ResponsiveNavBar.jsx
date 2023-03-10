@@ -51,7 +51,7 @@ function ResponsiveAppBar({ userObject, setComponent, setUserObject }) {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar sx={{mb: 3}} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ pt: 1, pb: 1 }}>
           {/* large view typography*/}
