@@ -30,6 +30,8 @@ function FoodDash({ currDateInt, userID }) {
   // console.log(showButtons);
   const [openMM, setOpenMM] = useState(false);
   const [rerender, setRerender] = useState(false);
+
+  const [showEditButton, setShowEditButton] = useState(false);
   // const [dashRender, setDashRender] = useState(false);
 
   const handleMealOpen = () => {
@@ -157,17 +159,23 @@ function FoodDash({ currDateInt, userID }) {
                 </Typography>
               </Grid>
               <Grid item xs={4} align="end" sx={{ pr: 4 }}>
+                {showEditButton && (
+                  <Fab
+                    color="primary"
+                    onClick={() => {
+                      setShowButtons(!showButtons);
+                    }}
+                    sx={{ mr: 2, "&:hover": { color: "orange" } }}
+                  >
+                    <EditIcon sx={{ "&:hover": { color: "orange" } }} />
+                  </Fab>
+                )}
                 <Fab
                   color="primary"
-                  onClick={() => {
-                    setShowButtons(!showButtons);
-                  }}
-                  sx={{ mr: 2 }}
+                  onClick={handleMealOpen}
+                  sx={{ "&:hover": { color: "orange" } }}
                 >
-                  <EditIcon />
-                </Fab>
-                <Fab color="primary" onClick={handleMealOpen}>
-                  <AddIcon />
+                  <AddIcon sx={{ "&:hover": { color: "orange" } }} />
                 </Fab>
               </Grid>
             </Grid>
@@ -211,8 +219,9 @@ function FoodDash({ currDateInt, userID }) {
             dinnerCals={dinnerCals}
             snacksCals={snacksCals}
             showButtons={showButtons}
+            rerender={rerender}
+            setShowEditButton={setShowEditButton}
             // setRerender={setRerender}
-            // rerender={rerender}
           />
 
           <Grid

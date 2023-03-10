@@ -154,8 +154,9 @@ app.post("/profiles/:profile_id", (req, res) => {
   });
 });
 
-app.get('/profiles/:profile_id/personal-records', (req, res) => {
-  db.query(`
+app.get("/profiles/:profile_id/personal-records", (req, res) => {
+  db.query(
+    `
     SELECT j.name, j.muscle_group AS muscle, MAX(e.weight) AS weight
     FROM exercises e
     LEFT JOIN (
@@ -164,7 +165,9 @@ app.get('/profiles/:profile_id/personal-records', (req, res) => {
     ) j ON j.exercise_detail_id = e.exercise_detail_id
     WHERE user_id = $1
     GROUP BY j.name, j.muscle_group, e.exercise_detail_id
-  `, [req.params.profile_id])
+  `,
+    [req.params.profile_id]
+  )
     .then(({ rows }) => {
       res.status(200);
       res.send(rows);
@@ -366,6 +369,9 @@ app.get("/nutrition", (req, res) => {
           console.log("Added to database");
           res.send(foody);
         });
+    })
+    .catch(() => {
+      res.send(404);
     });
 });
 

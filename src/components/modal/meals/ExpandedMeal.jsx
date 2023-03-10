@@ -28,8 +28,8 @@ function ExpandedMeal({
   currDateInt,
   userID,
   showButtons,
+  rerender,
   // setRerender,
-  // rerender,
 }) {
   const [foods, setFoods] = useState([]);
   console.log(foods);
@@ -48,7 +48,7 @@ function ExpandedMeal({
         setFoods(data);
         // setRerender(!rerender);
       });
-  }, []);
+  }, [rerender, currDateInt]);
 
   const handleDeleteFood = (foodId) => {
     axios
