@@ -175,10 +175,13 @@ app.get('/profiles/:profile_id/personal-records', (req, res) => {
 // to get message if there is one from the admin
 
 app.get("/message", (req, res) => {
+  console.log('in message route', req.query.date)
   db.query("SELECT message FROM messages WHERE date = $1", [
     req.query.date,
   ]).then((message) => {
     res.send(message.rows);
+  }).catch((err) => {
+    console.log(err);
   });
 });
 
