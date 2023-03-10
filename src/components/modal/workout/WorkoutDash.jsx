@@ -157,16 +157,16 @@ function Workout({ currDateInt, userID }) {
                   onClick={() => {
                     setShowButtons(!showButtons);
                   }}
-                  sx={{ mr: 2, "&:hover": { color: "orange" } }}
+                  sx={{ mr: 2 }}
                 >
-                  <EditIcon sx={{ "&:hover": { color: "orange" } }} />
+                  <EditIcon sx={{ "&:hover": { color: "white" } }} />
                 </Fab>
                 <Fab
                   color="primary"
                   onClick={handleOpen}
-                  sx={{ "&:hover": { color: "orange" } }}
+
                 >
-                  <AddIcon sx={{ "&:hover": { color: "orange" } }} />
+                  <AddIcon sx={{ "&:hover": { color: "white" } }} />
                 </Fab>
               </Grid>
             </Grid>
