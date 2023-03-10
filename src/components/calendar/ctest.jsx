@@ -115,29 +115,15 @@ function EnhancedTableHead(props) {
     order,
     orderBy,
     onRequestSort,
-    currDateInt,
-    userID
+    foodSelection,
+    setFoodSelection
   } = props;
 
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
-  const [foodselection, setFoodSelection] = useState("Breakfast");
 
-  useEffect(() => {
-    const test = document.getElementById('foodstuff').innerHTML = '';
-    console.log(test)
-    axios
-      .get(
-        `http://localhost:3000/daily-meals?date=${currDateInt}&category=${foodselection}&userId=${userID}`
-      )
-      .then(({ data }) => {
-        data.forEach(({name, calories, protein }) => {
-          createData(name, calories, protein);
-          console.log('from ctest',data, name, calories, protein)
-        });
-      });
-  }, [foodselection]);
+
 
   const handleChange = (event) => {
     setFoodSelection(event.target.value);
@@ -152,9 +138,9 @@ function EnhancedTableHead(props) {
             <Select
               labelId="demo-simple-select-standard-label"
               id="demo-simple-select-standard"
-              value={foodselection}
+              value={foodSelection}
               onChange={handleChange}
-              label={foodselection}
+              label={foodSelection}
             >
               <MenuItem value={"Breakfast"}>Breakfast</MenuItem>
               <MenuItem value={"Lunch"}>Lunch</MenuItem>
@@ -251,6 +237,9 @@ export default function MealModalTest({userID, currDateInt}) {
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
 
+  const [foodSelection, setFoodSelection] = useState("Breakfast");
+  const [foodList, setFoodList] = useState(rows);
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -262,25 +251,35 @@ export default function MealModalTest({userID, currDateInt}) {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
     setSelected(newSelected);
   };
 
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
+  
+
+  useEffect(() => {
+    // const test = document.getElementById('foodstuff').innerHTML = '';
+    // console.log(test)
+    let array = [];
+    axios
+      .get(
+        `http://localhost:3000/daily-meals?date=${currDateInt}&category=${foodSelection}&userId=${userID}`
+      )
+      .then(({ data }) => {
+        data.forEach(({name, calories, protein }) => {
+          array.push(createData(name, calories, protein));
+          console.log('from ctest',data, name, calories, protein)
+        });
+      })
+      .then(() => {
+        if (array.length === 0) return;
+        else {
+          setFoodList(array);
+        }
+      })
+  }, [foodList, foodSelection]);
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -294,6 +293,8 @@ export default function MealModalTest({userID, currDateInt}) {
           rowCount={rows.length}
           userID={userID}
           currDateInt={currDateInt}
+          setFoodSelection={setFoodSelection}
+          foodSelection={foodSelection}
         />
 
         <TableContainer sx={{ height: "13vh", overflowY: "auto" }}>
@@ -304,7 +305,7 @@ export default function MealModalTest({userID, currDateInt}) {
             overflow="auto"
           >
             <TableBody id="foodstuff">
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(foodList, getComparator(order, orderBy))
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
