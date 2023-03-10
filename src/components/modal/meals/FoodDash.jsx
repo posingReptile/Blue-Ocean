@@ -165,17 +165,13 @@ function FoodDash({ currDateInt, userID }) {
                     onClick={() => {
                       setShowButtons(!showButtons);
                     }}
-                    sx={{ mr: 2, "&:hover": { color: "orange" } }}
+                    sx={{ mr: 2 }}
                   >
-                    <EditIcon sx={{ "&:hover": { color: "orange" } }} />
+                    <EditIcon sx={{ "&:hover": { color: "white" } }} />
                   </Fab>
                 )}
-                <Fab
-                  color="primary"
-                  onClick={handleMealOpen}
-                  sx={{ "&:hover": { color: "orange" } }}
-                >
-                  <AddIcon sx={{ "&:hover": { color: "orange" } }} />
+                <Fab color="primary" onClick={handleMealOpen} sx={{}}>
+                  <AddIcon sx={{ "&:hover": { color: "white" } }} />
                 </Fab>
               </Grid>
             </Grid>
@@ -201,10 +197,9 @@ function FoodDash({ currDateInt, userID }) {
                   variant="h6"
                   component="div"
                 >
-                  <span style={{ fontWeight: 700 }}>
-                    Total Calories Consumed:
-                  </span>{" "}
-                  ~{totalCals} cals
+                  <span style={{ fontWeight: 700 }}>Total Calories 🍽️:</span>{" "}
+                  {`~ `}
+                  {totalCals} cals
                 </Typography>
               </div>
             </Grid>

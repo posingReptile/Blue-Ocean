@@ -20,19 +20,30 @@ const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
 
   useEffect(() => {
     let messageCurrentDay = format(currentDay, "yyyy-MM-dd");
-    axios.get(`http://localhost:3000/message?date=${messageCurrentDay}`).then((res) => {
-      if (res.data.length > 0) {
-        setAdminMessage(res.data[0].message);
-      } else {
-        setAdminMessage("");
-      }
-    });
+    axios
+      .get(`http://localhost:3000/message?date=${messageCurrentDay}`)
+      .then((res) => {
+        if (res.data.length > 0) {
+          setAdminMessage(res.data[0].message);
+        } else {
+          setAdminMessage("");
+        }
+      });
   }, [currentDay]);
 
   return (
     <Box elevation={10}>
-      <Meals userId={userID} date={currDateInt}/>
-      {adminMessage.length > 0 ? <AdminMessage adminMessage={adminMessage}/> : <Quote quotes={quotes} setQuotes={setQuotes} curQuote={curQuote} setCurQuote={setCurQuote} />}
+      <Meals userId={userID} date={currDateInt} />
+      {adminMessage.length > 0 ? (
+        <AdminMessage adminMessage={adminMessage} />
+      ) : (
+        <Quote
+          quotes={quotes}
+          setQuotes={setQuotes}
+          curQuote={curQuote}
+          setCurQuote={setCurQuote}
+        />
+      )}
       <Box
         sx={{
           marginTop: 1,
@@ -50,7 +61,7 @@ const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
       {/* Planned Workout and Meals */}
 
       {/* Planned Workout and Meals */}
-      <Grid container spacing={2}>
+      <Grid container spacing={0}>
         <Grid item xs={6}>
           <FoodDash
             currentDay={currentDay}

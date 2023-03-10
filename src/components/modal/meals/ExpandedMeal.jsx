@@ -29,10 +29,8 @@ function ExpandedMeal({
   userID,
   showButtons,
   rerender,
-  // setRerender,
 }) {
   const [foods, setFoods] = useState([]);
-  console.log(foods);
 
   useEffect(() => {
     axios
@@ -100,7 +98,11 @@ function ExpandedMeal({
 
   return (
     <>
-      <ListItemButton onClick={handleShowList} disableGutters>
+      <ListItemButton
+        onClick={handleShowList}
+        disableGutters
+        sx={{ "&:hover": { color: "white" } }}
+      >
         <Typography
           variant="h6"
           component="div"
@@ -108,13 +110,21 @@ function ExpandedMeal({
             ml: 4,
             width: "90%",
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "center",
             alignItems: "center",
+            gap: 3,
+            fontWeight: 700,
+            fontSize: 20,
           }}
         >
           <>
             {`${expandedType}`}
-            <ExitToAppIcon />
+            <ExitToAppIcon
+              sx={{
+                "&:hover": { color: "white" },
+                transform: "translate(0, -2px)",
+              }}
+            />
           </>
         </Typography>
       </ListItemButton>
