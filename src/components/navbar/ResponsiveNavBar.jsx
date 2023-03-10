@@ -64,7 +64,7 @@ function ResponsiveAppBar({ userObject, setComponent, setUserObject }) {
                 display: { xs: "none", md: "flex" },
               }}
             >
-              <img src="./icons/shredded.png" height={50} />
+              <img src="./icons/shreddedlogowhite.png" height={50} />
             </Typography>
           </Pressable>
 
