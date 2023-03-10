@@ -129,10 +129,10 @@ function ExpandedMeal({
                 >
                   Food
                 </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 700 }}>
+                <TableCell align="center" sx={{ fontWeight: 700, fontSize: 16  }}>
                   Calories
                 </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 700 }}>
+                <TableCell align="center" sx={{ fontWeight: 700, fontSize: 16  }}>
                   Protein
                 </TableCell>
                 {showButtons && (
