@@ -35,9 +35,10 @@ const DatePickerComponent = ({ currentDay, setCurrentDay }) => {
         onClick={handlePrevDay}
         sx={{
           color: "white",
+          "&:hover": { color: "orange" },
         }}
       >
-        <ArrowBack sx={{ "&:hover": { color: "lightBlue" } }} />
+        <ArrowBack sx={{ "&:hover": { color: "orange" } }} />
       </IconButton>
       <Typography variant="h6" sx={{ padding: "0 1rem", textAlign: "center" }}>
         {currentDay.toLocaleDateString()}
@@ -46,9 +47,10 @@ const DatePickerComponent = ({ currentDay, setCurrentDay }) => {
         onClick={handleNextDay}
         sx={{
           color: "white",
+          "&:hover": { color: "orange" },
         }}
       >
-        <ArrowForward sx={{ "&:hover": { color: "lightBlue" } }} />
+        <ArrowForward sx={{ "&:hover": { color: "orange" } }} />
       </IconButton>
     </Paper>
   );

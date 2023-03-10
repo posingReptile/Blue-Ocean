@@ -95,6 +95,8 @@ function Breakfast({
   onlyBreakfast,
   rerender,
   setRerender,
+  handleAlert,
+  handleError,
   // dashRender,
   // setDashRender,
 }) {
@@ -123,19 +125,19 @@ function Breakfast({
         ]);
         setInput("");
         setQuantity("100g");
-        alert("Successful input breakfast");
-        // setDashRender(!dashRender);
         setRerender(!rerender);
+        handleAlert();
       })
       .catch(() => {
-        alert("Error occured when entering breakfast");
+        handleError();
+        console.log("Error occured when entering breakfast");
       });
   };
 
   return (
-    <div>
+    <div style={{ display: "flex", alignItems: "center" }}>
       <TextField
-        placeholder="food..."
+        placeholder="Enter food..."
         ariant="filled"
         required
         sx={{
@@ -146,8 +148,9 @@ function Breakfast({
         onChange={(event) => setInput(event.target.value)}
       />
       <TextField
-        placeholder="grams..."
-        variant="filled"
+        placeholder="Grams"
+        variant="outlined"
+        label="Amount (g)"
         required
         sx={{
           margin: "1rem",

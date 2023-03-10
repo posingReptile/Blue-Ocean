@@ -82,7 +82,10 @@ function ChooseMuscleModal({ handleClose, currDateInt, userID, setExercises }) {
           overflow: "auto",
           justifyContent: "center",
           alignItems: "center",
-          minWidth: 400,
+          // minWidth: 400,
+          width: 450,
+          mt: -2,
+          mb: 1,
           // border: "1px solid red",
         }}
       >

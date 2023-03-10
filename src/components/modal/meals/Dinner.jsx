@@ -20,6 +20,8 @@ function Dinner({
   onlyDinner,
   rerender,
   setRerender,
+  handleAlert,
+  handleError,
   // dashRender,
   // setDashRender,
 }) {
@@ -49,19 +51,19 @@ function Dinner({
         ]);
         setInput("");
         setQuantity("100g");
-        alert("Successful input dinner");
-        // setDashRender(!dashRender);
         setRerender(!rerender);
+        handleAlert();
       })
       .catch(() => {
-        alert("Error occured when entering dinner");
+        handleError();
+        console.log("Error occured when entering dinner");
       });
   };
 
   return (
-    <div>
+    <div style={{ display: "flex", alignItems: "center" }}>
       <TextField
-        placeholder="food..."
+        placeholder="Enter food..."
         ariant="filled"
         required
         sx={{
@@ -72,8 +74,9 @@ function Dinner({
         onChange={(event) => setInput(event.target.value)}
       />
       <TextField
-        placeholder="grams..."
-        variant="filled"
+        placeholder="Grams"
+        label="Amount (g)"
+        variant="outlined"
         required
         sx={{
           margin: "1rem",
