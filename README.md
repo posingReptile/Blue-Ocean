@@ -67,3 +67,5 @@
 
 ---------- Gifs/pictures to be moved around --------
 ![login](https://user-images.githubusercontent.com/24445744/224448055-73784c3b-a3e9-4b69-9cf1-fea9efa23246.gif)
+![navigate](https://user-images.githubusercontent.com/24445744/224448472-a35a1dce-40ca-4a91-889c-9f44d3a45766.gif)
+
