@@ -79,9 +79,11 @@ function Workout({ currDateInt, userID }) {
         params: {
           date: currDateInt,
           userId: userID,
+          type: "workout",
         },
       })
       .then(({ data }) => {
+        // console.log("get notes:", data);
         if (!data[0].notes) {
           setCurrNotes("");
         } else {
@@ -96,12 +98,14 @@ function Workout({ currDateInt, userID }) {
   // Send a put request when clicking save notes
   const handleNoteSave = () => {
     axios
-      .put("http://localhost:3000/edit-notes", {
+      .put("http://localhost:3000/notes", {
         notes: currNotes,
         date: currDateInt,
+        userId: userID,
         type: "workout",
       })
       .then(({ data }) => {
+        // console.log(data);
         setCurrNotes(data[0].notes);
       })
       .catch(() => {

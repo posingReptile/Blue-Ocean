@@ -1,5 +1,5 @@
-import Meals from '../modal/meals/Meals.jsx'
-import FoodDash from "../modal/meals/FoodDash.jsx"
+import Meals from "../modal/meals/Meals.jsx";
+import FoodDash from "../modal/meals/FoodDash.jsx";
 import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
