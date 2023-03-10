@@ -34,8 +34,8 @@ const modalStyle = {
   flexDirection: "column",
   alignItems: "center",
   gap: 2,
-  width: "60%",
-  minWidth: 400,
+  // width: "60%",
+  minWidth: 500,
 };
 
 // Component for Dashboard (Showing today's workout)
@@ -157,12 +157,16 @@ function Workout({ currDateInt, userID }) {
                   onClick={() => {
                     setShowButtons(!showButtons);
                   }}
-                  sx={{ mr: 2 }}
+                  sx={{ mr: 2, "&:hover": { color: "orange" } }}
                 >
-                  <EditIcon />
+                  <EditIcon sx={{ "&:hover": { color: "orange" } }} />
                 </Fab>
-                <Fab color="primary" onClick={handleOpen}>
-                  <AddIcon />
+                <Fab
+                  color="primary"
+                  onClick={handleOpen}
+                  sx={{ "&:hover": { color: "orange" } }}
+                >
+                  <AddIcon sx={{ "&:hover": { color: "orange" } }} />
                 </Fab>
               </Grid>
             </Grid>
@@ -210,6 +214,7 @@ function Workout({ currDateInt, userID }) {
             setExercises={setExercises}
             currDateInt={currDateInt}
             userID={userID}
+            handleOpen={handleOpen}
           />
 
           <Grid

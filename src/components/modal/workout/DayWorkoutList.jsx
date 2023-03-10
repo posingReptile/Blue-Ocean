@@ -3,6 +3,8 @@ import axios from "axios";
 
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
+import ListItemButton from "@mui/material/ListItemButton";
 
 // React Components
 import DayWorkoutListItem from "./DayWorkoutListItem";
@@ -15,6 +17,7 @@ function DayWorkoutList({
   showButtons,
   currDateInt,
   userID,
+  handleOpen,
 }) {
   // Handler for saving edits
   const handleEditInfo = (editExerciseObj) => {
@@ -77,6 +80,13 @@ function DayWorkoutList({
     <>
       <Grid item xs={12} md={12}>
         <List sx={{ ml: 4, mr: 4, height: 300, overflow: "auto" }}>
+          {!listItems.length ? (
+            <ListItemButton onMouseDown={() => handleOpen()}>
+              <Typography variant="h6" sx={{ fontSize: 18 }}>
+                Let's get Shredded 💪 Click to add a workout!
+              </Typography>
+            </ListItemButton>
+          ) : null}
           {listItems}
         </List>
       </Grid>

@@ -1,9 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
-import { TextField } from "@mui/material";
+import { TextField, Alert } from "@mui/material";
 import Button from "@mui/material/Button";
-// import MealField from './MealField.jsx'
+import Typography from "@mui/material/Typography";
 import axios from "axios";
 import Breakfast from "./Breakfast.jsx";
 import Lunch from "./Lunch.jsx";
@@ -30,6 +30,24 @@ function Form({
   const [foodL, setFoodL] = useState([]);
   const [foodD, setFoodD] = useState([]);
   const [foodS, setFoodS] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
+  const [showError, setShowError] = useState(false);
+
+  const handleAlert = () => {
+    setShowAlert(true);
+
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+  };
+
+  const handleError = () => {
+    setShowError(true);
+
+    setTimeout(() => {
+      setShowError(false);
+    }, 2000);
+  };
 
   console.log(breakfast);
   // const date = (new Date()).toISOString().split('T')[0].split('-').join('')
@@ -124,7 +142,41 @@ function Form({
       }}
     >
       <div>
-        <div>Breakfast</div>
+        {showAlert && (
+          <Alert
+            severity="success"
+            sx={{ position: "absolute", top: 2, right: 1, left: 1 }}
+          >
+            <Typography
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                width: "500px",
+              }}
+            >
+              {`Item added! :)`}
+            </Typography>
+          </Alert>
+        )}
+        {showError && (
+          <Alert
+            severity="error"
+            sx={{ position: "absolute", top: 2, right: 1, left: 1 }}
+          >
+            <Typography
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                width: "500px",
+              }}
+            >
+              {`Item not found :(`}
+            </Typography>
+          </Alert>
+        )}
+        <Typography variant="h6" sx={{ ml: 2, mt: 3 }}>
+          Breakfast
+        </Typography>
         <Breakfast
           meal="Breakfast"
           breakfast={breakfast}
@@ -137,12 +189,16 @@ function Form({
           onlyBreakfast={onlyBreakfast}
           rerender={rerender}
           setRerender={setRerender}
+          handleAlert={handleAlert}
+          handleError={handleError}
           // dashRender={dashRender}
           // setDashRender={setDashRender}
         />
       </div>
       <div>
-        <div>Lunch</div>
+        <Typography variant="h6" sx={{ ml: 2 }}>
+          Lunch
+        </Typography>
         <Lunch
           meal="Lunch"
           lunch={lunch}
@@ -155,12 +211,16 @@ function Form({
           onlyLunch={onlyLunch}
           rerender={rerender}
           setRerender={setRerender}
+          handleAlert={handleAlert}
+          handleError={handleError}
           // dashRender={dashRender}
           // setDashRender={setDashRender}
         />
       </div>
       <div>
-        <div>Dinner</div>
+        <Typography variant="h6" sx={{ ml: 2 }}>
+          Dinner
+        </Typography>
         <Dinner
           meal="Dinner"
           dinner={dinner}
@@ -173,12 +233,16 @@ function Form({
           onlyDinner={onlyDinner}
           rerender={rerender}
           setRerender={setRerender}
+          handleAlert={handleAlert}
+          handleError={handleError}
           // dashRender={dashRender}
           // setDashRender={setDashRender}
         />
       </div>
       <div>
-        <div>Snacks</div>
+        <Typography variant="h6" sx={{ ml: 2 }}>
+          Snacks
+        </Typography>
         <Snacks
           meal="Snacks"
           snacks={snacks}
@@ -191,6 +255,8 @@ function Form({
           onlySnacks={onlySnacks}
           rerender={rerender}
           setRerender={setRerender}
+          handleAlert={handleAlert}
+          handleError={handleError}
           // dashRender={dashRender}
           // setDashRender={setDashRender}
         />
