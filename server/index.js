@@ -62,7 +62,7 @@ app.use(
 
 //---------------------------Session----------------------------
 app.get("/session", (req, res) => {
-  console.log(req);
+  // console.log(req);
   res.send(req.session);
 });
 
@@ -338,7 +338,7 @@ app.get("/nutrition", (req, res) => {
   axios
     .get("https://api.api-ninjas.com/v1/nutrition/", {
       headers: {
-        "X-Api-Key": process.env.API_KEY,
+        "X-Api-Key": 'PG1fyK32Ih+T2NB4HubGgA==RcWlEThwep0dMq9p',
       },
       params: {
         query: req.query.food,
@@ -372,16 +372,44 @@ app.get("/nutrition", (req, res) => {
     });
 });
 
-app.get("/daily-meals", (req, res) => {
+app.get("/daily-meals-calendar", (req, res) => {
   console.log("daily meal");
   console.log(req.query);
+  let user = req.query.userId;
+  let date = req.query.date;
+  let meal = req.query.mealType;
   db.query(
     "SELECT * FROM food WHERE date = $1 AND user_id =  $2 AND category = $3",
     [req.query.date, req.query.userId, req.query.mealType]
   )
     .then((allMeals) => {
-      res.send(allMeals.rows);
+      console.log('calendar call', allMeals.rows)
+      db.query('SELECT SUM(calories) FROM food WHERE user_id = $1 AND date = $2 AND category = $3', [user, date, meal]).then((sumCal) => {
+      let cals = sumCal.rows[0].sum;
+      res.json({
+        meals: allMeals.rows,
+        cals: cals
+      });
     })
+  })
+    .catch((err) => {
+      res.send(JSON.stringify("ERROR"));
+    });
+});
+
+app.get("/daily-meals", (req, res) => {
+  console.log("daily meal");
+  console.log(req.query);
+  let user = req.query.userId;
+  let date = req.query.date;
+  let meal = req.query.mealType;
+  db.query(
+    "SELECT * FROM food WHERE date = $1 AND user_id =  $2 AND category = $3",
+    [req.query.date, req.query.userId, req.query.mealType]
+  )
+    .then((allMeals) => {
+      res.send(allMeals.rows)
+  })
     .catch((err) => {
       res.send(JSON.stringify("ERROR"));
     });
@@ -443,14 +471,14 @@ app.get("/monthly-meals", (req, res) => {
 });
 
 // get all the calories for the monthly, ideally by [date, calorie]
-app.get("/monthly-calories", (req, res) => {
-  db.query(
-    "SELECT date, calories, category FROM food WHERE EXTRACT(MONTH FROM date) = $1 AND EXTRACT (YEAR FROM date) = $2 AND user_id = $3",
-    [req.query.month, req.query.year, req.query.userId]
-  ).then((calories) => {
-    res.send(calories.rows);
-  });
-});
+// app.get("/monthly-calories", (req, res) => {
+//   db.query(
+//     "SELECT date, calories, category FROM food WHERE EXTRACT(MONTH FROM date) = $1 AND EXTRACT (YEAR FROM date) = $2 AND user_id = $3",
+//     [req.query.month, req.query.year, req.query.userId]
+//   ).then((calories) => {
+//     res.send(calories.rows);
+//   });
+// });
 //get daily rountine by day if this is the choice delete one because it's copy/pasted
 
 // app.get('/daily-workout', (req, res) => {
@@ -478,6 +506,15 @@ app.get("/training", (req, res) => {
     res.send(training.rows);
   });
 });
+
+app.get('/monthly-calories', (req, res) => {
+  console.log(req.query)
+  db.query('SELECT SUM(calories) FROM food WHERE user_id = $1 AND date = $2', [req.query.userId, req.query.date]).then((calories) => {
+    console.log(calories.rows[0])
+    res.send(calories.rows)
+  })
+})
+
 
 //----------------------------------admin-------------------------------------------------
 

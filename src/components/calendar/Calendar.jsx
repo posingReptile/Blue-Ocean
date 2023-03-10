@@ -15,7 +15,7 @@ import Quote from "../dashboard/Quote";
 import DayWorkoutList from "../modal/workout/DayWorkoutList";
 import CalendarWorkout from "./CalendarWorkout";
 import CalendarFood from "./CalendarFood";
-import MealModalTest from "./ctest.jsx"
+import MealModalTest from "./ctest.jsx";
 const monthNames = [
   "January",
   "February",
@@ -47,6 +47,8 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
   ]);
 
   // console.log(currentDay);
+  const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // Jan - Dec (no leap year)
+  const leapYeardays = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // Jan - Dec (leap year)
 
   useEffect(() => {
     // if (caloriesCollection[calorieMonth]) {
@@ -56,52 +58,61 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
     // }
     const currMonth = monthNames.indexOf(calorieMonth.slice(0, -4)) + 1;
     const year = calorieMonth.slice(-4);
-    console.log(year, currMonth, userID)
-    axios
+    console.log(year, currMonth, userID);
+    for (let i = 1; i < 32; i++) {
+      let currentDay;
+      if (i < 10) {
+        currentDay = currDateInt.toString().slice(0, -2) + `0${i}`;
+      } else {
+        currentDay = currDateInt.toString().slice(0, -2) + `${i}`;
+      }
+
+      axios
       .get(
-        `http://localhost:3000/monthly-calories?year=${year}&month=${currMonth}&userId=${userID}`
+        `http://localhost:3000/monthly-calories?date=${Number(currentDay)}&userId=${userID}`
       )
-      .then(({ data }) => {
-        // console.log(data);
-        data.forEach(({ date, calories, category }) => {
-          const d = new Date(date);
+      .then(({data}) => {
+        if (data[0].sum) {
+          const d = new Date(currentDay);
           const parsedDate = `${
             monthNames[d.getMonth()]
           } ${d.getDate()}, ${d.getFullYear()}`;
-          // console.log(parsedDate, calories, category);
-          addCalories(parsedDate, calories, category);
+          addCalories(parsedDate, data[0].sum)
+        }
+        // console.log(currentDay);
+        // data.forEach(({ date, calories, category }) => {
+        //   const d = new Date(date);
+        //   const parsedDate = `${
+        //     monthNames[d.getMonth()]
+        //   } ${d.getDate()}, ${d.getFullYear()}`;
+        //   console.log(parsedDate, calories, category);
+          // addCalories(parsedDate, calories, category);
         });
-      });
+
+      // });
+    }
   }, [calorieMonth]);
 
-
-
   function addCalories(date, calories, category) {
-    if (category === "strength") {
-      category = "💪";
-    } else {
-      category = "👟";
+
+    console.log("from addCalories", date, calories, category);
+    if (document.getElementById(currDateInt)) {
+      console.log(
+        "conflict, from calander",
+        document.getElementById(currDateInt)
+      );
+      return;
     }
-    console.log('from addCalories', date, calories, category);
-    // if (document.getElementsByClassName(currentDay.toDateString().trim)[0]) {
-    //   console.log(
-    //     "conflict",
-    //     document.getElementsByClassName(currentDay.toDateString())
-    //   );
-    //   return;
-    // }
-    // if (!document.querySelector(`[aria-label="${date}"]`)) return;
     const dateButton = document.querySelector(
       `[aria-label="${date}"]`
     ).parentElement;
     const calorieDiv = document.createElement("div");
     const trainIconDiv = document.createElement("div");
     currentDay.toDateString();
-    // calorieDiv.classList.add(currentDay.toDateString().trim());
+    calorieDiv.setAttribute("id", currDateInt);
     calorieDiv.classList.add("calorieCount");
-    // trainIconDiv.classList.add(currentDay.toDateString().trim());
     trainIconDiv.classList.add("trainIcon");
-    trainIconDiv.innerText = category;
+    trainIconDiv.innerText = "💪";
     calorieDiv.innerText = calories + " cal";
     dateButton.appendChild(calorieDiv);
     dateButton.appendChild(trainIconDiv);
@@ -144,7 +155,7 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
             <CalendarWorkout userID={userID} currDateInt={currDateInt} />
           </Paper>
           <Paper elevation={5}>
-            <MealModalTest userID={userID} currDateInt={currDateInt}/>
+            <MealModalTest userID={userID} currDateInt={currDateInt} />
           </Paper>
         </div>
       </div>
