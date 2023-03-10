@@ -50,7 +50,7 @@ tr td {
 }
 
 .container {
-  margin-top: 5%;
+  /* margin-top: 5%; */
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -60,6 +60,9 @@ tr td {
   flex-wrap: wrap;
   /* background-color: #242424;
   margin-bottom: 100px; */
+  /* margin: auto; */
+  top: 50%;
+  transform: translate(0px, 15%);
 }
 
 .container button{
@@ -83,7 +86,7 @@ tr td {
 .workMealContainer {
   display: flex;
   flex-direction: column;
-  gap: 1.5vh;
+  justify-content: space-between;
 }
 .wrapper {
   min-width: 396px;
@@ -191,6 +194,7 @@ button.react-calendar__tile.react-calendar__month-view__days__day {
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.125em;
   box-shadow: 2px 3px 6px gray;
+  max-width: 680px !important;
 }
 
 .react-calendar__viewContainer {
@@ -216,6 +220,7 @@ button.react-calendar__tile.react-calendar__month-view__days__day > abbr{
 
 .whatever {
   height: 10vh !important;
+  max-height: 100px;
 }
 .react-calendar--doubleView {
   width: 700px;

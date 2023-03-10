@@ -17,6 +17,7 @@ import Paper from "@mui/material/Paper";
 import { visuallyHidden } from "@mui/utils";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
+import RefreshIcon from '@mui/icons-material/Refresh';
 import EditIcon from "@mui/icons-material/Edit";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -24,7 +25,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Grid from "@mui/material/Grid";
 import axios from "axios";
-import MealModal from "../modal/meals/MealModal.jsx"
+import Meals from "../modal/meals/Meals.jsx"
 function createData(name, calories, protein) {
   return {
     name,
@@ -149,9 +150,9 @@ function EnhancedTableHead(props) {
             </Select>
           </FormControl>
         </TableCell>
-        {headCells.slice(1).map((headCell) => (
+        {headCells.slice(1).map((headCell, index) => (
           <TableCell
-            key={headCell.id}
+            key={index}
             align={"right"}
             padding={"none"}
             sortDirection={orderBy === headCell.id ? order : false}
@@ -179,24 +180,43 @@ function EnhancedTableHead(props) {
 
 
 
-function EnhancedTableToolbar({date, userID, numSelected}) {
+function EnhancedTableToolbar({date, userID, numSelected, renderCalender, renderMealPlan}) {
+  const [rerender, setRerender] = useState(false);
   const [openMM, setOpenMM] = useState(false);
+
+  const handleMealOpen = () => {
+    setOpenMM(true);
+  };
+
+  const handleMealClose = () => {
+    setOpenMM(false);
+  };
+
   return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
-            ),
-        }),
-        display: "flex",
-        justifyContent: "space-between"
-      }}
-    >
+    <>
+      <Meals
+        userId={userID}
+        date={date}
+        openMM={openMM}
+        handleMealClose={handleMealClose}
+        rerender={rerender}
+        setRerender={setRerender}
+      />
+      <Toolbar
+        sx={{
+          pl: { sm: 2 },
+          pr: { xs: 1, sm: 1 },
+          ...(numSelected > 0 && {
+            bgcolor: (theme) =>
+              alpha(
+                theme.palette.primary.main,
+                theme.palette.action.activatedOpacity
+              ),
+          }),
+          display: "flex",
+          justifyContent: "space-between"
+        }}
+      >
           <Grid item xs={12} sx={{ display: "flex"}}>
             <Grid item xs={8}>
               <Typography
@@ -214,25 +234,25 @@ function EnhancedTableToolbar({date, userID, numSelected}) {
               <Fab
                 color="primary"
                 onClick={() => {
-                  setShowButtons()
+                  renderCalender();
+                  renderMealPlan();
                 }}
                 sx={{ mr: 1.5 }}
                 size="small"
               >
-                <EditIcon />
+                <RefreshIcon />
               </Fab>
-              <Fab color="primary" onClick={() => setOpenMM(true)} size="small" sx={{}}>
+              <Fab color="primary" onClick={handleMealOpen} size="small" sx={{}}>
                 <AddIcon />
-                <MealModal open={openMM} handleClose={() => setOpenMM(false)} userId={userID} date={date}/>
               </Fab>
             </Grid>
-
-    </Toolbar>
+      </Toolbar>
+    </>
   );
 }
 
 
-export default function MealModalTest({userID, currDateInt}) {
+export default function MealModalTest({userID, currDateInt, renderCalender}) {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
@@ -247,6 +267,7 @@ export default function MealModalTest({userID, currDateInt}) {
   };
 
 
+
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
@@ -256,13 +277,8 @@ export default function MealModalTest({userID, currDateInt}) {
 
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
-
-
-
-  useEffect(() => {
-    // const test = document.getElementById('foodstuff').innerHTML = '';
-    // console.log(test)
-
+  function renderMealPlan() {
+    setFoodList([]);
     let array = [];
     console.log('from useEffect', currDateInt, foodSelection, userID)
     axios
@@ -282,18 +298,23 @@ export default function MealModalTest({userID, currDateInt}) {
         });
       })
       .then(() => {
-        // console.log(array)
+        console.log('this is working from renderMealPlan', array)
         if (array.length === 0) return;
         else {
           setFoodList(array);
         }
       })
-  }, [foodSelection]);
+  }
+
+
+  useEffect(() => {
+    renderMealPlan();
+  }, [foodSelection, currDateInt]);
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Paper sx={{ height: "32vh" }}>
-        <EnhancedTableToolbar numSelected={selected.length} userID={userID} date={currDateInt}/>
+      <Paper sx={{ height: "32vh", maxHeight: "350px" }}>
+        <EnhancedTableToolbar numSelected={selected.length} userID={userID} date={currDateInt} renderCalender={renderCalender} renderMealPlan={renderMealPlan}/>
         <EnhancedTableHead
           numSelected={selected.length}
           order={order}
@@ -325,7 +346,7 @@ export default function MealModalTest({userID, currDateInt}) {
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={index}
                       selected={isItemSelected}
                     >
                       <TableCell
