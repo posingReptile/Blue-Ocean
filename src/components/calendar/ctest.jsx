@@ -280,7 +280,7 @@ export default function MealModalTest({userID, currDateInt, renderCalender}) {
   function renderMealPlan() {
     setFoodList([]);
     let array = [];
-    console.log('from useEffect', currDateInt, foodSelection, userID)
+    // console.log('from useEffect', currDateInt, foodSelection, userID)
     axios
       .get(
         `http://localhost:3000/daily-meals`,

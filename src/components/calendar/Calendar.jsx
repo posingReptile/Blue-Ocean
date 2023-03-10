@@ -56,13 +56,13 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
        // console.log(sum, parsedDate);
        if (sum) {
          const parsedWordDate = `${monthNames[Number(parsedDate.slice(4,6)) - 1]} ${Number(parsedDate.slice(-2))}, ${parsedDate.slice(0,4)}`;
-         console.log(sum, parsedDate);
+        //  console.log(sum, parsedDate);
          monthlyArray.push({date: parsedWordDate, calories:sum});
        }
      })
      .then(() => {
        if (parsedDate.slice(-2) === "31") {
-         console.log('from ffinished', monthlyArray);
+        //  console.log('from ffinished', monthlyArray);
          if (monthlyArray.length === 0) {
          } else {
          setCalorieDates(monthlyArray);
@@ -92,37 +92,37 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
   }
 
   useEffect(() => {
-    console.log('I am being used!!!')
+    // console.log('I am being used!!!')
     renderCalender();
   }, [calorieMonth]);
 
   useEffect(() => {
     calorieDates.map(({date, calories}) => {
-      console.log('from map function', date, calories);
+      // console.log('from map function', date, calories);
       addCalories(date, calories)
     })
   }, [calorieDates])
 
   function addCalories(date, calories) {
-    console.log("I am used form addCalories")
+    // console.log("I am used form addCalories")
     if (calories === undefined) return;
     // console.log("from addCalories", date, calories);
     if (document.querySelector(
       `[aria-label="${date}"]`
     ) === null) {
-      console.log("it null")
+      // console.log("it null")
       return;
     }
     const dateButton = document.querySelector(
       `[aria-label="${date}"]`
     ).parentElement;
-    console.log(document.getElementById(currDateInt), !!document.getElementById(currDateInt))
+    // console.log(document.getElementById(currDateInt), !!document.getElementById(currDateInt))
     let blank = document.getElementById(date)
     // blank.innerHTML = calories + " cal";
     if (blank) {
       blank.innerHTML = calories + " cal";
     } else {
-      console.log(blank);
+      // console.log(blank);
       const calorieDiv = document.createElement("div");
       const trainIconDiv = document.createElement("div");
       calorieDiv.innerText = calories + " cal";
@@ -139,7 +139,7 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
   function monthChecker(e) {
     const date = e.activeStartDate;
     const curMonth = monthNames[date.getMonth()];
-    console.log("The current month is", curMonth + date.getFullYear());
+    // console.log("The current month is", curMonth + date.getFullYear());
     setCalorieMonth(curMonth + date.getFullYear());
   }
 
