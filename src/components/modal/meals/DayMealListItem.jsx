@@ -35,15 +35,29 @@ function DayMealListItem({ mealName, handleChangeDisplay, calorieDisplay }) {
         <ListItemAvatar>
           <Avatar sx={{ backgroundColor: "white" }}>
             {mealName === "Breakfast" ? (
-              <EmojiFoodBeverageIcon color="secondary" />
+              <EmojiFoodBeverageIcon
+                color="primary"
+                sx={{ "&:hover": { color: "#006edc" } }}
+              />
             ) : null}
             {mealName === "Lunch" ? (
-              <BakeryDiningIcon color="secondary" />
+              <BakeryDiningIcon
+                color="primary"
+                sx={{ "&:hover": { color: "#006edc" } }}
+              />
             ) : null}
             {mealName === "Dinner" ? (
-              <DinnerDiningIcon color="secondary" />
+              <DinnerDiningIcon
+                color="primary"
+                sx={{ "&:hover": { color: "#006edc" } }}
+              />
             ) : null}
-            {mealName === "Snacks" ? <EggIcon color="secondary" /> : null}
+            {mealName === "Snacks" ? (
+              <EggIcon
+                color="primary"
+                sx={{ "&:hover": { color: "#006edc" } }}
+              />
+            ) : null}
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary={`${mealName}`} sx={{ width: 220 }} />
