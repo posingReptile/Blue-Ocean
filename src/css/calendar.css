@@ -45,6 +45,9 @@ tr td {
   display: flex !important;
   justify-content: center;
 } */
+.container .css-10dfkli-MuiTableCell-root {
+  padding-right: 150px;
+}
 
 .container {
   margin-top: 5%;

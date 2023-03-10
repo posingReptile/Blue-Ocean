@@ -8,19 +8,12 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
+
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
@@ -29,6 +22,9 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import Grid from "@mui/material/Grid";
+import axios from "axios";
+import MealModal from "../modal/meals/MealModal.jsx"
 function createData(name, calories, protein) {
   return {
     name,
@@ -36,6 +32,17 @@ function createData(name, calories, protein) {
     protein,
   };
 }
+
+
+// function Meals({userId, date}) {
+
+//     return (
+//         <div>
+//             <Button variant='contained' color='primary' onClick={setOpenMM}>Add meal</Button>
+//             <MealModal open={openMM} handleClose={handleClose} userId={userId} date={date}/>
+//         </div>
+//     )
+// }
 
 const rows = [
   createData("Cupcake", 305, 3.7),
@@ -69,10 +76,7 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-// stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-// only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-// with exampleArray.slice().sort(exampleComparator)
+
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -108,32 +112,18 @@ const headCells = [
 
 function EnhancedTableHead(props) {
   const {
-    onSelectAllClick,
     order,
     orderBy,
-    numSelected,
-    rowCount,
     onRequestSort,
+    foodSelection,
+    setFoodSelection
   } = props;
 
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
-  const [foodselection, setFoodSelection] = useState("");
 
-  useEffect(() => {
-    // axios
-    //   .get(
-    //     `http://localhost:3000/monthly-calories?year=${year}&month=${currMonth}&userId=${userID}`
-    //   )
-    //   .then(({ data }) => {
-    //     data.forEach(({name, calories, protein }) => {
-    //       createData(name, calories, protein);
-    //     });
-    //   });
-    // const test = document.getElementById('foodstuff').innerHTML = '';
-    // console.log(test)
-  }, [foodselection]);
+
 
   const handleChange = (event) => {
     setFoodSelection(event.target.value);
@@ -142,15 +132,15 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell key={"name"} align={"left"} sortDirection={false}>
+        <TableCell key={"name"} align={"left"} sortDirection={false} padding="none">
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
             <InputLabel id="demo-simple-select-standard-label">Meal</InputLabel>
             <Select
               labelId="demo-simple-select-standard-label"
               id="demo-simple-select-standard"
-              value={foodselection}
+              value={foodSelection}
               onChange={handleChange}
-              label={foodselection}
+              label={foodSelection}
             >
               <MenuItem value={"Breakfast"}>Breakfast</MenuItem>
               <MenuItem value={"Lunch"}>Lunch</MenuItem>
@@ -162,8 +152,8 @@ function EnhancedTableHead(props) {
         {headCells.slice(1).map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
-            padding={headCell.disablePadding ? "none" : "normal"}
+            align={"right"}
+            padding={"none"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -181,22 +171,16 @@ function EnhancedTableHead(props) {
           </TableCell>
         ))}
       </TableRow>
+
+
     </TableHead>
   );
 }
 
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
 
-function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
 
+function EnhancedTableToolbar({date, userID, numSelected}) {
+  const [openMM, setOpenMM] = useState(false);
   return (
     <Toolbar
       sx={{
@@ -209,48 +193,52 @@ function EnhancedTableToolbar(props) {
               theme.palette.action.activatedOpacity
             ),
         }),
+        display: "flex",
+        justifyContent: "space-between"
       }}
     >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Today's Meal Plan
-        </Typography>
-      )}
-      <Fab color="primary" onClick={() => {}} size="small" sx={{}}>
-        <EditIcon />
-      </Fab>
-      <Fab color="primary" onClick={() => {}} size="small" sx={{}}>
-        <AddIcon />
-      </Fab>
+          <Grid item xs={12} sx={{ display: "flex"}}>
+            <Grid item xs={8}>
+              <Typography
+                variant="h4"
+                component="div"
+                sx={{
+                  display: "flex",
+                }}
+              >
+                Today's Meal Plan
+              </Typography>
+            </Grid>
+            </Grid>
+            <Grid item xs={4} align="end" sx={{}}>
+              <Fab
+                color="primary"
+                onClick={() => {
+                  setShowButtons()
+                }}
+                sx={{ mr: 1.5 }}
+                size="small"
+              >
+                <EditIcon />
+              </Fab>
+              <Fab color="primary" onClick={() => setOpenMM(true)} size="small" sx={{}}>
+                <AddIcon />
+                <MealModal open={openMM} handleClose={() => setOpenMM(false)} userId={userID} date={date}/>
+              </Fab>
+            </Grid>
+          
     </Toolbar>
   );
 }
 
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
 
-export default function MealModalTest() {
+export default function MealModalTest({userID, currDateInt}) {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(true);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const [foodSelection, setFoodSelection] = useState("Breakfast");
+  const [foodList, setFoodList] = useState(rows);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -258,62 +246,55 @@ export default function MealModalTest() {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelected = rows.map((n) => n.name);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
 
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
+  
 
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  useEffect(() => {
+    // const test = document.getElementById('foodstuff').innerHTML = '';
+    // console.log(test)
+    let array = [];
+    axios
+      .get(
+        `http://localhost:3000/daily-meals?date=${currDateInt}&category=${foodSelection}&userId=${userID}`
+      )
+      .then(({ data }) => {
+        data.forEach(({name, calories, protein }) => {
+          array.push(createData(name, calories, protein));
+          console.log('from ctest',data, name, calories, protein)
+        });
+      })
+      .then(() => {
+        if (array.length === 0) return;
+        else {
+          setFoodList(array);
+        }
+      })
+  }, [foodList, foodSelection]);
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Paper sx={{ height: "30vh" }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+      <Paper sx={{ height: "32vh" }}>
+        <EnhancedTableToolbar numSelected={selected.length} userID={userID} date={currDateInt}/>
         <EnhancedTableHead
           numSelected={selected.length}
           order={order}
           orderBy={orderBy}
-          onSelectAllClick={handleSelectAllClick}
           onRequestSort={handleRequestSort}
           rowCount={rows.length}
-          width="100%"
+          userID={userID}
+          currDateInt={currDateInt}
+          setFoodSelection={setFoodSelection}
+          foodSelection={foodSelection}
         />
 
         <TableContainer sx={{ height: "13vh", overflowY: "auto" }}>
@@ -324,12 +305,10 @@ export default function MealModalTest() {
             overflow="auto"
           >
             <TableBody id="foodstuff">
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              {stableSort(foodList, getComparator(order, orderBy))
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
-
                   return (
                     <TableRow
                       hover
@@ -355,16 +334,6 @@ export default function MealModalTest() {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{ overflow: "inherit" }}
-        />
       </Paper>
     </Box>
   );
