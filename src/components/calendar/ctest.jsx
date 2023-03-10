@@ -226,7 +226,7 @@ function EnhancedTableToolbar({date, userID, numSelected}) {
                 <MealModal open={openMM} handleClose={() => setOpenMM(false)} userId={userID} date={date}/>
               </Fab>
             </Grid>
-          
+
     </Toolbar>
   );
 }
@@ -257,29 +257,38 @@ export default function MealModalTest({userID, currDateInt}) {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  
+
 
   useEffect(() => {
     // const test = document.getElementById('foodstuff').innerHTML = '';
     // console.log(test)
+
     let array = [];
+    console.log('from useEffect', currDateInt, foodSelection, userID)
     axios
       .get(
-        `http://localhost:3000/daily-meals?date=${currDateInt}&category=${foodSelection}&userId=${userID}`
+        `http://localhost:3000/daily-meals`,
+        {params: {
+          date: currDateInt,
+          mealType: foodSelection,
+          userId: userID
+        }}
       )
       .then(({ data }) => {
+        console.log(data);
         data.forEach(({name, calories, protein }) => {
           array.push(createData(name, calories, protein));
           console.log('from ctest',data, name, calories, protein)
         });
       })
       .then(() => {
+        // console.log(array)
         if (array.length === 0) return;
         else {
           setFoodList(array);
         }
       })
-  }, [foodList, foodSelection]);
+  }, [foodSelection]);
 
   return (
     <Box sx={{ width: "100%" }}>
