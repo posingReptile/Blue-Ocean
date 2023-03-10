@@ -170,11 +170,7 @@ function FoodDash({ currDateInt, userID }) {
                     <EditIcon sx={{ "&:hover": { color: "white" } }} />
                   </Fab>
                 )}
-                <Fab
-                  color="primary"
-                  onClick={handleMealOpen}
-                  sx={{ }}
-                >
+                <Fab color="primary" onClick={handleMealOpen} sx={{}}>
                   <AddIcon sx={{ "&:hover": { color: "white" } }} />
                 </Fab>
               </Grid>

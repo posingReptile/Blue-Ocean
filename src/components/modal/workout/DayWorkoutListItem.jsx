@@ -127,7 +127,7 @@ function DayWorkoutListItem({
                   size="small"
                   onClick={handleEditClick}
                 >
-                  <EditIcon />
+                  <EditIcon sx={{ "&:hover": { color: "white" } }}/>
                 </Fab>
                 <Popover
                   id={id}
