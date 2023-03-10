@@ -3,7 +3,7 @@ import '../../css/LogSign.css'
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import imgUrl from './biceplogo.png'
+import imgUrl from '../../../public/icons/shreddedlogoblue.png'
 import axios from 'axios';
 
 function Login({ setLoginComponent, setUserObject, setComponent, setPassword, setUsername, username, password}) {

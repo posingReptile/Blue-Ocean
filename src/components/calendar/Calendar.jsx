@@ -17,6 +17,7 @@ import CalendarWorkout from "./CalendarWorkout";
 import CalendarFood from "./CalendarFood";
 import MealModalTest from "./ctest.jsx";
 import Form from "../modal/meals/Form";
+import DatePickerComponent from "../dashboard/DatePickerComponent.jsx";
 const monthNames = [
   "January",
   "February",
@@ -32,11 +33,10 @@ const monthNames = [
   "December",
 ];
 
-
 function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
   const [calorieMonth, setCalorieMonth] = useState("March2023");
   const [calorieDates, setCalorieDates] = useState([]);
-// console.log('form start', currentDay.getMonth() + 1, currDateInt)
+  // console.log('form start', currentDay.getMonth() + 1, currDateInt)
   const [daliyMealPlan, setDaliyMealPlan] = useState([
     "apple",
     "banana",
@@ -47,48 +47,57 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
     "Chest",
     "Glutes",
   ]);
-  function renderCalender () {
-
-    async function getCalories (parsedDate, userID) {
-      await axios.get(`http://localhost:3000/monthly-calories?date=${Number(parsedDate)}&userId=${userID}`)
-     .then(({data}) => {
-       const sum = data[0].sum;
-       // console.log(sum, parsedDate);
-       if (sum) {
-         const parsedWordDate = `${monthNames[Number(parsedDate.slice(4,6)) - 1]} ${Number(parsedDate.slice(-2))}, ${parsedDate.slice(0,4)}`;
-        //  console.log(sum, parsedDate);
-         monthlyArray.push({date: parsedWordDate, calories:sum});
-       }
-     })
-     .then(() => {
-       if (parsedDate.slice(-2) === "31") {
-        //  console.log('from ffinished', monthlyArray);
-         if (monthlyArray.length === 0) {
-         } else {
-         setCalorieDates(monthlyArray);
-         }
-       }  
-     })
-   }
-   const currMonth = monthNames.indexOf(calorieMonth.slice(0, -4)) + 1;
-   const year = calorieMonth.slice(-4);
-   let monthlyArray = [];
-   for (let i = 1; i < 32; i++) {
-     let month = currMonth;
-     let day;
-     if (month < 10) {
-       month = `0${month}`;
-     } else {
-       month = `${i}`;
-     }
-     if (i < 10) {
-       day = `0${i}`;
-     } else {
-       day = `${i}`;
-     }
-     const parsedDate = `${year}${month}${day}`;
-     getCalories(parsedDate, userID);
-   }
+  function renderCalender() {
+    async function getCalories(parsedDate, userID) {
+      // console.log(parsedDate);
+      await axios
+        .get(
+          `http://localhost:3000/monthly-calories?date=${Number(
+            parsedDate
+          )}&userId=${userID}`
+        )
+        .then(({ data }) => {
+          const sum = data[0].sum;
+          console.log(sum, parsedDate);
+          if (sum) {
+            const parsedWordDate = `${
+              monthNames[Number(parsedDate.slice(4, 6)) - 1]
+            } ${Number(parsedDate.slice(-2))}, ${parsedDate.slice(0, 4)}`;
+            //  console.log(sum, parsedDate);
+            monthlyArray.push({ date: parsedWordDate, calories: sum });
+          }
+        })
+        .then(() => {
+          if (parsedDate.slice(-2) === "31") {
+            console.log("from ffinished", monthlyArray);
+            if (monthlyArray.length === 0) {
+            } else {
+              setCalorieDates(monthlyArray);
+            }
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    const currMonth = monthNames.indexOf(calorieMonth.slice(0, -4)) + 1;
+    const year = calorieMonth.slice(-4);
+    let monthlyArray = [];
+    //  console.log('from inputs', calorieMonth, currMonth)
+    for (let i = 1; i < 32; i++) {
+      let month = currMonth;
+      let day;
+      if (month < 10) {
+        month = `0${month}`;
+      }
+      if (i < 10) {
+        day = `0${i}`;
+      } else {
+        day = `${i}`;
+      }
+      const parsedDate = `${year}${month}${day}`;
+      getCalories(parsedDate, userID);
+    }
   }
 
   useEffect(() => {
@@ -97,19 +106,17 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
   }, [calorieMonth]);
 
   useEffect(() => {
-    calorieDates.map(({date, calories}) => {
+    calorieDates.map(({ date, calories }) => {
       // console.log('from map function', date, calories);
-      addCalories(date, calories)
-    })
-  }, [calorieDates])
+      addCalories(date, calories);
+    });
+  }, [calorieDates]);
 
   function addCalories(date, calories) {
     // console.log("I am used form addCalories")
     if (calories === undefined) return;
     // console.log("from addCalories", date, calories);
-    if (document.querySelector(
-      `[aria-label="${date}"]`
-    ) === null) {
+    if (document.querySelector(`[aria-label="${date}"]`) === null) {
       // console.log("it null")
       return;
     }
@@ -117,7 +124,7 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
       `[aria-label="${date}"]`
     ).parentElement;
     // console.log(document.getElementById(currDateInt), !!document.getElementById(currDateInt))
-    let blank = document.getElementById(date)
+    let blank = document.getElementById(date);
     // blank.innerHTML = calories + " cal";
     if (blank) {
       blank.innerHTML = calories + " cal";
@@ -131,7 +138,7 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
       dateButton.appendChild(calorieDiv);
 
       trainIconDiv.classList.add("trainIcon");
-      trainIconDiv.innerText = "💪";
+      trainIconDiv.innerText = "🍎";
       dateButton.appendChild(trainIconDiv);
     }
   }
@@ -151,11 +158,25 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
 
   return (
     <>
+      {/* <Box
+        sx={{
+          marginTop: 1,
+          marginBottom: 2.5,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <DatePickerComponent
+          currentDay={currentDay}
+          setCurrentDay={setCurrentDay}
+        />
+      </Box> */}
       <div className="container">
         <Calendar
           onChange={setCurrentDay}
           value={currentDay}
           className="wrapper"
+          minDetail="year"
           onActiveStartDateChange={(e) => {
             monthChecker(e);
           }}
@@ -163,11 +184,18 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
           // onClickDay={(e, value) => {console.log(e, value)}}
         />
         <div className="workMealContainer">
-          <Paper elevation={5} sx={{ width: 450, height: "30vh", p: 1, maxHeight: "300px" }}>
+          <Paper
+            elevation={5}
+            sx={{ width: 450, height: "30vh", p: 1, maxHeight: "300px" }}
+          >
             <CalendarWorkout userID={userID} currDateInt={currDateInt} />
           </Paper>
           <Paper elevation={5}>
-            <MealModalTest userID={userID} currDateInt={currDateInt} renderCalender={renderCalender}/>
+            <MealModalTest
+              userID={userID}
+              currDateInt={currDateInt}
+              renderCalender={renderCalender}
+            />
           </Paper>
         </div>
       </div>

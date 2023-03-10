@@ -81,7 +81,7 @@ function DayWorkoutListItem({
       <ListItemButton
         onMouseDown={() => setShowMore(!showMore)}
         disableGutters
-        sx={{ mr: 1 }}
+        sx={{ pr: 1 }}
       >
         <ListItemAvatar>
           <Avatar sx={{ backgroundColor: "white" }}>
@@ -118,7 +118,7 @@ function DayWorkoutListItem({
           }
         />
         {showButtons && (
-          <ListItemSecondaryAction onMouseDown={(e) => e.stopPropagation()}>
+          <ListItemSecondaryAction onMouseDown={(e) => e.stopPropagation()} sx={{pr: 1}}>
             {showMore ? null : (
               <>
                 <Fab
@@ -127,7 +127,7 @@ function DayWorkoutListItem({
                   size="small"
                   onClick={handleEditClick}
                 >
-                  <EditIcon />
+                  <EditIcon sx={{ "&:hover": { color: "white" } }}/>
                 </Fab>
                 <Popover
                   id={id}

@@ -178,14 +178,14 @@ app.get("/profiles/:profile_id/personal-records", (req, res) => {
 // to get message if there is one from the admin
 
 app.get("/message", (req, res) => {
-  console.log('in message route', req.query.date)
-  db.query("SELECT message FROM messages WHERE date = $1", [
-    req.query.date,
-  ]).then((message) => {
-    res.send(message.rows);
-  }).catch((err) => {
-    console.log(err);
-  });
+  console.log("in message route", req.query.date);
+  db.query("SELECT message FROM messages WHERE date = $1", [req.query.date])
+    .then((message) => {
+      res.send(message.rows);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 app.get("/quotes", (req, res) => {
@@ -341,7 +341,7 @@ app.get("/nutrition", (req, res) => {
   axios
     .get("https://api.api-ninjas.com/v1/nutrition/", {
       headers: {
-        "X-Api-Key": 'PG1fyK32Ih+T2NB4HubGgA==RcWlEThwep0dMq9p',
+        "X-Api-Key": "PG1fyK32Ih+T2NB4HubGgA==RcWlEThwep0dMq9p",
       },
       params: {
         query: req.query.food,
@@ -389,15 +389,18 @@ app.get("/daily-meals-calendar", (req, res) => {
     [req.query.date, req.query.userId, req.query.mealType]
   )
     .then((allMeals) => {
-      console.log('calendar call', allMeals.rows)
-      db.query('SELECT SUM(calories) FROM food WHERE user_id = $1 AND date = $2 AND category = $3', [user, date, meal]).then((sumCal) => {
-      let cals = sumCal.rows[0].sum;
-      res.json({
-        meals: allMeals.rows,
-        cals: cals
+      console.log("calendar call", allMeals.rows);
+      db.query(
+        "SELECT SUM(calories) FROM food WHERE user_id = $1 AND date = $2 AND category = $3",
+        [user, date, meal]
+      ).then((sumCal) => {
+        let cals = sumCal.rows[0].sum;
+        res.json({
+          meals: allMeals.rows,
+          cals: cals,
+        });
       });
     })
-  })
     .catch((err) => {
       res.send(JSON.stringify("ERROR"));
     });
@@ -414,8 +417,8 @@ app.get("/daily-meals", (req, res) => {
     [req.query.date, req.query.userId, req.query.mealType]
   )
     .then((allMeals) => {
-      res.send(allMeals.rows)
-  })
+      res.send(allMeals.rows);
+    })
     .catch((err) => {
       res.send(JSON.stringify("ERROR"));
     });
@@ -513,14 +516,20 @@ app.get("/training", (req, res) => {
   });
 });
 
-app.get('/monthly-calories', (req, res) => {
-  console.log(req.query)
-  db.query('SELECT SUM(calories) FROM food WHERE user_id = $1 AND date = $2', [req.query.userId, req.query.date]).then((calories) => {
-    console.log(calories.rows[0])
-    res.send(calories.rows)
-  }).catch((err) => console.log(err));
-})
-
+app.get("/monthly-calories", (req, res) => {
+  console.log(req.query);
+  db.query("SELECT SUM(calories) FROM food WHERE user_id = $1 AND date = $2", [
+    req.query.userId,
+    req.query.date,
+  ])
+    .then((calories) => {
+      console.log(calories.rows[0]);
+      res.send(calories.rows);
+    })
+    .catch((err) => {
+      res.send(JSON.stringify("ERROR"));
+    });
+});
 
 //----------------------------------admin-------------------------------------------------
 
