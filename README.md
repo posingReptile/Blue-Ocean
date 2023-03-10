@@ -64,3 +64,6 @@
 ### VII. Interactions
 ### VIII. Workflow and Key lessons
 ### IX. MISC
+
+---------- Gifs/pictures to be moved around --------
+![login](https://user-images.githubusercontent.com/24445744/224448055-73784c3b-a3e9-4b69-9cf1-fea9efa23246.gif)
