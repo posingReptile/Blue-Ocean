@@ -526,7 +526,9 @@ app.get("/monthly-calories", (req, res) => {
       console.log(calories.rows[0]);
       res.send(calories.rows);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      res.send(JSON.stringify("ERROR"));
+    });
 });
 
 //----------------------------------admin-------------------------------------------------
