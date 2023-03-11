@@ -1,31 +1,25 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-import Box from "@mui/material/Box";
-import Fab from "@mui/material/Fab";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Modal from "@mui/material/Modal";
-import Divider from "@mui/material/Divider";
-
-// Icons
-import Button from "@mui/material/Button";
+import {
+  Box,
+  Fab,
+  Grid,
+  Typography,
+  TextField,
+  Modal,
+  Divider,
+  Button,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
-
-// React Components
 import DayWorkoutList from "./DayWorkoutList";
 import ChooseMuscleModal from "./ChooseMuscleModal";
-import "../../../css/workout.css";
 
 const modalStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  // width: "50%",
-  // height: "50%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -34,11 +28,9 @@ const modalStyle = {
   flexDirection: "column",
   alignItems: "center",
   gap: 2,
-  // width: "60%",
   minWidth: 500,
 };
 
-// Component for Dashboard (Showing today's workout)
 function Workout({ currDateInt, userID }) {
   const [exercises, setExercises] = useState([]); // Today's exercises
   const [currNotes, setCurrNotes] = useState(""); // Today's notes
@@ -46,9 +38,6 @@ function Workout({ currDateInt, userID }) {
   const [open, setOpen] = useState(false); // Opens add ChooseMuscleModal
   const handleOpen = () => setOpen(true); // Handles when Add (+) is clicked
   const handleClose = () => setOpen(false); // Handles modal outside click (closes)
-  // console.log(exercises);
-  // console.log(userID);
-  // console.log(currNotes);
 
   const totalWorkoutDuration = exercises.reduce((acc, exercise) => {
     return (acc += exercise.duration);
@@ -83,7 +72,6 @@ function Workout({ currDateInt, userID }) {
         },
       })
       .then(({ data }) => {
-        // console.log("get notes:", data);
         if (!data[0].notes) {
           setCurrNotes("");
         } else {
@@ -95,7 +83,6 @@ function Workout({ currDateInt, userID }) {
       });
   }, [currDateInt]);
 
-  // Send a put request when clicking save notes
   const handleNoteSave = () => {
     axios
       .put("http://localhost:3000/notes", {
@@ -105,7 +92,6 @@ function Workout({ currDateInt, userID }) {
         type: "workout",
       })
       .then(({ data }) => {
-        // console.log(data);
         setCurrNotes(data[0].notes);
       })
       .catch(() => {
@@ -200,7 +186,6 @@ function Workout({ currDateInt, userID }) {
                   {totalWorkoutDuration} min(s)
                 </Typography>
               </div>
-              {/* <Divider /> */}
             </Grid>
           </Grid>
 

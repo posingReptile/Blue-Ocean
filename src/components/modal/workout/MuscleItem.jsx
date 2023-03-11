@@ -1,11 +1,11 @@
 import React from "react";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import { CardActionArea } from "@mui/material";
-import Typography from "@mui/material/Typography";
-
-// public/icons/chest.png
+import {
+  Grid,
+  Card,
+  CardMedia,
+  CardActionArea,
+  Typography,
+} from "@mui/material";
 
 function MuscleItem({ muscleName, muscleQuery, handleExerciseOpen }) {
   let muscleIcon = "";

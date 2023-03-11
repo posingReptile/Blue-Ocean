@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import {
+  Paper,
+  Typography,
+  TextField,
+  Box,
+  Button,
+  ButtonGroup,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+} from "@mui/material";
 
 function EditExerciseModal({
   exerciseId,
@@ -36,6 +36,7 @@ function EditExerciseModal({
     handleClose();
     const estimatedStrCals = setsInput * repsInput * 1; // Cals from str exercises
     const estimatedCardioCals = intensityInput * durationInput * 5; // Cals from cardio
+
     let estimatedTotalCals = 0;
     if (estimatedStrCals) {
       estimatedTotalCals += estimatedStrCals;
@@ -64,6 +65,7 @@ function EditExerciseModal({
     };
     handleEditInfo(editExerciseObj);
   };
+
   return (
     <Paper>
       <Typography

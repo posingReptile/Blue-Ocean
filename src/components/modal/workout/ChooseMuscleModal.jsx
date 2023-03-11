@@ -57,8 +57,6 @@ function ChooseMuscleModal({ handleClose, currDateInt, userID, setExercises }) {
     );
   });
 
-  // Make an axios request here to get exercises according to muscle group
-
   return (
     <>
       <Typography align="center" variant="h4">
