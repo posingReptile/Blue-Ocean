@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import { createFilterOptions } from "@mui/material/Autocomplete";
 
-// maybe replace with an api call to be sure
 const muscles = [
   "abdominals",
   "biceps",
@@ -126,14 +125,6 @@ function PersonalRecords(props) {
               </TableCell>
             </TableRow>
           </TableHead>
-          {/* <TableRow>
-            <TableCell>
-              <Typography sx={{ fontWeight: "bold" }}>Exercise</Typography>
-            </TableCell>
-            <TableCell align="right">
-              <Typography sx={{ fontWeight: "bold" }}>PR</Typography>
-            </TableCell>
-          </TableRow> */}
           <TableBody>
             {filteredRows.map((pr) => (
               <TableRow key={pr.name}>
@@ -142,32 +133,6 @@ function PersonalRecords(props) {
               </TableRow>
             ))}
           </TableBody>
-          {/* <TableFooter>
-            <TableRow key="foot">
-              <TableCell>
-                <Autocomplete
-                  id="pr-muscles"
-                  options={muscles}
-                  getOptionLabel={(option) => option}
-                  onChange={updateCategoryFilters}
-                  renderInput={(params) => (
-                    <TextField {...params} label="muscles" />
-                  )}
-                />
-              </TableCell>
-              <TableCell>
-                <Autocomplete
-                  id="pr-exercises"
-                  options={ex}
-                  getOptionLabel={(option) => option}
-                  onChange={updateExerciseFilters}
-                  renderInput={(params) => (
-                    <TextField {...params} label="exercise" />
-                  )}
-                />
-              </TableCell>
-            </TableRow>
-          </TableFooter> */}
         </Table>
       </TableContainer>
     </>
