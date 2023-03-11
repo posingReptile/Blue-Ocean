@@ -27,8 +27,7 @@ function UserSetup({ setUserObject, setComponent, setLoginComponent, username, p
   const [goalDateError, setGoalDateError] = useState(false);
   const [calorieGoal, setCalorieGoal] = useState(0);
 
-  const calculateCalorieGoal = () => {
-    console.log(Date.now())
+  const calculateCalorieGoal = () => { //Calculates calorie goal
     let tempCalorieGoal = 0;
     const height = (feet * 12 + inches) * 2.54;
     const ageInYears = Math.floor(age / 31536000000);
@@ -38,7 +37,6 @@ function UserSetup({ setUserObject, setComponent, setLoginComponent, username, p
     const weightDifferenceInDays = (goalWeightDate - Date.now()) / 86400000;
     const weightDifferencePerDay = weightDifference / weightDifferenceInDays;
     const caloriesPerDay = weightDifferencePerDay * 7700;
-    console.log(caloriesPerDay)
     if (weightDifferencePerDay > 0) {
       tempCalorieGoal = 10 * metricWeight + 6.25 * height - 5 * ageInYears + 5 - caloriesPerDay;
     }
@@ -47,12 +45,10 @@ function UserSetup({ setUserObject, setComponent, setLoginComponent, username, p
 
   useEffect(() => {
     let calorieGoal = 0;
-    if (goalWeightDate > 0 && age > 0 && weight > 0 && goalWeight > 0 && feet > 1) {
+    if (goalWeightDate > 0 && age > 0 && weight > 0 && goalWeight > 0 && feet > 1) { //Checks if all fields are filled out
       calorieGoal = calculateCalorieGoal();
     }
-    console.log('calorieGoal: ', calorieGoal);
   }, [goalWeightDate, age, weight, goalWeight, feet]);
-
 
 
   const handleFeetChange = (event) => {
@@ -64,12 +60,10 @@ function UserSetup({ setUserObject, setComponent, setLoginComponent, username, p
   };
 
   const handleAgeChange = (event) => {
-    console.log(event.$d.valueOf())
     setAge(event.$d.valueOf());
   };
 
   const handleGoalDateChange = (event) => {
-    console.log(event.$d.valueOf())
     setGoalWeightDate(event.$d.valueOf());
   };
 
@@ -81,36 +75,35 @@ function UserSetup({ setUserObject, setComponent, setLoginComponent, username, p
     setGoalWeight(Number(event.target.value));
   };
 
-  const validateForm = () => {
+  const validateForm = () => { //Validates form
 
     let weightCheck = (weight <= 0 || typeof weight !== 'number' || isNaN(weight));
     let goalWeightCheck = (goalWeight <= 0 || typeof goalWeight !== 'number' || isNaN(goalWeight));
     let ageCheck = (age >= Date.now() || typeof age !== 'number' || isNaN(age) || age === 0);
     let goalDateCheck = (goalWeightDate <= Date.now() || typeof goalWeightDate !== 'number' || isNaN(goalWeightDate));
 
-    if(weight <= 0 || typeof weight !== 'number' || isNaN(weight)) {
+    if(weight <= 0 || typeof weight !== 'number' || isNaN(weight)) { //If weight is invalid
       setWeightError(true);
     } else {
       setWeightError(false);
     }
-    if(goalWeight <= 0 || typeof goalWeight !== 'number' || isNaN(goalWeight)) {
+    if(goalWeight <= 0 || typeof goalWeight !== 'number' || isNaN(goalWeight)) { //If goal weight is invalid
       setGoalWeightError(true);
     } else {
       setGoalWeightError(false);
     }
-    if(age >= Date.now() || age === 0) {
+    if(age >= Date.now() || age === 0) { //If age is in the future
       setAgeError(true);
     } else {
       setAgeError(false);
     }
-    if(goalWeightDate <= Date.now()) {
+    if(goalWeightDate <= Date.now()) { //If goal date is before today
       setGoalDateError(true);
     } else {
       setGoalDateError(false);
     }
 
-    if(!weightCheck && !goalWeightCheck && !ageCheck && !goalDateCheck) {
-      console.log('inside axios')
+    if(!weightCheck && !goalWeightCheck && !ageCheck && !goalDateCheck) { //If all fields are valid
       axios.post(`http://localhost:3000/new-user`, {
         username: username,
         password: password,
@@ -123,7 +116,6 @@ function UserSetup({ setUserObject, setComponent, setLoginComponent, username, p
         calories: Math.floor(calorieGoal),
         isadmin: false,
       }).then((response) => {
-        console.log(response.data)
         if(response.data.user_id) {
           setUserObject(response.data);
           setComponent('dashboard');
@@ -135,25 +127,11 @@ function UserSetup({ setUserObject, setComponent, setLoginComponent, username, p
         console.log(error);
       });
     }
-
-    console.log('username: ', username);
-    console.log('feet: ', feet);
-    console.log('inches: ', inches);
-    console.log('age: ', Math.floor(age / 31536000000));
-    console.log('weight: ', weight);
-    console.log('goalWeight: ', goalWeight);
-    console.log('weightError: ', weightCheck);
-    console.log('goalWeightError: ', goalWeightCheck);
-    console.log('ageError: ', ageCheck);
-    console.log('goalDate: ', new Date(goalWeightDate));
-    console.log('goalDateError: ', goalDateCheck);
   }
-
 
   const handleSubmit = () => {
     validateForm();
   }
-
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
