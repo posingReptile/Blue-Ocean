@@ -22,8 +22,6 @@ function Snacks({
   setRerender,
   handleAlert,
   handleError,
-  // dashRender,
-  // setDashRender,
 }) {
   const [input, setInput] = useState("");
   const [quantity, setQuantity] = useState("100g");
@@ -99,81 +97,3 @@ function Snacks({
 }
 
 export default Snacks;
-
-// const [snacks, setSnacks] = useState([]);
-// const [inputList, setInputList] = useState([
-//   {
-//     input: "",
-//     quantity: '100g',
-//     input_rank: null
-//   }
-// ])
-// const [isDisabled, setIsDisabled] = useState(false)
-
-// const handleListAdd = () => {
-//   setInputList([
-//     ...inputList,
-//     {
-//       input: "",
-//       quantity: '100g',
-//       input_rank: null
-//     }
-//   ])
-// }
-
-// useEffect(() => {
-//   if (inputList.length > 0) {
-//     inputList[inputList.length - 1].input === ""
-//       ? setIsDisabled(true)
-//       : setIsDisabled(false)
-//   }
-// }, [foodS, onlySnacks])
-
-// const getFoods = () => {
-//   axios.get(`http://localhost:3000/daily-meals?date=${date}&userId=${userId}`)
-//     .then((res) => {
-//       setFoodS(res.data)
-//     })
-// }
-
-// useEffect(() => {
-//   getFoods()
-// }, [snacks])
-
-// const handleInputChange = (event, index) => {
-//   const { value } = event.target
-//   const newInputList = [...inputList]
-//   newInputList[index].input = value
-//   newInputList[index].input_rank = index + 1
-//   setInputList(newInputList)
-// }
-
-// const handleQuantityChange = (event, index) => {
-//   const { value } = event.target
-//   const newInputList = [...inputList]
-//   newInputList[index].quantity = value
-//   setInputList(newInputList)
-// }
-
-// const handleRemoveItem = (index) => {
-//   const newList = [...snacks]
-//   newList.splice(index, 1)
-//   setSnacks(newList)
-// }
-
-// console.log('SNACKS', snacks)
-
-// const deleteFood = () => {
-//   const food_Id = { food_id: foodId }
-//   axios.delete(`http://localhost:3000/delete-meal/${foodId}`)
-//     .then((res) => {
-//       console.log('Delete: ', res)
-//     })
-// }
-
-// const editFood = () => {
-//   axios.put(`http://localhost:3000/edit-meal/${foodId}`, )
-//   .then((res) => {
-//     console.log('Edit: ', res)
-//   })
-// }
