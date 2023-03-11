@@ -8,11 +8,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
-/*
-app analytics
-  number of calorie goals completed
-*/
-
 function AdminPage(props) {
   const { goBack } = props;
 
@@ -81,7 +76,6 @@ function AdminPage(props) {
           </Box>
           <TextField id="adminMessage" label="message" variant="outlined" required />
           <Box direction="row" sx={{ textAlign: 'right', width: '100%', mt: 1 }}>
-            {/* <Button variant="outlined">remove</Button> */}
             <Button variant="contained" type="submit">post</Button>
           </Box>
         </FormControl>
@@ -108,10 +102,6 @@ function AdminPage(props) {
               <TableCell align="left">workouts planned</TableCell>
               <TableCell align="right">{exerciseCount}</TableCell>
             </TableRow>
-            {/* <TableRow>
-              <TableCell align="left">completed calorie goals</TableCell>
-              <TableCell align="right"># of completed calorie goals</TableCell>
-            </TableRow> */}
           </TableBody>
         </Table>
       </TableContainer>
