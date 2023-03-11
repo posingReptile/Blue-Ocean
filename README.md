@@ -1,5 +1,5 @@
 # Blue Ocean: Shredded
-==============================
+=======================================================================
 
 ## Table of Contents
 ### [I. Contributors](#Contributors)
@@ -18,17 +18,12 @@
 ### [VIII. Workflow and Key lessons](#Workflow-lessons)
 ### [IX. MISC](#MISC)
 
-### I. Contributors
-  #### Agnese Castellucci
-  #### Andrew Feng
-  #### Anthony Chen
-  #### Jerry MacPherson
-  #### Jesus Solorzano
-  #### Sonia Ramlall
-  #### Thomas Faddegon
+### I. Contributors:
+  Agnese Castellucci, Andrew Feng, Anthony Chen, Jerry MacPherson, Jesus Solorzano, Sonia Ramlall, Thomas Faddegon
 
 ### II. Description
- Application to provide users a way to track their daily workouts, meals, and caloric intake.
+  Shredded is an app for fitness enthusiasts and newbies alike. It is a one-stop shop for both exercise and meal planning that gives users a detailed overview of their upcoming meals and workouts, along with how many calories they’ll be consuming and burning every day.
+
 
 ### III. Project Overview
 #### User authentication:  
@@ -42,7 +37,7 @@
   The user will be able to see their workouts and meals for the day. From this dashboard, they can also access the add workout or add meal modals.
 
 #### Calendar:
-  The user can access a full-page calendar with each date square showing previews of the workouts and meals for the day. The bottom 1/3rd-1/4th of the screen will have a summary section showing the meals and workouts for the selected day, and clicking on any day in the calendar will display the meals and workouts for that day.
+  The user can access a full-page calendar with each date square showing previews of the workouts and meals for the day. The right half of the screen will have a summary section showing the meals and workouts for the selected day, and clicking on any day in the calendar will display the meals and workouts for that day.
 #### Nav Bar: 
   The nav bar will be visible on both the dashboard and the calendar pages, and will have options to add a meal, add a workout, go to the calendar, or go back to the dashboard. 
 
@@ -59,7 +54,6 @@
 #### Testing/Utilities: 
   Vite, Jest, Cypress, K6.
 
-### IV. Tech stack
 ### V. Challenges
 ### VI. Demo
 ### VII. Interactions
@@ -76,6 +70,3 @@
 ![calendar](https://user-images.githubusercontent.com/24445744/224450757-25e0876a-9c1f-4894-9166-f508a5cde9bf.gif)
 ![foodmodal](https://user-images.githubusercontent.com/24445744/224450926-991a6544-b310-4c2d-8c4d-f51aae037cf2.gif)
 ![workoutmodal](https://user-images.githubusercontent.com/24445744/224450930-b2d5205f-c5fe-48a4-bfdc-9a66fa187f5f.gif)
-
-
-
