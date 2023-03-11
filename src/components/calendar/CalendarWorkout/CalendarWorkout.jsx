@@ -5,22 +5,15 @@ import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
-import Divider from "@mui/material/Divider";
 
 // Icons
-import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 
 // React Components
-import DayWorkoutList from "../modal/workout/DayWorkoutList";
 import CalendarWorkoutList from "./CalendarWorkoutList";
-import ChooseMuscleModal from "../modal/workout/ChooseMuscleModal";
-// import "../../../css/workout.css";
-
-import MealTable from "./CalendarMealTable";
+import ChooseMuscleModal from "../../modal/workout/ChooseMuscleModal";
 
 const modalStyle = {
   position: "absolute",
@@ -40,7 +33,7 @@ const modalStyle = {
 };
 
 // Component for Dashboard (Showing today's workout)
-function CalendarFood({ currDateInt, userID }) {
+function CalendarWorkout({ currDateInt, userID }) {
   const [exercises, setExercises] = useState([]); // Today's exercises
   const [currNotes, setCurrNotes] = useState(""); // Today's notes
   const [showButtons, setShowButtons] = useState(false); // Shows edit and clear button
@@ -116,10 +109,6 @@ function CalendarFood({ currDateInt, userID }) {
           sx={{
             display: "flex",
             flexDirection: "column",
-            // backgroundColor: "lightblue",
-            // marginLeft: 2,
-            // borderTopLeftRadius: 15,
-            // borderTopRightRadius: 15,
           }}
         >
           <Grid item xs={12} sx={{ display: "flex" }}>
@@ -129,11 +118,9 @@ function CalendarFood({ currDateInt, userID }) {
                 component="div"
                 sx={{
                   display: "flex",
-                  // paddingTop: 1,
-                  // paddingLeft: 2,
                 }}
               >
-                Today's Meal Plan
+                Today's Workout
               </Typography>
             </Grid>
             <Grid item xs={4} align="end" sx={{}}>
@@ -161,19 +148,18 @@ function CalendarFood({ currDateInt, userID }) {
               }}
             >
               <Typography sx={{ fontSize: 16 }} variant="h6" component="div">
-                <span style={{ fontWeight: 700 }}>Calories 🍴:</span> ~
+                <span style={{ fontWeight: 700 }}>Calories 🔥:</span> ~
                 {totalCalsBurned} cals
               </Typography>
               <Typography sx={{ fontSize: 16 }} variant="h6" component="div">
-                <span style={{ fontWeight: 700 }}>Total Meals:</span> ~
-                {totalWorkoutDuration}
+                <span style={{ fontWeight: 700 }}>Workout 🕛:</span> ~
+                {totalWorkoutDuration} min(s)
               </Typography>
             </div>
-            {/* <Divider /> */}
           </Grid>
         </Grid>
 
-        <MealTable
+        <CalendarWorkoutList
           showButtons={showButtons}
           exercises={exercises}
           setExercises={setExercises}
@@ -183,16 +169,16 @@ function CalendarFood({ currDateInt, userID }) {
       </Grid>
       <Modal open={open} onClose={handleClose}>
         <Box sx={modalStyle}>
-          {/* <ChooseMuscleModal
+          <ChooseMuscleModal
             handleClose={handleClose}
             currDateInt={currDateInt}
             userID={userID}
             setExercises={setExercises}
-          /> */}
+          />
         </Box>
       </Modal>
     </>
   );
 }
 
-export default CalendarFood;
+export default CalendarWorkout;

@@ -26,8 +26,8 @@
 
 
 ### III. Project Overview
+
 #### User authentication:  
-  
   New users are required to create a user account with log-in details. Upon entering a username and password they will be prompted for further information about themselves that will aid in calculations required by the application. User sessions are stored in a PostgreSQL database to allow them to persist across different site visits.
 
 #### Central Dashboard:
@@ -38,6 +38,7 @@
 
 #### Calendar:
   The user can access a full-page calendar with each date square showing previews of the workouts and meals for the day. The right half of the screen will have a summary section showing the meals and workouts for the selected day, and clicking on any day in the calendar will display the meals and workouts for that day.
+
 #### Nav Bar: 
   The nav bar will be visible on both the dashboard and the calendar pages, and will have options to add a meal, add a workout, go to the calendar, or go back to the dashboard. 
 
@@ -45,6 +46,7 @@
   The profile page will track personal records and allow the user to see/edit their current information. Personal records will be displayed for every workout. If the user is an admin they can also access admin message posting, and app metrics.
 
 ### IV. Tech stack
+
 #### Front End: 
   JavaScript, ReactJS, MaterialUI, 
 #### Back End: 

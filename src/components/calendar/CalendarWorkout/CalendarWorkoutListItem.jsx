@@ -19,8 +19,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
-import EditExerciseModal from "../modal/workout/EditExerciseModal";
-// import "../../../css/workout.css";
+import EditExerciseModal from "../../modal/workout/EditExerciseModal";
 
 function CalendarWorkoutListItem({
   handleEditInfo,
