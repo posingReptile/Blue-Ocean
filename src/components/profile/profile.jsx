@@ -3,7 +3,6 @@ import axios from "axios";
 import dayjs from "dayjs";
 import PersonalRecords from "./personalRecords.jsx";
 import AdminPage from "./adminPage.jsx";
-// import defaultProfileImage from '../../assets/pfpic.png';
 import {
   Avatar,
   Badge,
@@ -19,7 +18,6 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import EditIcon from "@mui/icons-material/Edit";
 import CastleIcon from "@mui/icons-material/Castle";
-// import '../../css/profile.css';
 
 function GridEntry(props) {
   const { label, gridValue } = props;
@@ -61,7 +59,6 @@ function Profile(props) {
 
   const [editFields, setEditFields] = useState(false);
   const [username, setUsername] = useState("");
-  // const [profilePic, setProfilePic] = useState(defaultProfileImage);
   const [heightFt, setHeightFt] = useState();
   const [heightIn, setHeightIn] = useState();
   const [weight, setWeight] = useState();
@@ -116,16 +113,6 @@ function Profile(props) {
       const formHeightIn = Number(event.target.elements.heightIn.value);
       const formAge = Number(event.target.elements.age.value);
       const formTargetWeight = Number(event.target.targetWeight.value);
-
-      // Calculate your BMR:
-      // For men: BMR = 66 + (6.2 x weight in pounds) + (12.7 x height in inches) - (6.76 x age in years)
-      // For women: BMR = 655.1 + (4.35 x weight in pounds) + (4.7 x height in inches) - (4.7 x age in years)
-      // Determine your activity level factor:
-      // Sedentary (little or no exercise) = 1.2
-      // Lightly active (light exercise 1-3 days a week) = 1.375
-      // Moderately active (moderate exercise 3-5 days a week) = 1.55
-      // Very active (hard exercise 6-7 days a week) = 1.725
-      // Extra active (very hard exercise, physical job or training twice a day) = 1.9
 
       const days = Math.ceil((dayjs(pickerDate) - dayjs()) / 86400000);
       const height = formHeightFt * 12 + formHeightIn;
@@ -183,7 +170,6 @@ function Profile(props) {
       sx={{
         maxWidth: "700px",
         margin: "0 auto",
-        // padding: '2rem',
         pl: "2rem",
         pr: "2rem",
         textAlign: "center",
