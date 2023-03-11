@@ -24,9 +24,11 @@
 ### II. Description
   Shredded is an app for fitness enthusiasts and newbies alike. It is a one-stop shop for both exercise and meal planning that gives users a detailed overview of their upcoming meals and workouts, along with how many calories they’ll be consuming and burning every day.
 
+
 ### III. Project Overview
-#### User authentication:
-  New users are required to create a user account with log-in details. Upon opening the app, the user will be prompted to provide their log-in details if not already logged in, and/or create a new user account in order to access the app’s functionalities. On their first login, they will be prompted to add personal information including weight, age, height, and goal weight.
+#### User authentication:  
+  
+  New users are required to create a user account with log-in details. Upon entering a username and password they will be prompted for further information about themselves that will aid in calculations required by the application. User sessions are stored in a PostgreSQL database to allow them to persist across different site visits.
 
 #### Central Dashboard:
   The user will be able to see their workouts and meals for the day. From this dashboard, they can also access the add workout or add meal modals.
@@ -40,7 +42,7 @@
   The nav bar will be visible on both the dashboard and the calendar pages, and will have options to add a meal, add a workout, go to the calendar, or go back to the dashboard. 
 
 #### Profile Page: 
-  The profile page will track personal records and allow the user to see/edit their current information. Personal records will be displayed for estimated calorie burn of every workout.
+  The profile page will track personal records and allow the user to see/edit their current information. Personal records will be displayed for every workout. If the user is an admin they can also access admin message posting, and app metrics.
 
 ### IV. Tech stack
 #### Front End: 
