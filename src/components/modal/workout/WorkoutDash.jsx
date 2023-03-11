@@ -118,7 +118,7 @@ function Workout({ currDateInt, userID }) {
       <Box
         sx={{
           minHeight: 600,
-          width: 500,
+          width: 536,
           backgroundColor: "primary.light",
           borderRadius: 4,
           margin: 4,
@@ -157,16 +157,12 @@ function Workout({ currDateInt, userID }) {
                   onClick={() => {
                     setShowButtons(!showButtons);
                   }}
-                  sx={{ mr: 2, "&:hover": { color: "orange" } }}
+                  sx={{ mr: 2 }}
                 >
-                  <EditIcon sx={{ "&:hover": { color: "orange" } }} />
+                  <EditIcon sx={{ "&:hover": { color: "white" } }} />
                 </Fab>
-                <Fab
-                  color="primary"
-                  onClick={handleOpen}
-                  sx={{ "&:hover": { color: "orange" } }}
-                >
-                  <AddIcon sx={{ "&:hover": { color: "orange" } }} />
+                <Fab color="primary" onClick={handleOpen}>
+                  <AddIcon sx={{ "&:hover": { color: "white" } }} />
                 </Fab>
               </Grid>
             </Grid>
@@ -192,7 +188,7 @@ function Workout({ currDateInt, userID }) {
                   variant="h6"
                   component="div"
                 >
-                  <span style={{ fontWeight: 700 }}>Calories 🔥:</span> ~
+                  <span style={{ fontWeight: 700 }}>Calories 🔥:</span> {`~ `}
                   {totalCalsBurned} cals
                 </Typography>
                 <Typography
@@ -200,7 +196,7 @@ function Workout({ currDateInt, userID }) {
                   variant="h6"
                   component="div"
                 >
-                  <span style={{ fontWeight: 700 }}>Workout 🕛:</span> ~
+                  <span style={{ fontWeight: 700 }}>Workout 🕛:</span> {`~ `}
                   {totalWorkoutDuration} min(s)
                 </Typography>
               </div>

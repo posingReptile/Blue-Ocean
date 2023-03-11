@@ -52,7 +52,7 @@
 #### Front End: 
   JavaScript, ReactJS, MaterialUI, 
 #### Back End: 
-  NodeJS, Express, PostgreSQL, PgAdmin, Food/Workout API, PassportJS
+  NodeJS, Express, PostgreSQL, PgAdmin, Food/Workout AP
 #### Deployment: 
   AWS EC2
 #### Testing/Utilities: 
@@ -64,3 +64,17 @@
 ### VII. Interactions
 ### VIII. Workflow and Key lessons
 ### IX. MISC
+
+---------- Gifs/pictures to be moved around --------
+![login](https://user-images.githubusercontent.com/24445744/224448055-73784c3b-a3e9-4b69-9cf1-fea9efa23246.gif)
+![navigate](https://user-images.githubusercontent.com/24445744/224450577-4adec2b5-f891-43a4-ab1e-9fd3e534b7e7.gif)
+![quotesmessages](https://user-images.githubusercontent.com/24445744/224448649-e72ea72b-d450-4cd4-9bc9-005f51a5a1c6.gif)
+![adminpanel](https://user-images.githubusercontent.com/24445744/224449303-bd1ae075-f9af-4100-9931-c3b91d6890a6.gif)
+![pr](https://user-images.githubusercontent.com/24445744/224449311-10f3a45d-9550-40ed-b2bd-b3e7f2ed066e.gif)
+![profileedit](https://user-images.githubusercontent.com/24445744/224449313-e546c28c-bae8-4554-9e62-ad358230dc80.gif)
+![calendar](https://user-images.githubusercontent.com/24445744/224450757-25e0876a-9c1f-4894-9166-f508a5cde9bf.gif)
+![foodmodal](https://user-images.githubusercontent.com/24445744/224450926-991a6544-b310-4c2d-8c4d-f51aae037cf2.gif)
+![workoutmodal](https://user-images.githubusercontent.com/24445744/224450930-b2d5205f-c5fe-48a4-bfdc-9a66fa187f5f.gif)
+
+
+

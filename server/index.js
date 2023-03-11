@@ -326,14 +326,18 @@ app.get("/daily-meals-calendar", (req, res) => {
     [req.query.date, req.query.userId, req.query.mealType]
   )
     .then((allMeals) => {
-      db.query('SELECT SUM(calories) FROM food WHERE user_id = $1 AND date = $2 AND category = $3', [user, date, meal]).then((sumCal) => {
-      let cals = sumCal.rows[0].sum;
-      res.json({
-        meals: allMeals.rows,
-        cals: cals
+      console.log("calendar call", allMeals.rows);
+      db.query(
+        "SELECT SUM(calories) FROM food WHERE user_id = $1 AND date = $2 AND category = $3",
+        [user, date, meal]
+      ).then((sumCal) => {
+        let cals = sumCal.rows[0].sum;
+        res.json({
+          meals: allMeals.rows,
+          cals: cals,
+        });
       });
     })
-  })
     .catch((err) => {
       res.send(JSON.stringify("ERROR"));
     });
@@ -348,8 +352,8 @@ app.get("/daily-meals", (req, res) => {
     [req.query.date, req.query.userId, req.query.mealType]
   )
     .then((allMeals) => {
-      res.send(allMeals.rows)
-  })
+      res.send(allMeals.rows);
+    })
     .catch((err) => {
       res.send(JSON.stringify("ERROR"));
     });
@@ -416,12 +420,20 @@ app.get("/training", (req, res) => {
   });
 });
 
-app.get('/monthly-calories', (req, res) => {
-  db.query('SELECT SUM(calories) FROM food WHERE user_id = $1 AND date = $2', [req.query.userId, req.query.date]).then((calories) => {
-    res.send(calories.rows)
-  }).catch((err) => console.log(err));
-})
-
+app.get("/monthly-calories", (req, res) => {
+  console.log(req.query);
+  db.query("SELECT SUM(calories) FROM food WHERE user_id = $1 AND date = $2", [
+    req.query.userId,
+    req.query.date,
+  ])
+    .then((calories) => {
+      console.log(calories.rows[0]);
+      res.send(calories.rows);
+    })
+    .catch((err) => {
+      res.send(JSON.stringify("ERROR"));
+    });
+});
 
 //----------------------------------admin-------------------------------------------------
 

@@ -1,24 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import dayjs from 'dayjs';
-import PersonalRecords from './personalRecords.jsx';
-import AdminPage from './adminPage.jsx';
-// import defaultProfileImage from '../../assets/pfpic.png';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import dayjs from "dayjs";
+import PersonalRecords from "./personalRecords.jsx";
+import AdminPage from "./adminPage.jsx";
 import {
-  Avatar, Badge, Box, Button, FormControl, Stack, TextField, Typography
-} from '@mui/material';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import EditIcon from '@mui/icons-material/Edit';
-import CastleIcon from '@mui/icons-material/Castle';
-// import '../../css/profile.css';
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  FormControl,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import EditIcon from "@mui/icons-material/Edit";
+import CastleIcon from "@mui/icons-material/Castle";
 
 function GridEntry(props) {
   const { label, gridValue } = props;
   return (
     <Box sx={{ mb: 1 }}>
-      <Typography variant="overline" sx={{ display: 'block', fontWeight: 'bold', mb: 0.5 }}>
+      <Typography
+        variant="overline"
+        sx={{ display: "block", fontWeight: "bold", mb: 0.5 }}
+      >
         {label}
       </Typography>
       <Typography>{gridValue}</Typography>
@@ -39,7 +47,7 @@ function FormEntry(props) {
       type={type}
       inputProps={{
         min,
-        max
+        max,
       }}
       required
     />
@@ -50,8 +58,7 @@ function Profile(props) {
   const { userID } = props;
 
   const [editFields, setEditFields] = useState(false);
-  const [username, setUsername] = useState('');
-  // const [profilePic, setProfilePic] = useState(defaultProfileImage);
+  const [username, setUsername] = useState("");
   const [heightFt, setHeightFt] = useState();
   const [heightIn, setHeightIn] = useState();
   const [weight, setWeight] = useState();
@@ -70,7 +77,8 @@ function Profile(props) {
 
   useEffect(() => {
     if (userID) {
-      axios.get(`http://localhost:3000/profiles/${userID}/`)
+      axios
+        .get(`http://localhost:3000/profiles/${userID}/`)
         .then(({ data }) => {
           const userObj = data[0];
           setIsAdmin(userObj.isadmin);
@@ -81,12 +89,14 @@ function Profile(props) {
           setWeight(userObj.weight);
           setTargetWeight(userObj.goal_weight);
           setCalorieGoal(userObj.calorie_goal);
-          setTargetDate(((userObj.goal_date.split('T')[0]).split('-')).join(''));
-          setPickerDate(((userObj.goal_date.split('T')[0]).split('-')).join(''));
+          setTargetDate(userObj.goal_date.split("T")[0].split("-").join(""));
+          setPickerDate(userObj.goal_date.split("T")[0].split("-").join(""));
         })
-        .then(() => axios.get(`http://localhost:3000/profiles/${userID}/personal-records`))
+        .then(() =>
+          axios.get(`http://localhost:3000/profiles/${userID}/personal-records`)
+        )
         .then(({ data }) => setPRs(data))
-        .catch(() => console.log('failed to get profile info'))
+        .catch(() => console.log("failed to get profile info"));
     }
   }, [userID]);
 
@@ -104,23 +114,13 @@ function Profile(props) {
       const formAge = Number(event.target.elements.age.value);
       const formTargetWeight = Number(event.target.targetWeight.value);
 
-      // Calculate your BMR:
-        // For men: BMR = 66 + (6.2 x weight in pounds) + (12.7 x height in inches) - (6.76 x age in years)
-        // For women: BMR = 655.1 + (4.35 x weight in pounds) + (4.7 x height in inches) - (4.7 x age in years)
-      // Determine your activity level factor:
-        // Sedentary (little or no exercise) = 1.2
-        // Lightly active (light exercise 1-3 days a week) = 1.375
-        // Moderately active (moderate exercise 3-5 days a week) = 1.55
-        // Very active (hard exercise 6-7 days a week) = 1.725
-        // Extra active (very hard exercise, physical job or training twice a day) = 1.9
-
       const days = Math.ceil((dayjs(pickerDate) - dayjs()) / 86400000);
-      const height = (formHeightFt * 12) + formHeightIn;
-      const BMR = 66 + (6.2 * formWeight) + (12.7 * height) - (6.76 * formAge);
+      const height = formHeightFt * 12 + formHeightIn;
+      const BMR = 66 + 6.2 * formWeight + 12.7 * height - 6.76 * formAge;
       const TDEE = BMR * 1.2;
       const weightDelta = formTargetWeight - formWeight;
       const calorieDiff = weightDelta * 3500;
-      const goal = Math.floor((calorieDiff / days) + TDEE);
+      const goal = Math.floor(calorieDiff / days + TDEE);
 
       setAge(formAge);
       setWeight(formWeight);
@@ -138,118 +138,189 @@ function Profile(props) {
         goal_date: pickerDate,
         calorie_goal: goal,
       };
-      axios.post(`http://localhost:3000/profiles/${userID}`, userInfo)
+      axios
+        .post(`http://localhost:3000/profiles/${userID}`, userInfo)
         .then(() => onEdit())
-        .catch(() => console.log('failed to update profile info'));
+        .catch(() => console.log("failed to update profile info"));
     }
   }
 
   function upDate(event) {
-    const day = (event.$D >= 10) ? event.$D : ('0' + event.$D);
-    const month = ((event.$M + 1) >= 10) ? (event.$M + 1) : ('0' + (event.$M + 1))
+    const day = event.$D >= 10 ? event.$D : "0" + event.$D;
+    const month = event.$M + 1 >= 10 ? event.$M + 1 : "0" + (event.$M + 1);
     const year = event.$y;
 
-    if (dayjs(event).isAfter(dayjs())){
+    if (dayjs(event).isAfter(dayjs())) {
       setPickerDate(year + month + day);
     } else {
       setPickerDate(null);
     }
   }
 
-  const formattedDate = targetDate ? targetDate.substring(4, 6) + '/' + targetDate.substring(6) + '/' + targetDate.substring(0, 4) : '';
+  const formattedDate = targetDate
+    ? targetDate.substring(4, 6) +
+      "/" +
+      targetDate.substring(6) +
+      "/" +
+      targetDate.substring(0, 4)
+    : "";
 
   return (
-    <Box sx={{
-      maxWidth: '700px',
-      margin: '0 auto',
-      padding: '2rem',
-      textAlign: 'center',
-    }}>
-      {isAdmin && (!openAdminPage) && (
+    <Box
+      sx={{
+        maxWidth: "700px",
+        margin: "0 auto",
+        pl: "2rem",
+        pr: "2rem",
+        textAlign: "center",
+      }}
+    >
+      {isAdmin && !openAdminPage && (
         <Button
           onClick={onAdminClick}
           sx={{
             backgroundColor: "white",
             borderRadius: 4,
             boxShadow: 2,
-            '&:hover': {
-              backgroundColor: 'primary.main',
-              color: 'white',
-          },
-            display: 'flex',
-            vertical: 'top',
-            color: 'primary.main'
+            "&:hover": {
+              backgroundColor: "primary.main",
+              color: "white",
+            },
+            display: "flex",
+            vertical: "top",
+            color: "primary.main",
           }}
         >
           <CastleIcon />
         </Button>
       )}
-      {openAdminPage && (<AdminPage goBack={onAdminClick} />)}
+      {openAdminPage && <AdminPage goBack={onAdminClick} />}
       {!openAdminPage && (
         <Box>
           <Badge
             overlap="circular"
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            badgeContent={<EditIcon sx={{ color: 'action' }} onClick={onEdit} />}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            badgeContent={
+              <EditIcon sx={{ color: "action" }} onClick={onEdit} />
+            }
           >
-            <Avatar color="primary" variant="outlined" sx={{
-              width: 99,
-              height: 99,
-              fontSize: 50,
-              textAlign: 'center',
-              backgroundColor: "white",
-              color: "primary.main"
-            }}>
-              {(username.charAt(0)).toUpperCase()}
+            <Avatar
+              color="primary"
+              variant="outlined"
+              sx={{
+                width: 99,
+                height: 99,
+                fontSize: 50,
+                textAlign: "center",
+                backgroundColor: "white",
+                color: "primary.main",
+              }}
+            >
+              {username.charAt(0).toUpperCase()}
             </Avatar>
           </Badge>
-          <Typography variant='h4'>{username}</Typography>
+          <Typography variant="h4">{username}</Typography>
         </Box>
       )}
-      {!(editFields) && (!openAdminPage) && (
+      {!editFields && !openAdminPage && (
         <Box>
-          <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-            <GridEntry gridValue={age + ' y.o.'} label="age" />
-            <GridEntry gridValue={heightFt + '\'' + ' ' + heightIn + '"'} label="height"/>
+          <Box sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)" }}>
+            <GridEntry gridValue={age + " y.o."} label="age" />
+            <GridEntry
+              gridValue={heightFt + "'" + " " + heightIn + '"'}
+              label="height"
+            />
 
-            <GridEntry gridValue={weight + ' lbs'} label="current weight" />
-            <GridEntry gridValue={targetWeight + ' lbs'} label="target weight" />
+            <GridEntry gridValue={weight + " lbs"} label="current weight" />
+            <GridEntry
+              gridValue={targetWeight + " lbs"}
+              label="target weight"
+            />
 
             <GridEntry gridValue={formattedDate} label="target date" />
-            <GridEntry gridValue={calorieGoal + ' cals'} label="daily calorie goal" />
+            <GridEntry
+              gridValue={calorieGoal + " cals"}
+              label="daily calorie goal"
+            />
           </Box>
         </Box>
       )}
 
-      {(editFields) && (!openAdminPage) && (
+      {editFields && !openAdminPage && (
         <Box>
           <form onSubmit={updateFields}>
             <FormControl onSubmit={updateFields}>
-              <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                <FormEntry identifier="age" formLabel="age" defaultValue={age} type="number" min="12" max="130" />
-                <FormEntry identifier="weight" formLabel="weight" defaultValue={weight} type="number" min="60" max="666"/>
+              <Box
+                sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)" }}
+              >
+                <FormEntry
+                  identifier="age"
+                  formLabel="age"
+                  defaultValue={age}
+                  type="number"
+                  min="12"
+                  max="130"
+                />
+                <FormEntry
+                  identifier="weight"
+                  formLabel="weight"
+                  defaultValue={weight}
+                  type="number"
+                  min="60"
+                  max="666"
+                />
 
                 <Stack direction="row">
-                  <FormEntry identifier="heightFt" formLabel="ft" defaultValue={heightFt} type="number" min="4" max="8" width={1} />
-                  <FormEntry identifier="heightIn" formLabel="in" defaultValue={heightIn} type="number" min="0" max="11" width={1} />
+                  <FormEntry
+                    identifier="heightFt"
+                    formLabel="ft"
+                    defaultValue={heightFt}
+                    type="number"
+                    min="4"
+                    max="8"
+                    width={1}
+                  />
+                  <FormEntry
+                    identifier="heightIn"
+                    formLabel="in"
+                    defaultValue={heightIn}
+                    type="number"
+                    min="0"
+                    max="11"
+                    width={1}
+                  />
                 </Stack>
 
-                <FormEntry identifier="targetWeight" formLabel="target weight" defaultValue={targetWeight} type="number" min="60" max="666" />
+                <FormEntry
+                  identifier="targetWeight"
+                  formLabel="target weight"
+                  defaultValue={targetWeight}
+                  type="number"
+                  min="60"
+                  max="666"
+                />
 
                 <Box>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker label="goal date" disablePast onChange={upDate} value={dayjs(pickerDate)} />
-                    {!pickerDate && <div className="errorText">Enter a valid date</div>}
+                    <DatePicker
+                      label="goal date"
+                      disablePast
+                      onChange={upDate}
+                      value={dayjs(pickerDate)}
+                    />
+                    {!pickerDate && (
+                      <div className="errorText">Enter a valid date</div>
+                    )}
                   </LocalizationProvider>
                 </Box>
                 <GridEntry />
 
-                <Box sx={{ textAlign: 'right', mr: 1, mt: 1}}>
+                <Box sx={{ textAlign: "right", mr: 1, mt: 1 }}>
                   <Button variant="outlined" onClick={onEdit}>
                     Cancel
                   </Button>
                 </Box>
-                <Box sx={{ textAlign: 'left', ml: 1, mt: 1 }}>
+                <Box sx={{ textAlign: "left", ml: 1, mt: 1 }}>
                   <Button type="submit" variant="contained">
                     Done
                   </Button>
@@ -259,7 +330,7 @@ function Profile(props) {
           </form>
         </Box>
       )}
-      {(!openAdminPage) && (<PersonalRecords prs={prs} />)}
+      {!openAdminPage && <PersonalRecords prs={prs} />}
     </Box>
   );
 }

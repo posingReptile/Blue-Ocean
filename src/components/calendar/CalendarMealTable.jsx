@@ -31,7 +31,6 @@ import EggIcon from '@mui/icons-material/Egg';
 import { Category } from '@mui/icons-material';
 
 function createData(name, calories, food, carbs, protein) {
-  console.log(name, calories, food, carbs, protein);
   return {
     name,
     calories,
@@ -41,7 +40,6 @@ function createData(name, calories, food, carbs, protein) {
   };
 }
 const mealTimeIcon = (component) => {
-  console.log('from icon', component);
   switch (component) {
     case 'Breakfast':
       return  (
@@ -118,7 +116,7 @@ function Row(props) {
               margin: "1rem",
               width: "50px"
             }} />
-            <Fab color="primary" onClick={() => console.log('hi')}>
+            <Fab color="primary" onClick={() => {}}>
               <AddIcon />
             </Fab>
                 </TableBody>
