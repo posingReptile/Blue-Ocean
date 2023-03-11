@@ -8,26 +8,24 @@ import axios from 'axios';
 
 function Login({ setLoginComponent, setUserObject, setComponent, setPassword, setUsername, username, password}) {
   const [usernameError, setUsernameError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false); //Error states for username and password
 
   const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+    setUsername(event.target.value); //Sets username state to the value of the input field
   };
 
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+    setPassword(event.target.value); //Sets password state to the value of the input field
   };
 
-  const handleLogin = () => {
-    console.log('username: ', username);
-    console.log('password: ', password);
+  const handleLogin = () => { //Handles login button click
 
-    if(username === '') {
+    if(username === '') { //Checks if username is empty
       setUsernameError(true);
     } else {
       setUsernameError(false);
     }
-    if(password === '') {
+    if(password === '') { //Checks if password is empty
       setPasswordError(true);
     } else {
       setPasswordError(false);
@@ -36,8 +34,7 @@ function Login({ setLoginComponent, setUserObject, setComponent, setPassword, se
     if(username !== '' && password !== '') {
       axios.get(`http://localhost:3000/login?username=${username}&password=${password}`)
       .then((res) => {
-        console.log('success', res);
-        if(res.data === 'NO USER') {
+        if(res.data === 'NO USER') { //Checks if user exists
           setUsernameError(true);
           setPasswordError(true);
         } else if (res.data.user_id) {
@@ -48,22 +45,19 @@ function Login({ setLoginComponent, setUserObject, setComponent, setPassword, se
         }
       })
       .catch((err) => {
-        console.log('error')
         console.log(err);
       })
     }
   }
 
-  const handleSignup = () => {
-    console.log('username: ', username);
-    console.log('password: ', password);
+  const handleSignup = () => { //Handles signup button click
 
-    if(username === '') {
+    if(username === '') { //Checks if username is empty
       setUsernameError(true);
     } else {
       setUsernameError(false);
     }
-    if(password === '') {
+    if(password === '') { //Checks if password is empty
       setPasswordError(true);
     } else {
       setPasswordError(false);
