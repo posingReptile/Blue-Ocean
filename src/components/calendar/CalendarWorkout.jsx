@@ -45,8 +45,6 @@ function CalendarWorkout({ currDateInt, userID }) {
   const [open, setOpen] = useState(false); // Opens add ChooseMuscleModal
   const handleOpen = () => setOpen(true); // Handles when Add (+) is clicked
   const handleClose = () => setOpen(false); // Handles modal outside click (closes)
-  // console.log(userID);
-  // console.log(currNotes);
 
   const totalWorkoutDuration = exercises.reduce((acc, exercise) => {
     return (acc += exercise.duration);

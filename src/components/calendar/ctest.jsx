@@ -280,7 +280,7 @@ export default function MealModalTest({userID, currDateInt, renderCalender}) {
   function renderMealPlan() {
     setFoodList([]);
     let array = [];
-    // console.log('from useEffect', currDateInt, foodSelection, userID)
+
     axios
       .get(
         `http://localhost:3000/daily-meals`,
@@ -291,14 +291,11 @@ export default function MealModalTest({userID, currDateInt, renderCalender}) {
         }}
       )
       .then(({ data }) => {
-        console.log(data);
         data.forEach(({name, calories, protein }) => {
           array.push(createData(name, calories, protein));
-          console.log('from ctest',data, name, calories, protein)
         });
       })
       .then(() => {
-        console.log('this is working from renderMealPlan', array)
         if (array.length === 0) return;
         else {
           setFoodList(array);
