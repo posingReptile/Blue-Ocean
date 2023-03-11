@@ -47,7 +47,7 @@
   The nav bar will be visible on both the dashboard and the calendar pages, and will have options to add a meal, add a workout, go to the calendar, or go back to the dashboard. 
 
 #### Profile Page: 
-  The profile page will track personal records and allow the user to see/edit their current information. Personal records will be displayed for estimated calorie burn of every workout.
+  The profile page will track personal records and allow the user to see/edit their current information. Personal records will be displayed for every workout. If the user is an admin they can also access admin message posting, and app metrics.
 
 ### IV. Tech stack
 #### Front End: 
