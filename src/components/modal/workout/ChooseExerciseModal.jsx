@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Box, Modal, Button, Grid, List } from "@mui/material";
-
-// import Box from "@mui/material/Box";
-// import Modal from "@mui/material/Modal";
-// import Button from "@mui/material/Button";
-// import Grid from "@mui/material/Grid";
-// import List from "@mui/material/List";
-
-// React Components
 import ExerciseItem from "./ExerciseItem";
 
 const style = {
@@ -29,16 +21,13 @@ function ChooseExerciseModal({
   muscleName,
   open,
   handleClose,
-  handleOpen,
+  // handleOpen,
   exerciseList,
   currDateInt,
   userID,
   setExercises,
 }) {
-  // Pass down function to post a new exercise to the table
   const handleAddExercise = (newExerciseObj) => {
-    // Make an axios post request here
-    console.log("Exercise added to database");
     axios
       .post("http://localhost:3000/new-exercise", newExerciseObj)
       .then(() => {
@@ -50,7 +39,6 @@ function ChooseExerciseModal({
             },
           })
           .then(({ data }) => {
-            // console.log(data);
             setExercises(data);
           });
       })
@@ -59,7 +47,6 @@ function ChooseExerciseModal({
       });
   };
 
-  console.log(exerciseList);
   const exerciseItems = exerciseList.map((exercise) => {
     return (
       <ExerciseItem
