@@ -13,8 +13,7 @@ import pgSession from "connect-pg-simple";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const createLog = (req, res, next) => {
-  res.on("finish", function () {
-  });
+  res.on("finish", function () {});
   next();
 };
 
@@ -100,10 +99,8 @@ app.get("/profiles/:profile_id", (req, res) => {
   db.query(
     `SELECT * FROM users WHERE user_id  = ${req.params.profile_id}`
   ).then((userInfo) => {
-
     res.send(userInfo.rows);
   });
-
 });
 
 app.post("/profiles/:profile_id", (req, res) => {
@@ -144,17 +141,14 @@ app.get("/profiles/:profile_id/personal-records", (req, res) => {
     .catch(() => res.status(500));
 });
 
-
-
 app.get("/message", (req, res) => {
-
-  db.query("SELECT message FROM messages WHERE date = $1", [
-    req.query.date,
-  ]).then((message) => {
-    res.send(message.rows);
-  }).catch((err) => {
-    res.send(404)
-  });
+  db.query("SELECT message FROM messages WHERE date = $1", [req.query.date])
+    .then((message) => {
+      res.send(message.rows);
+    })
+    .catch((err) => {
+      res.send(404);
+    });
 });
 
 app.get("/quotes", (req, res) => {
@@ -174,7 +168,6 @@ app.get("/exercises", (req, res) => {
 });
 
 app.get("/daily-workout", (req, res) => {
-
   db.query(
     "SELECT * FROM exercises FULL OUTER JOIN exercise_details ON exercises.exercise_detail_id = exercise_details.exercise_detail_id WHERE exercises.date = $1 AND user_id = $2 ORDER BY exercises.exercise_id ASC",
     [req.query.date, req.query.userId]
@@ -188,7 +181,6 @@ app.get("/daily-workout", (req, res) => {
 });
 
 app.post("/new-exercise", (req, res) => {
-
   db.query(
     "INSERT INTO exercises (exercise_detail_id, user_id, date, weight, sets, reps, duration, intensity, calories_burned) VALUES ($1, $2, $3,$4,$5,$6,$7,$8, $9)",
     [
@@ -236,7 +228,6 @@ app.delete("/delete", (req, res) => {
     res.send(202);
   });
 });
-
 
 app.get("/notes", (req, res) => {
   db.query("SELECT * FROM workouts WHERE date = $1 AND user_id = $2", [
@@ -398,7 +389,6 @@ app.get("/monthly-meals", (req, res) => {
     res.send(foods.rows);
   }); //month year
 });
-
 
 app.get("/monthly-workout", (req, res) => {
   db.query(

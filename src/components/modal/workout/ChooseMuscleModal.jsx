@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-
-// Modal Stuff
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-
+import { Grid, Typography, Box, Button } from "@mui/material";
 import MuscleItem from "./MuscleItem";
 import ChooseExerciseModal from "./ChooseExerciseModal";
 
@@ -18,9 +11,6 @@ function ChooseMuscleModal({ handleClose, currDateInt, userID, setExercises }) {
 
   // This handler gets invoked when muscle is clicked (axios call made)
   const handleExerciseOpen = (muscleName, muscleQuery) => {
-    console.log(muscleQuery);
-    // List of all muscles:
-    //[abdominals, biceps, calves, chest, glutes, hamstring, lats, lower_back, quads, traps, triceps]
     axios
       .get("http://localhost:3000/exercises", {
         params: {
@@ -41,7 +31,6 @@ function ChooseMuscleModal({ handleClose, currDateInt, userID, setExercises }) {
     setExerciseOpen(false);
   };
 
-  // Dynamically load from database types maybe?
   const muscles = [
     ["Biceps", "biceps"],
     ["Triceps", "triceps"],
@@ -82,11 +71,9 @@ function ChooseMuscleModal({ handleClose, currDateInt, userID, setExercises }) {
           overflow: "auto",
           justifyContent: "center",
           alignItems: "center",
-          // minWidth: 400,
           width: 450,
           mt: -2,
           mb: 1,
-          // border: "1px solid red",
         }}
       >
         {muscleItems}

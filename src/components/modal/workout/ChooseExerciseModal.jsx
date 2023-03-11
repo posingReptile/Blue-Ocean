@@ -21,7 +21,6 @@ function ChooseExerciseModal({
   muscleName,
   open,
   handleClose,
-  // handleOpen,
   exerciseList,
   currDateInt,
   userID,
