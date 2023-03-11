@@ -23,14 +23,11 @@ function App() {
   const [loggedUser, setLoggedUser] = useState("");
   const [component, setComponent] = useState("logsign");
   const [currentDay, setCurrentDay] = useState(new Date());
-  // const [userID, setUserID] = useState(0);
   const [userObject, setUserObject] = useState({});
   const [totalDailyCalories, setDailyCalories] = useState(0);
   useEffect(() => {
     axios.get("http://localhost:3000/session").then((res) => {
-      console.log("res.data", res.data);
       if (res.data.user_id) {
-        //setUserID(res.data.user_id);
         setComponent("dashboard");
         setUserObject({
           username: res.data.username,
@@ -42,16 +39,12 @@ function App() {
   }, []);
 
   const currDateInt = Number(format(new Date(currentDay), "yyyyMMdd"));
-  // console.log(currDateInt);
 
   const currComponent = (component) => {
-    console.log("Our current component is:", component);
     switch (component) {
       case "profile":
-        // console.log(component);
         return <Profile userID={userObject.user_id} />;
       case "dashboard":
-        console.log(component);
         return (
           <Dashboard
             currentDay={currentDay}
@@ -61,7 +54,6 @@ function App() {
           />
         );
       case "logsign":
-        console.log(component);
         return (
           <LogSignMain
             setUserObject={setUserObject}
@@ -69,7 +61,6 @@ function App() {
           />
         );
       case "calendar":
-        console.log(component);
         return (
           <CalendarPage
             currentDay={currentDay}

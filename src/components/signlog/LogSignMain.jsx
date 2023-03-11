@@ -5,12 +5,12 @@ import UserSetup from './UserSetup.jsx';
 
 
 function LogSignMain({ setComponent, setUserObject }) {
-  const [loginComponent, setLoginComponent] = useState('logsign');
+  const [loginComponent, setLoginComponent] = useState('logsign'); //State for which component to display
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const currComponent = (loginComponent) => {
-    switch (loginComponent) {
+    switch (loginComponent) { //Switches between login and signup components
       case 'logsign' :
         return (<LogSign setUserObject={setUserObject} username={username} setUsername={setUsername} password={password} setPassword={setPassword}setLoginComponent={setLoginComponent} setComponent={setComponent} />);
       case 'usersetup' :

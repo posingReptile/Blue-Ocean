@@ -14,7 +14,6 @@ function Quote({ curQuote, setCurQuote, quotes, setQuotes }) {
 
   useEffect(() => {
     axios.get("http://localhost:3000/quotes").then((res) => {
-      console.log("res.data", res.data);
       setQuotes(res.data);
       if(curQuote.length === 0) {
         setCurQuote(randomQuote(res.data));
