@@ -10,8 +10,6 @@ function MealModal({
   date,
   rerender,
   setRerender,
-  // dashRender,
-  // setDashRender,
 }) {
   return (
     <Dialog open={open} onClose={handleClose} fullWidth={true}>
@@ -22,8 +20,6 @@ function MealModal({
         date={date}
         rerender={rerender}
         setRerender={setRerender}
-        // dashRender={dashRender}
-        // setDashRender={setDashRender}
       />
     </Dialog>
   );
