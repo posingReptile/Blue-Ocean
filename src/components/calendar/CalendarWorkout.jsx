@@ -1,24 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-import Box from "@mui/material/Box";
-import Fab from "@mui/material/Fab";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Modal from "@mui/material/Modal";
-import Divider from "@mui/material/Divider";
-
-// Icons
-import Button from "@mui/material/Button";
+import {
+  Box,
+  Fab,
+  Grid,
+  Typography,
+  TextField,
+  Modal,
+  Divider,
+  Button,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
-
-// React Components
 import DayWorkoutList from "../modal/workout/DayWorkoutList";
 import CalendarWorkoutList from "./CalendarWorkoutList";
 import ChooseMuscleModal from "../modal/workout/ChooseMuscleModal";
-// import "../../../css/workout.css";
 
 const modalStyle = {
   position: "absolute",
@@ -37,7 +33,6 @@ const modalStyle = {
   minWidth: 400,
 };
 
-// Component for Dashboard (Showing today's workout)
 function CalendarWorkout({ currDateInt, userID }) {
   const [exercises, setExercises] = useState([]); // Today's exercises
   const [currNotes, setCurrNotes] = useState(""); // Today's notes
@@ -114,10 +109,6 @@ function CalendarWorkout({ currDateInt, userID }) {
           sx={{
             display: "flex",
             flexDirection: "column",
-            // backgroundColor: "lightblue",
-            // marginLeft: 2,
-            // borderTopLeftRadius: 15,
-            // borderTopRightRadius: 15,
           }}
         >
           <Grid item xs={12} sx={{ display: "flex" }}>
@@ -127,8 +118,6 @@ function CalendarWorkout({ currDateInt, userID }) {
                 component="div"
                 sx={{
                   display: "flex",
-                  // paddingTop: 1,
-                  // paddingLeft: 2,
                 }}
               >
                 Today's Workout
@@ -167,7 +156,6 @@ function CalendarWorkout({ currDateInt, userID }) {
                 {totalWorkoutDuration} min(s)
               </Typography>
             </div>
-            {/* <Divider /> */}
           </Grid>
         </Grid>
 
