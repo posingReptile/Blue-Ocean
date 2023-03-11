@@ -1,17 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-
-import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
-import ListItemButton from "@mui/material/ListItemButton";
-
-// React Components
+import { Divider, Grid, List, Typography, ListItemButton } from "@mui/material";
 import DayWorkoutListItem from "./DayWorkoutListItem";
-import "../../../css/workout.css";
 
-// Show Modal here
 function DayWorkoutList({
   exercises,
   setExercises,
@@ -83,12 +74,12 @@ function DayWorkoutList({
         <List sx={{ ml: 4, mr: 4, height: 300, overflow: "auto" }}>
           {!listItems.length ? (
             <>
-            <ListItemButton onMouseDown={() => handleOpen()}>
-              <Typography variant="h6" sx={{ fontSize: 18 }}>
-                Let's get Shredded 💪 Click to add a workout!
-              </Typography>
-            </ListItemButton>
-            <Divider/>
+              <ListItemButton onMouseDown={() => handleOpen()}>
+                <Typography variant="h6" sx={{ fontSize: 18 }}>
+                  Let's get Shredded 💪 Click to add a workout!
+                </Typography>
+              </ListItemButton>
+              <Divider />
             </>
           ) : null}
           {listItems}
