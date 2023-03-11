@@ -28,11 +28,12 @@
   #### Thomas Faddegon
 
 ### II. Description
- the application will provide users a way to track their daily workouts, meals, and caloric intake.
+ Application to provide users a way to track their daily workouts, meals, and caloric intake.
 
 ### III. Project Overview
-#### User authentication:
-  New users are required to create a user account with log-in details. Upon opening the app, the user will be prompted to provide their log-in details if not already logged in, and/or create a new user account in order to access the app’s functionalities. On their first login, they will be prompted to add personal information including weight, age, height, and goal weight.
+#### User authentication:  
+  
+  New users are required to create a user account with log-in details. Upon entering a username and password they will be prompted for further information about themselves that will aid in calculations required by the application. User sessions are stored in a PostgreSQL database to allow them to persist across different site visits.
 
 #### Central Dashboard:
   The user will be able to see their workouts and meals for the day. From this dashboard, they can also access the add workout or add meal modals.
