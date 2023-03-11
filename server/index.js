@@ -326,7 +326,6 @@ app.get("/daily-meals-calendar", (req, res) => {
     [req.query.date, req.query.userId, req.query.mealType]
   )
     .then((allMeals) => {
-      console.log("calendar call", allMeals.rows);
       db.query(
         "SELECT SUM(calories) FROM food WHERE user_id = $1 AND date = $2 AND category = $3",
         [user, date, meal]
@@ -421,13 +420,11 @@ app.get("/training", (req, res) => {
 });
 
 app.get("/monthly-calories", (req, res) => {
-  console.log(req.query);
   db.query("SELECT SUM(calories) FROM food WHERE user_id = $1 AND date = $2", [
     req.query.userId,
     req.query.date,
   ])
     .then((calories) => {
-      console.log(calories.rows[0]);
       res.send(calories.rows);
     })
     .catch((err) => {
