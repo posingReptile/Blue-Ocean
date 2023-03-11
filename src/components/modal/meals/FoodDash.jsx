@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
-
-// Icons
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
-
-//react
 import DayMealList from "./DayMealList";
 import MealTable from "./MealTable.jsx";
 import Meals from "./Meals.jsx";
+
 
 function FoodDash({ currDateInt, userID }) {
   const [breakfastCals, setBreakfastCals] = useState(0);
@@ -24,15 +20,11 @@ function FoodDash({ currDateInt, userID }) {
   const [dinnerCals, setDinnerCals] = useState(0);
   const [snacksCals, setSnacksCals] = useState(0);
   const [totalCals, setTotalCals] = useState(0);
-
-  const [currNotes, setCurrNotes] = useState(""); // Today's notes
-  const [showButtons, setShowButtons] = useState(false); // Shows edit and clear button
-  // console.log(showButtons);
+  const [currNotes, setCurrNotes] = useState("");
+  const [showButtons, setShowButtons] = useState(false);
   const [openMM, setOpenMM] = useState(false);
   const [rerender, setRerender] = useState(false);
-
   const [showEditButton, setShowEditButton] = useState(false);
-  // const [dashRender, setDashRender] = useState(false);
 
   const handleMealOpen = () => {
     setOpenMM(true);
@@ -51,8 +43,6 @@ function FoodDash({ currDateInt, userID }) {
         },
       })
       .then(({ data }) => {
-        // console.log(data);
-        // Calculate calories
         let breakfast = 0;
         let lunch = 0;
         let dinner = 0;
@@ -74,7 +64,6 @@ function FoodDash({ currDateInt, userID }) {
       });
   }, [currDateInt, rerender]);
 
-  // Grab the current day's workout notes
   useEffect(() => {
     axios
       .get("http://localhost:3000/notes", {
@@ -96,7 +85,6 @@ function FoodDash({ currDateInt, userID }) {
       });
   }, [currDateInt]);
 
-  // Send a put request when clicking save notes
   const handleNoteSave = () => {
     axios
       .put("http://localhost:3000/notes", {
@@ -205,7 +193,6 @@ function FoodDash({ currDateInt, userID }) {
             </Grid>
           </Grid>
 
-          {/* USE THIS <MealTable /> */}
           <DayMealList
             currDateInt={currDateInt}
             userID={userID}
@@ -216,7 +203,6 @@ function FoodDash({ currDateInt, userID }) {
             showButtons={showButtons}
             rerender={rerender}
             setShowEditButton={setShowEditButton}
-            // setRerender={setRerender}
           />
 
           <Grid

@@ -5,80 +5,6 @@ import Box from "@mui/material/Box";
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 
-// const [breakfast, setBreakfast] = useState([]);
-// const [x, setX] = useState([{food: 'apple', quantity: '100g', calories: '53', protein: '1'},
-// {food: 'banana', quantity: '100g', calories: '110', protein: '2'},
-// {food: 'orange', quantity: '100g', calories: '80', protein: '1'}])
-// console.log('USERID: ', userId)
-// const [allFood, setAllFood] = useState([]);
-
-// const [inputList, setInputList] = useState([
-//   {
-//     input: "",
-//     quantity: '100g',
-//     input_rank: null
-//   }
-// ])
-// const [isDisabled, setIsDisabled] = useState(false)
-
-// const handleListAdd = () => {
-//   setInputList([
-//     ...inputList,
-//     {
-//       input: "",
-//       quantity: '100g',
-//       input_rank: null
-//     }
-//   ])
-// }
-
-// useEffect(() => {
-//   if (inputList.length > 0) {
-//     inputList[inputList.length - 1].input === ""
-//       ? setIsDisabled(true)
-//       : setIsDisabled(false)
-//   }
-// }, [foodB, onlyBreakfast])
-
-// const getFoods = () => {
-//   axios.get(`http://localhost:3000/daily-meals?date=${date}&userId=${userId}`)
-//   .then((res) => {
-//     setFoodB(res.data)
-//   })
-// }
-
-// useEffect(() => {
-//   getFoods()
-// }, [breakfast])
-
-// const handleInputChange = (event, index) => {
-//   const { value } = event.target
-//   const newInputList = [...inputList]
-//   newInputList[index].input = value
-//   newInputList[index].input_rank = index + 1
-//   setInputList(newInputList)
-// }
-
-// const handleQuantityChange = (event, index) => {
-//   const { value } = event.target
-//   const newInputList = [...inputList]
-//   newInputList[index].quantity = value
-//   setInputList(newInputList)
-// }
-
-// const handleRemoveItem = (index) => {
-//   const newList = [...breakfast]
-//   newList.splice(index, 1)
-//   setBreakfast(newList)
-// }
-
-// const deleteFood = () => {
-//   const food_Id = {food_id: foodId}
-//   axios.delete(`http://localhost:3000/delete-meal/${foodId}`)
-//   .then((res)=> {
-//     console.log('Delete: ', res)
-//   })
-// }
 
 function Breakfast({
   open,
@@ -97,8 +23,6 @@ function Breakfast({
   setRerender,
   handleAlert,
   handleError,
-  // dashRender,
-  // setDashRender,
 }) {
   const [input, setInput] = useState("");
   const [quantity, setQuantity] = useState("100g");

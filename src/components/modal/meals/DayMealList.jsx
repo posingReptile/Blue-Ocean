@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
@@ -11,21 +10,15 @@ import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import Popover from "@mui/material/Popover";
-
-// Icons
 import Fab from "@mui/material/Fab";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from "@mui/icons-material/Clear";
-// import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-
 import DayMealListItem from "./DayMealListItem";
 import ExpandedMeal from "./ExpandedMeal";
-// React Components
 
 const defaultDisplays = {
   list: true,
@@ -43,7 +36,6 @@ const allDisplaysFalse = {
   snacks: false,
 };
 
-// Show Modal here
 function DayMealList({
   currDateInt,
   userID,
@@ -54,13 +46,11 @@ function DayMealList({
   showButtons,
   rerender,
   setShowEditButton,
-  // setRerender,
 }) {
   const [showList, setShowList] = useState(true);
   const [showExpanded, setShowExpanded] = useState(false);
   const [expandedType, setExpandedType] = useState("");
 
-  // mealType should be breakfast, lunch, dinner, or snacks
   const handleChangeDisplay = (mealType) => {
     setShowList(false);
     setShowExpanded(true);
@@ -68,7 +58,6 @@ function DayMealList({
     setExpandedType(mealType);
   };
 
-  // Give this to each component to set back to original list view
   const handleShowList = () => {
     setShowList(true);
     setShowExpanded(false);
@@ -111,10 +100,8 @@ function DayMealList({
             userID={userID}
             showButtons={showButtons}
             rerender={rerender}
-            // setRerender={setRerender}
           />
         ) : null}
-        {/* <button onClick={() => handleChangeDisplay("list")}>Test</button> */}
       </Grid>
     </>
   );

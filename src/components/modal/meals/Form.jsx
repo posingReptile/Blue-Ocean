@@ -9,8 +9,8 @@ import Breakfast from "./Breakfast.jsx";
 import Lunch from "./Lunch.jsx";
 import Dinner from "./Dinner.jsx";
 import Snacks from "./Snacks.jsx";
-
 import MealTable from "./MealModal.jsx";
+
 
 function Form({
   open,
@@ -19,9 +19,7 @@ function Form({
   date,
   rerender,
   setRerender,
-  // dashRender, setDashRender
 }) {
-  // const meals = ['Breakfast', 'Lunch', 'Dinner', 'Snacks']
   const [breakfast, setBreakfast] = useState("");
   const [lunch, setLunch] = useState("");
   const [dinner, setDinner] = useState("");
@@ -49,22 +47,12 @@ function Form({
     }, 2000);
   };
 
-  console.log(breakfast);
-  // const date = (new Date()).toISOString().split('T')[0].split('-').join('')
-  // const userId = 2
   const foodId = 16;
 
   const handleSubmit = (event) => {
     event.preventDefault();
     handleClose();
   };
-
-  // console.log("ALLL FOOODSSS", foodB)
-
-  // console.log('BREAKFAST', breakfast)
-  // console.log('LUNCH', lunch)
-  // console.log('DINNER', dinner)
-  // console.log('SNACKS', snacks)
 
   const breakfastMap = (arrFood) => {
     return arrFood.filter((food) => {

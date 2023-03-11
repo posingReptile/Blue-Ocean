@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
@@ -8,19 +7,16 @@ import Typography from "@mui/material/Typography";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-
 import Fab from "@mui/material/Fab";
-
 import ClearIcon from "@mui/icons-material/Clear";
-
 import FoodItem from "./FoodItem";
+
 
 function ExpandedMeal({
   handleShowList,
@@ -42,9 +38,7 @@ function ExpandedMeal({
         },
       })
       .then(({ data }) => {
-        // console.log(data);
         setFoods(data);
-        // setRerender(!rerender);
       });
   }, [rerender, currDateInt]);
 
@@ -62,7 +56,6 @@ function ExpandedMeal({
           })
           .then(({ data }) => {
             setFoods(data);
-            // setRerender(!rerender);
           });
       })
       .catch(() => {
@@ -83,8 +76,6 @@ function ExpandedMeal({
     );
   });
 
-  // We need a route to grab all breakfast items
-  // Breakfast, Lunch, Dinner, Snacks
   let mealType = "";
   if (expandedType === "Breakfast") {
     mealType = "Breakfast";
@@ -162,8 +153,3 @@ function ExpandedMeal({
 }
 
 export default ExpandedMeal;
-
-// db.query(
-//     "SELECT * FROM food WHERE date = $1 AND user_id =  $2 and category = $3",
-//     [req.query.date, req.query.userId, req.query.mealType]
-//   )
