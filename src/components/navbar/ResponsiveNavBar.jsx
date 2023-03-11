@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Pressable from "@mui/material/Button";
 import axios from "axios";
-
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  MenuItem,
+  Container,
+  Avatar,
+  Button,
+} from "@mui/material";
+import Pressable from "@mui/material/Button";
+import MenuIcon from "@mui/icons-material/Menu";
 import "../../css/responsivenavbar.css";
 
 function ResponsiveAppBar({ userObject, setComponent, setUserObject }) {
@@ -25,8 +26,6 @@ function ResponsiveAppBar({ userObject, setComponent, setUserObject }) {
 
   const handleCloseNavMenu = (event, componentName) => {
     setAnchorElNav(null);
-    console.log(componentName);
-    // setComponent("calendar");
     setComponent(componentName);
   };
 
@@ -36,25 +35,20 @@ function ResponsiveAppBar({ userObject, setComponent, setUserObject }) {
 
   const handleCloseUserMenu = (event, componentName) => {
     setAnchorElUser(null);
-
-    // console.log(componentName);
     if (!componentName) return;
-
     if (componentName === "logsign") {
       axios.get("http://localhost:3000/logout").then((res) => {
         console.log("res.data", res.data);
         setUserObject({});
       });
     }
-
     setComponent(componentName);
   };
 
   return (
-    <AppBar sx={{mb: 3}} position="static">
+    <AppBar sx={{ mb: 3 }} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ pt: 1, pb: 1 }}>
-          {/* large view typography*/}
           <Pressable onClick={() => setComponent("dashboard")}>
             <Typography
               variant="h6"
@@ -67,7 +61,6 @@ function ResponsiveAppBar({ userObject, setComponent, setUserObject }) {
               <img src="./icons/shreddedlogowhite.png" height={50} />
             </Typography>
           </Pressable>
-
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -105,8 +98,6 @@ function ResponsiveAppBar({ userObject, setComponent, setUserObject }) {
               </MenuItem>
             </Menu>
           </Box>
-
-          {/* Small view typography */}
           <Typography
             variant="h6"
             noWrap
@@ -120,7 +111,6 @@ function ResponsiveAppBar({ userObject, setComponent, setUserObject }) {
           >
             <img src="./icons/shredded.png" height={50} />
           </Typography>
-
           <Box
             sx={{
               flexGrow: 1,
@@ -136,10 +126,10 @@ function ResponsiveAppBar({ userObject, setComponent, setUserObject }) {
                 color: "white",
                 fontSize: 18,
                 display: "block",
-                '&:hover': {
-                  backgroundColor: '#fff',
-                  color: '#3c52b2',
-              },
+                "&:hover": {
+                  backgroundColor: "#fff",
+                  color: "#3c52b2",
+                },
               }}
             >
               Calendar
@@ -152,31 +142,33 @@ function ResponsiveAppBar({ userObject, setComponent, setUserObject }) {
                 fontSize: 18,
                 color: "white",
                 display: "block",
-                '&:hover': {
-                  backgroundColor: '#fff',
-                  color: '#3c52b2',
-              },
+                "&:hover": {
+                  backgroundColor: "#fff",
+                  color: "#3c52b2",
+                },
               }}
             >
               Dashboard
             </Button>
           </Box>
-
-          {/* Profile Icon */}
           <>
             <Box sx={{ flexGrow: 0 }}>
               <IconButton
-              onClick={handleOpenUserMenu}
-              sx={{
-                pt: 2,
-                pb: 2,
-                '&:hover': {
-                  backgroundColor: 'transparent',
-                  color: '#3c52b2',
-              },
-              }}
+                onClick={handleOpenUserMenu}
+                sx={{
+                  pt: 2,
+                  pb: 2,
+                  "&:hover": {
+                    backgroundColor: "transparent",
+                    color: "#3c52b2",
+                  },
+                }}
               >
-                <Avatar color="primary" variant="outlined" sx={{backgroundColor: "white", color: "primary.main"}}>
+                <Avatar
+                  color="primary"
+                  variant="outlined"
+                  sx={{ backgroundColor: "white", color: "primary.main" }}
+                >
                   {userObject.username[0].toUpperCase()}
                 </Avatar>
               </IconButton>

@@ -1,15 +1,11 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { format } from "date-fns";
+import { Box, Paper, Typography, Grid } from "@mui/material";
 import Meals from "../modal/meals/Meals.jsx";
 import FoodDash from "../modal/meals/FoodDash.jsx";
-import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import { format } from "date-fns";
 import WorkoutDash from "../modal/workout/WorkoutDash";
 import DatePickerComponent from "./DatePickerComponent";
-import axios from "axios";
-
 import AdminMessage from "./AdminMessage";
 import Quote from "./Quote";
 
@@ -57,10 +53,6 @@ const Dashboard = ({ currentDay, setCurrentDay, currDateInt, userID }) => {
           setCurrentDay={setCurrentDay}
         />
       </Box>
-
-      {/* Planned Workout and Meals */}
-
-      {/* Planned Workout and Meals */}
       <Grid container spacing={0}>
         <Grid item xs={6}>
           <FoodDash

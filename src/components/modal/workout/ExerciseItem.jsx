@@ -1,23 +1,19 @@
 import React, { useState } from "react";
-
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-
+import {
+  ListItemAvatar,
+  Avatar,
+  ListItemButton,
+  ListItemText,
+  TextField,
+  Button,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+} from "@mui/material";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-
-// Needs userId and date prop drilled down to each item
-// Need to implement a formula for calories burned
 function ExerciseItem({ handleAddExercise, exercise, userID, currDateInt }) {
   const [showMore, setShowMore] = useState(false); // Shows the full details of the exercise clicked
   const [intensity, setIntensity] = useState(undefined);
@@ -25,7 +21,6 @@ function ExerciseItem({ handleAddExercise, exercise, userID, currDateInt }) {
   const [weight, setWeight] = useState(undefined);
   const [sets, setSets] = useState(undefined);
   const [reps, setReps] = useState(undefined);
-  // console.log(exercise);
 
   const { type, instructions, name, difficulty } = exercise;
   const exerciseId = exercise.exercise_detail_id;

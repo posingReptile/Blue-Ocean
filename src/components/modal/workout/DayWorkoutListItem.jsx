@@ -1,26 +1,23 @@
 import React, { useState } from "react";
-
-import ListItemText from "@mui/material/ListItemText";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
-import Popover from "@mui/material/Popover";
-
-// Icons
-import Fab from "@mui/material/Fab";
+import {
+  ListItemText,
+  ListItemButton,
+  ListItemSecondaryAction,
+  ListItemAvatar,
+  Avatar,
+  Divider,
+  Button,
+  Popover,
+  Fab,
+  Box,
+  Typography,
+} from "@mui/material";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from "@mui/icons-material/Clear";
-
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-
-import "../../../css/workout.css";
 import EditExerciseModal from "./EditExerciseModal";
+import "../../../css/workout.css";
 
 function DayWorkoutListItem({
   handleEditInfo,
@@ -118,7 +115,10 @@ function DayWorkoutListItem({
           }
         />
         {showButtons && (
-          <ListItemSecondaryAction onMouseDown={(e) => e.stopPropagation()} sx={{pr: 1}}>
+          <ListItemSecondaryAction
+            onMouseDown={(e) => e.stopPropagation()}
+            sx={{ pr: 1 }}
+          >
             {showMore ? null : (
               <>
                 <Fab
@@ -127,7 +127,7 @@ function DayWorkoutListItem({
                   size="small"
                   onClick={handleEditClick}
                 >
-                  <EditIcon sx={{ "&:hover": { color: "white" } }}/>
+                  <EditIcon sx={{ "&:hover": { color: "white" } }} />
                 </Fab>
                 <Popover
                   id={id}

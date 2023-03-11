@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Calendar from "react-calendar";
+import { TextField, Button, Box, Paper } from "@mui/material";
 import { BiPencil } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
-import axios from "axios";
-import "../../css/calendar.css";
-
-import { TextField } from "@mui/material";
-import Button from "@mui/material/Button";
-
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-
 import Quote from "../dashboard/Quote";
 import DayWorkoutList from "../modal/workout/DayWorkoutList";
 import CalendarWorkout from "./CalendarWorkout";
 import CalendarFood from "./CalendarFood";
 import MealModalTest from "./ctest.jsx";
 import Form from "../modal/meals/Form";
+import "../../css/calendar.css";
+
 import DatePickerComponent from "../dashboard/DatePickerComponent.jsx";
 const monthNames = [
   "January",
@@ -143,19 +138,6 @@ function CalendarPage({ currentDay, setCurrentDay, currDateInt, userID }) {
 
   return (
     <>
-      {/* <Box
-        sx={{
-          marginTop: 1,
-          marginBottom: 2.5,
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <DatePickerComponent
-          currentDay={currentDay}
-          setCurrentDay={setCurrentDay}
-        />
-      </Box> */}
       <div className="container">
         <Calendar
           onChange={setCurrentDay}

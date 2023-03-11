@@ -1,15 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-
-import Grid from "@mui/material/Grid";
-import List from "@mui/material/List";
-
-// React Components
-// import DayWorkoutListItem from "../modal/workout/DayWorkoutList";
+import { Grid, List } from "@mui/material";
 import CalendarWorkoutListItem from "./CalendarWorkoutListItem";
-// import "../../../css/workout.css";
 
-// Show Modal here
 function CalendarWorkoutList({
   exercises,
   setExercises,
@@ -17,7 +10,6 @@ function CalendarWorkoutList({
   currDateInt,
   userID,
 }) {
-  // Handler for saving edits
   const handleEditInfo = (editExerciseObj) => {
     axios
       .put("http://localhost:3000/edit-workout", editExerciseObj)
