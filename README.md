@@ -52,7 +52,7 @@
 #### Front End: 
   JavaScript, ReactJS, MaterialUI, 
 #### Back End: 
-  NodeJS, Express, PostgreSQL, PgAdmin, Food/Workout API, PassportJS
+  NodeJS, Express, PostgreSQL, PgAdmin, Food/Workout AP
 #### Deployment: 
   AWS EC2
 #### Testing/Utilities: 
